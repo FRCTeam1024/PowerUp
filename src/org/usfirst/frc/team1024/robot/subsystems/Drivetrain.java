@@ -20,12 +20,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class Drivetrain extends Subsystem {
-	private TalonSRX frontLeft  = new TalonSRX(0);
+	private TalonSRX frontLeft  = new TalonSRX(42);
 	//private TalonSRX middleLeft = new TalonSRX(1);
-	private TalonSRX rearLeft = new TalonSRX(2);
-	private TalonSRX frontRight = new TalonSRX(3);
+	private TalonSRX rearLeft = new TalonSRX(1);
+	private TalonSRX frontRight = new TalonSRX(2);
 	//private TalonSRX middleRight = new TalonSRX(4);
-	private TalonSRX rearRight = new TalonSRX(5);
+	private TalonSRX rearRight = new TalonSRX(3);
 	
 	public PIDController posPID;
 	public PIDController turnPID;
@@ -38,7 +38,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void drive(double leftPower, double rightPower) {
-		frontLeft.set(ControlMode.PercentOutput, leftPower);
+		frontLeft.set(ControlMode.PercentOutput, -leftPower);
 		frontRight.set(ControlMode.PercentOutput, rightPower);
 	}
 	
