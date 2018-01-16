@@ -6,8 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team1024.robot;
-import edu.wpi.first.wpilibj.Ultrasonic;
-
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;

@@ -5,35 +5,26 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 
-
-/**
- *
- */
 public class Sensors extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	
+	private static double MILLIMETER_SCALE_FACTOR = 124;
+	private static double INCH_SCALE_FACTOR = MILLIMETER_SCALE_FACTOR * 0.3937;
 	AnalogInput ultrasonic = new AnalogInput(0);
 	double distanceI;
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
     
     public double getDistanceInMillimeters() {
-    	return getRawUltrasonic() * 620;
+    	return getRawUltrasonic() * MILLIMETER_SCALE_FACTOR;
     }
     
     public double getDistanceInches() {
-		return 0;
-    	//.0393700787 
+		return getRawUltrasonic() * INCH_SCALE_FACTOR;
     }
     
     public double getRawUltrasonic() {
-    	double volts = ultrasonic.getVoltage();
-    	return volts;
+    	return ultrasonic.getVoltage();
     }
 }
 
