@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
+import org.usfirst.frc.team1024.robot.commands.CrossLine;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 
@@ -42,6 +43,8 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new Auto());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
+		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
 	}
 	
 	/**
@@ -72,8 +75,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
-
+		//m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = new CrossLine();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -112,7 +115,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
 	}
 
 	/**
