@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team1024.robot;
+import edu.wpi.first.wpilibj.Ultrasonic;
+
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,8 +27,10 @@ import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
  */
 public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
+	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
