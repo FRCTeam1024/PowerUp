@@ -15,25 +15,25 @@ public class Sensors extends Subsystem {
     // here. Call these from Commands.
 	
 	AnalogInput ultrasonic = new AnalogInput(0);
-	double distance;
+	double distanceI;
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	
     }
+    
     public double getDistanceInMillimeters() {
-    	double volts = ultrasonic.getVoltage();
-    	distance = volts/4096;
-    	return distance;
+    	return getRawUltrasonic() * 620;
     }
     
     public double getDistanceInches() {
-    	
+		return 0;
+    	//.0393700787 
     }
     
-    private double getRawUltrasonic() {
-    	
+    public double getRawUltrasonic() {
+    	double volts = ultrasonic.getVoltage();
+    	return volts;
     }
 }
 
