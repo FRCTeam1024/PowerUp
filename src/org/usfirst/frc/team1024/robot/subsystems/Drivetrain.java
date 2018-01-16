@@ -8,13 +8,16 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -26,6 +29,8 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontRight = new TalonSRX(2);
 	//private TalonSRX middleRight = new TalonSRX(4);
 	private TalonSRX rearRight = new TalonSRX(3);
+	
+	public Encoder encoderMain = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	
 	public PIDController posPID;
 	public PIDController turnPID;
@@ -56,6 +61,7 @@ public class Drivetrain extends Subsystem {
 		slave.set(ControlMode.Follower, master.getDeviceID());
 	}
 	
+	
 	public void stop() {
 		frontLeft.set(ControlMode.PercentOutput, 0.0);
 		frontRight.set(ControlMode.PercentOutput, 0.0);
@@ -63,5 +69,15 @@ public class Drivetrain extends Subsystem {
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoysticks());
+	}
+	
+	public void smartDash() {
+		SmartDashboard.putNumber("Encoder Value Raw", encoderMain.getRaw());
+		SmartDashboard.putData("Reset Encoder", new EncoderCalibrate());
+		
+	}
+	
+	public void encoderReset() {
+		encoderMain.reset();
 	}
 }
