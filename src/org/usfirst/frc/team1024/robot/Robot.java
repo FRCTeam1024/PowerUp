@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
+import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
+import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 
 /**
@@ -39,6 +41,9 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new Auto());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		SmartDashboard.putData("Encoder Calibrate", new EncoderCalibrate());
+		
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
 	}
 	
 	/**
@@ -109,6 +114,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		Robot.drivetrain.smartDash();
 	}
 
 	/**

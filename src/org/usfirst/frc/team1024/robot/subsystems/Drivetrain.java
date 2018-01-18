@@ -11,6 +11,7 @@ import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -29,8 +30,7 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontRight = new TalonSRX(2);
 	//private TalonSRX middleRight = new TalonSRX(4);
 	private TalonSRX rearRight = new TalonSRX(3);
-	
-	public Encoder encoderMain = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+	//public Encoder encoderMain = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	
 	public PIDController posPID;
 	public PIDController turnPID;
@@ -40,6 +40,9 @@ public class Drivetrain extends Subsystem {
 		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
+		
+		frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		frontLeft.getSensorCollection().getQuadraturePosition();
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -72,12 +75,18 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void smartDash() {
-		SmartDashboard.putNumber("Encoder Value Raw", encoderMain.getRaw());
-		SmartDashboard.putData("Reset Encoder", new EncoderCalibrate());
-		
+		//SmartDashboard.putNumber("Encoder Value Raw", encoderMain.getRaw());
+		//SmartDashboard.putData("Reset Encoder", new EncoderCalibrate());
+		SmartDashboard.putNumber("Encoder Value: ", frontLeft.getSensorCollection().getQuadraturePosition());
 	}
 	
 	public void encoderReset() {
-		encoderMain.reset();
+		//encoderMain.reset();
+		frontLeft.getSensorCollection().setQuadraturePosition(0, 10);
+	}
+	
+	public double getEncoderValue() {
+		return frontLeft.getSensorCollection().getQuadraturePosition();
+		
 	}
 }
