@@ -45,6 +45,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
 		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
+		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
+		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
 	}
 	
 	/**
@@ -115,6 +117,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
+		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
 	}
 
 	/**

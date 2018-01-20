@@ -7,9 +7,11 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -34,6 +36,7 @@ public class Drivetrain extends Subsystem {
 		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
+		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -62,5 +65,18 @@ public class Drivetrain extends Subsystem {
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoysticks());
+	}
+	
+	public double getRawEncoder() {
+		return frontRight.getSelectedSensorPosition(0);
+	}
+	
+	public double getWheelRotation() {
+		return getRawEncoder() / 3;
+	}
+	
+	public double getDistanceInches() {
+		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
+		return (getWheelRotation() * Math.PI * Constants.WHEEL_DIAMETER) / 1024;
 	}
 }
