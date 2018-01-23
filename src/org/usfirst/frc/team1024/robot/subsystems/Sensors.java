@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Sensors extends Subsystem {
 
-	private static double MILLIMETER_SCALE_FACTOR = 124;
-	private static double INCH_SCALE_FACTOR = MILLIMETER_SCALE_FACTOR * 0.3937;
+	private static final double MILLIMETER_SCALE_FACTOR = 124;
+	private static final double INCH_SCALE_FACTOR = MILLIMETER_SCALE_FACTOR * 0.3937;
 	AnalogInput ultrasonic = new AnalogInput(0);
 	double distanceI;
 

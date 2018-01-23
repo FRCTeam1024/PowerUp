@@ -1,8 +1,6 @@
 package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.Robot;
-import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
-
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -31,7 +29,7 @@ public class EncoderCalibrate extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.encoderReset();
+    	Robot.drivetrain.resetEncoder();
     }
 
     // Make this return true when this Command no longer needs to run execute()

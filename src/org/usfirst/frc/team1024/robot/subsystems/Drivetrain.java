@@ -7,11 +7,13 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
+
+import org.usfirst.frc.team1024.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -35,13 +37,33 @@ public class Drivetrain extends Subsystem {
 	public PIDController turnPID;
 	
 	public Drivetrain () {
+		frontRight.setInverted(false);
+		rearRight.setInverted(false);
 		//setFollower(middleLeft, frontLeft);
 		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
 		
-		frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-		frontLeft.getSensorCollection().getQuadraturePosition();
+
+		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		//frontRight.setSensorPhase(true);
+		
+		frontRight.configNominalOutputForward(0, 10);
+        frontRight.configNominalOutputReverse(0, 10);
+        frontRight.configPeakOutputForward(1, 10);
+        frontRight.configPeakOutputReverse(-1, 10);
+        /* set the allowable closed-loop error,
+         * Closed-Loop output will be neutral within this range.
+         * See Table in Section 17.2.1 for native units per rotation. 
+         */
+        //frontRight.configAllowableClosedloopError(0, 0, 10); /* always servo */
+        /* set closed loop gains in slot0 */
+        frontRight.config_kF(0, 0.0, 10);
+        frontRight.config_kP(0, 1.0, 10);
+        frontRight.config_kI(0, 0.0, 10);
+        frontRight.config_kD(0, 0.0, 10);
+		
+        
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -79,13 +101,54 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Encoder Value: ", frontLeft.getSensorCollection().getQuadraturePosition());
 	}
 	
-	public void encoderReset() {
-		//encoderMain.reset();
-		frontLeft.getSensorCollection().setQuadraturePosition(0, 10);
-	}
-	
 	public double getEncoderValue() {
 		return frontLeft.getSensorCollection().getQuadraturePosition();
+	}
+	
+	public double getRawEncoder() {
+		return frontRight.getSelectedSensorPosition(0);
+	}
+	
+	public double getRawQuad() {
+		return frontRight.getSensorCollection().getQuadraturePosition();
+	}
+	
+	public double getWheelRotation() {
+		return getRawEncoder() / 3;
+	}
+	
+	public double getDistanceInches() {
+		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
+		return (((getRawEncoder() / Constants.ENCODER_TO_WHEEL_RATIO * Math.PI * Constants.WHEEL_DIAMETER) / 
+				Constants.ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
+	}
+	
+	public double getTicks(double distanceInInches) {
+//		return (distance * 9 * Constants.ENCODER_COUNTS_PER_REVOLUTION * Constants.ENCODER_RATIO_TO_WHEEL * 
+//				Math.PI * Constants.WHEEL_DIAMETER) / 12;
 		
+		int ticksPerInch = 71;
+		return -1*(ticksPerInch * distanceInInches);
+	} 
+	
+	public void resetEncoder() {
+		frontRight.getSensorCollection().setQuadraturePosition(0, 0);
+	}
+	
+	public boolean isMoving() {
+		if (frontRight.getMotorOutputPercent() > 0.1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void driveDistance(double inches) {
+		double ticks = getTicks(inches);
+		System.out.println("num Ticks for " + inches + " inches : " + ticks);
+		frontRight.set(ControlMode.Position, ticks);
+		frontLeft.set(ControlMode.PercentOutput, -1*frontRight.getMotorOutputPercent());
+//		frontRight.set(ControlMode.Position, -3000);
 	}
 }
+	
