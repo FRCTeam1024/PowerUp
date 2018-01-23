@@ -112,7 +112,7 @@ public class Drivetrain extends Subsystem {
 //				Math.PI * Constants.WHEEL_DIAMETER) / 12;
 		
 		int ticksPerInch = 71;
-		return -1 * (ticksPerInch * distanceInInches);
+		return -1*(ticksPerInch * distanceInInches);
 	}
 	
 	public void resetEncoder() {
@@ -130,7 +130,7 @@ public class Drivetrain extends Subsystem {
 	public void driveDistance(double inches) {
 		double ticks = getTicks(inches);
 		System.out.println("num Ticks for " + inches + " inches : " + ticks);
-		frontRight.set(ControlMode.Position, getTicks(inches));
+		frontRight.set(ControlMode.Position, ticks);
 		frontLeft.set(ControlMode.PercentOutput, -1*frontRight.getMotorOutputPercent());
 //		frontRight.set(ControlMode.Position, -3000);
 	}

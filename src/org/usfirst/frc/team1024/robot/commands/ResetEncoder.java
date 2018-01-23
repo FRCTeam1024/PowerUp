@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ResetEncoder extends Command {
 	boolean done = false;
     public ResetEncoder() {
+    	requires(Robot.drivetrain);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
