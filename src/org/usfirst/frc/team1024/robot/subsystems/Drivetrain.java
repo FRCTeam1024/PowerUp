@@ -8,7 +8,6 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
-import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -33,8 +32,8 @@ public class Drivetrain extends Subsystem {
 	public PIDController turnPID;
 	
 	public Drivetrain () {
-		frontRight.setInverted(true);
-		rearRight.setInverted(true);
+		frontRight.setInverted(false);
+		rearRight.setInverted(false);
 		//setFollower(middleLeft, frontLeft);
 		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
@@ -132,6 +131,7 @@ public class Drivetrain extends Subsystem {
 		double ticks = getTicks(inches);
 		System.out.println("num Ticks for " + inches + " inches : " + ticks);
 		frontRight.set(ControlMode.Position, getTicks(inches));
+		frontLeft.set(ControlMode.PercentOutput, -1*frontRight.getMotorOutputPercent());
 //		frontRight.set(ControlMode.Position, -3000);
 	}
 }

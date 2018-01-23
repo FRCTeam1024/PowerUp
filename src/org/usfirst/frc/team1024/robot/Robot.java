@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
 		
 		// try to drive 1 revolution of wheel
 		double inchesPerRevolution = 19.24;
-		m_autonomousCommand = new DriveDistance(10 * inchesPerRevolution);
+		m_autonomousCommand = new DriveDistance(48);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
