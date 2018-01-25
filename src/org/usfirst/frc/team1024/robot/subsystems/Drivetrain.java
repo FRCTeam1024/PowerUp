@@ -57,10 +57,12 @@ public class Drivetrain extends PIDSubsystem {
 		
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
         getPIDController().setInputRange(-180,180);
+        getPIDController().setContinuous();
         getPIDController().setOutputRange(-1,1);
         //getPIDController().setSetpoint(setpointInit);
         getPIDController().setAbsoluteTolerance(2);
         getPIDController().enable();
+        
 		
         //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
         //turnPID.setContinuous(true);
@@ -117,6 +119,12 @@ public class Drivetrain extends PIDSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		pidGet = output;
+	}
+	/*
+	public void getCenterRotationDisplacement() {
+		getHeading() % 180
+		
 		
 	}
+	*/
 }
