@@ -31,6 +31,7 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
  */
 public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
+	public static final SmarterDashboard smartdash = new SmarterDashboard();
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 	public boolean isDone = false;
@@ -60,6 +61,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
 		drivetrain.resetEncoder();
 		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+		SmartDashboard.putNumber("SET DISTANCE", 0);
 	}
 	
 	/**
@@ -141,12 +143,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		Robot.drivetrain.smartDash();
-		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
-		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
-		SmartDashboard.putNumber("Raw Encoder Quad", drivetrain.getRawQuad());
-		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
-		SmartDashboard.putBoolean("isMoving", drivetrain.isMoving());
+		Robot.smartdash.smartDash();
 	}
 
 	/**

@@ -8,7 +8,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
-
+import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class Drivetrain extends Subsystem {
-	private TalonSRX frontLeft  = new TalonSRX(42);
+	public TalonSRX frontLeft  = new TalonSRX(42);
 	//private TalonSRX middleLeft = new TalonSRX(1);
 	private TalonSRX rearLeft = new TalonSRX(1);
 	private TalonSRX frontRight = new TalonSRX(2);
@@ -95,11 +95,7 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new DriveWithJoysticks());
 	}
 	
-	public void smartDash() {
-		//SmartDashboard.putNumber("Encoder Value Raw", encoderMain.getRaw());
-		//SmartDashboard.putData("Reset Encoder", new EncoderCalibrate());
-		SmartDashboard.putNumber("Encoder Value: ", frontLeft.getSensorCollection().getQuadraturePosition());
-	}
+	
 	
 	public double getEncoderValue() {
 		return frontLeft.getSensorCollection().getQuadraturePosition();
