@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
+import org.usfirst.frc.team1024.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 
@@ -45,6 +46,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
 		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
+		
+
+		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
+		SmartDashboard.putNumber("Turn KI", Robot.drivetrain.turnkI);
+		SmartDashboard.putNumber("Turn KD", Robot.drivetrain.turnkD);
+		SmartDashboard.putNumber("Turn KF", Robot.drivetrain.turnkF);
+		SmartDashboard.putNumber("Turn Setpoint", 0);
 	}
 	
 	/**
@@ -76,7 +84,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//m_autonomousCommand = m_chooser.getSelected();
-		m_autonomousCommand = new CrossLine();
+		//m_autonomousCommand = new CrossLine();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -113,8 +121,9 @@ public class Robot extends TimedRobot {
 	 * This function is called periodically during operator control.
 	 */
 	@Override
-	public void teleopPeriodic() {
+	public void teleopPeriodic() {	
 		Scheduler.getInstance().run();
+		SmartDashboard.putData("Turn to Angle", new TurnToAngle(SmartDashboard.getNumber("Turn Setpoint", 0)));
 	}
 
 	/**
