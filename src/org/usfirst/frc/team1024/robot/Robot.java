@@ -26,7 +26,7 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final Drivetrain drivetrain = new Drivetrain();
+	public static Drivetrain drivetrain;
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 
@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		drivetrain = new Drivetrain();
 		m_chooser.addDefault("Default Auto", new Auto());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -124,6 +125,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {	
 		Scheduler.getInstance().run();
 		SmartDashboard.putData("Turn to Angle", new TurnToAngle(SmartDashboard.getNumber("Turn Setpoint", 0)));
+		SmartDashboard.putNumber("Angle", Robot.drivetrain.getHeading());
 	}
 
 	/**

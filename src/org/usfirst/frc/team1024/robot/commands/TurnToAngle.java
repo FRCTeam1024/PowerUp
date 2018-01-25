@@ -21,25 +21,31 @@ public class TurnToAngle extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
-    	Robot.drivetrain.turnPID.reset();
-    	Robot.drivetrain.turnPID.setPID(SmartDashboard.getNumber("Turn KP", Constants.TURN_KP),
+    	//Robot.drivetrain.reset();
+    	/*Robot.drivetrain.(SmartDashboard.getNumber("Turn KP", Constants.TURN_KP),
     									SmartDashboard.getNumber("Turn KI", Constants.TURN_KI),
     									SmartDashboard.getNumber("Turn KD", Constants.TURN_KD), 
     									SmartDashboard.getNumber("Turn KF", Constants.TURN_KF));
-		Robot.drivetrain.turnPID.enable();
-		Robot.drivetrain.turnPID.setSetpoint(angle);
+		*/
+		Robot.drivetrain.setSetpoint(angle);
+		Robot.drivetrain.enable();
 		initialized = true;
     }
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	rotatePower = Robot.drivetrain.turnPID.get();
-    	Robot.drivetrain.drive(-rotatePower, rotatePower);
+    	//rotatePower = Robot.drivetrain.turnPID.get();
+    	Robot.drivetrain.drive(-Robot.drivetrain.pidGet, Robot.drivetrain.pidGet);
+    	SmartDashboard.putNumber("rotatePower", rotatePower);
+    	SmartDashboard.putNumber("Angle: ", Robot.drivetrain.getHeading());
+    	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
+    	System.out.println("I got here");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return initialized && !Robot.drivetrain.isMoving() && Math.abs(angle - Robot.drivetrain.getHeading()) < 10; //fiddle with the 10 number
+        //return initialized && !Robot.drivetrain.isMoving() && Math.abs(angle - Robot.drivetrain.getHeading()) < 10; //fiddle with the 10 number
+    	return false;
     }
 
     // Called once after isFinished returns true

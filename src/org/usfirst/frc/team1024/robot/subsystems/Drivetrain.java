@@ -14,16 +14,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class Drivetrain extends Subsystem implements PIDOutput {
+public class Drivetrain extends PIDSubsystem {
 	private TalonSRX frontLeft  = new TalonSRX(42);
 	//private TalonSRX middleLeft = new TalonSRX(1);
 	private TalonSRX rearLeft = new TalonSRX(1);
@@ -35,6 +37,8 @@ public class Drivetrain extends Subsystem implements PIDOutput {
 	
 	public double rotateToAngleRate;
 	
+	public double pidGet;
+	
 	//Remove these and any references when set properly
 	public double turnkP = Constants.TURN_KP;
 	public double turnkI = Constants.TURN_KI;
@@ -42,21 +46,24 @@ public class Drivetrain extends Subsystem implements PIDOutput {
 	public double turnkF = Constants.TURN_KF;
 	
 	public PIDController posPID;
-	public PIDController turnPID;
 	
-	public Drivetrain () {
+	public Drivetrain() {
+		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, Constants.TURN_KF);
 		//setFollower(middleLeft, frontLeft);
 		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
-		navx = new AHRS(SerialPort.Port.kMXP);
-		navx.setPIDSourceType(PIDSourceType.kDisplacement);
+		navx = new AHRS(Port.kMXP);
 		
-		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, Constants.TURN_KF, navx, output -> {});
-        turnPID.setInputRange(-180.0f,  180.0f);
-        turnPID.setOutputRange(-1.0, 1.0);
-        turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
-        turnPID.setContinuous(true);
+		navx.setPIDSourceType(PIDSourceType.kDisplacement);
+        getPIDController().setInputRange(-180,180);
+        getPIDController().setOutputRange(-1,1);
+        //getPIDController().setSetpoint(setpointInit);
+        getPIDController().setAbsoluteTolerance(2);
+        getPIDController().enable();
+		
+        //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
+        //turnPID.setContinuous(true);
 	}
 	
 	public boolean isMoving() {
@@ -64,11 +71,7 @@ public class Drivetrain extends Subsystem implements PIDOutput {
 	}
 	
 	public double getHeading() {
-		if (navx.isConnected()) {
-			return navx.pidGet();
-		} else {
-			return 0;
-		}
+		return navx.getAngle();
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -95,19 +98,25 @@ public class Drivetrain extends Subsystem implements PIDOutput {
 		frontRight.set(ControlMode.PercentOutput, 0.0);
 	}
 	
-
 	
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoysticks());
 	}
 
-	@Override
-	public void pidWrite(double output) {
-		rotateToAngleRate = output;
-	}
 
 	public void resetGyro() {
 		navx.reset();
+	}
+
+	@Override
+	protected double returnPIDInput() {
+		return navx.pidGet();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		pidGet = output;
+		
 	}
 }
