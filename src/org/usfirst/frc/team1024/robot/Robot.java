@@ -129,7 +129,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		log("In teleopPeriodic");
 		Scheduler.getInstance().run();
-		SmartDashboard.putData("Turn to Angle2", new TurnToAngle(/*SmartDashboard.getNumber("Turn Setpoint", 0)*/ 90));
+		SmartDashboard.putData("Turn to Angle", new TurnToAngle(/*SmartDashboard.getNumber("Turn Setpoint", 0)*/ 90));
 		SmartDashboard.putNumber("Angle", Robot.drivetrain.getHeading());
 	}
 
