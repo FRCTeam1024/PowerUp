@@ -10,11 +10,14 @@ package org.usfirst.frc.team1024.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
 import org.usfirst.frc.team1024.robot.commands.TurnToAngle;
+import org.usfirst.frc.team1024.robot.commands.DriveDistance;
+import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 
@@ -29,7 +32,7 @@ public class Robot extends TimedRobot {
 	public static Drivetrain drivetrain;
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
-
+	public boolean isDone = false;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -47,13 +50,15 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
 		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
-		
-
 		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
 		SmartDashboard.putNumber("Turn KI", Robot.drivetrain.turnkI);
 		SmartDashboard.putNumber("Turn KD", Robot.drivetrain.turnkD);
 		SmartDashboard.putNumber("Turn KF", Robot.drivetrain.turnkF);
 		SmartDashboard.putNumber("Turn Setpoint", 0);
+		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
+		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
+		drivetrain.resetEncoder();
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
 	}
 	
 	/**
@@ -85,7 +90,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//m_autonomousCommand = m_chooser.getSelected();
-		//m_autonomousCommand = new CrossLine();
+		
+		// try to drive 1 revolution of wheel
+		double inchesPerRevolution = 19.24;
+		m_autonomousCommand = new DriveDistance(48);
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -96,7 +105,7 @@ public class Robot extends TimedRobot {
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
-		}
+		}	
 	}
 
 	/**
@@ -105,6 +114,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		if (isDone != true) {
+			SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
+			SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
+			SmartDashboard.putNumber("Raw Encoder Quad", drivetrain.getRawQuad());
+			SmartDashboard.putBoolean("isMoving", drivetrain.isMoving());
+//			Robot.drivetrain.driveDistance(12);
+		}
 	}
 
 	@Override
@@ -131,6 +147,11 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putData("Turn to Angle", new TurnToAngle(/*SmartDashboard.getNumber("Turn Setpoint", 0)*/ 90));
 		SmartDashboard.putNumber("Angle", Robot.drivetrain.getHeading());
+		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
+		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
+		SmartDashboard.putNumber("Raw Encoder Quad", drivetrain.getRawQuad());
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+		SmartDashboard.putBoolean("isMoving", drivetrain.isMoving());
 	}
 
 	/**

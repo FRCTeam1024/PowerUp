@@ -8,10 +8,11 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
-import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -51,8 +52,8 @@ public class Drivetrain extends PIDSubsystem {
 	
 	public Drivetrain() {
 		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD);
-		//setFollower(middleLeft, frontLeft);
-		//setFollower(middleRight, frontRight);
+		frontRight.setInverted(false);
+		rearRight.setInverted(false);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
 		navx = new AHRS(Port.kMXP);
@@ -64,15 +65,32 @@ public class Drivetrain extends PIDSubsystem {
         //getPIDController().setSetpoint(setpointInit);
         getPIDController().setAbsoluteTolerance(2);
         getPIDController().setPercentTolerance(10);
-        //getPIDController().enable();
         
+
+		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		
+		frontRight.configNominalOutputForward(0, 10);
+        frontRight.configNominalOutputReverse(0, 10);
+        frontRight.configPeakOutputForward(1, 10);
+        frontRight.configPeakOutputReverse(-1, 10);
+        /* set the allowable closed-loop error,
+         * Closed-Loop output will be neutral within this range.
+         * See Table in Section 17.2.1 for native units per rotation. 
+         */
+        //frontRight.configAllowableClosedloopError(0, 0, 10); /* always servo */
+        /* set closed loop gains in slot0 */
+        frontRight.config_kF(0, 0.0, 10);
+        frontRight.config_kP(0, 1.0, 10);
+        frontRight.config_kI(0, 0.0, 10);
+        frontRight.config_kD(0, 0.0, 10);
 		
         //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
         //turnPID.setContinuous(true);
 	}
 	
 	public boolean isMoving() {
-		return Math.abs(frontLeft.getMotorOutputPercent()) > 0.05 || Math.abs(frontRight.getMotorOutputPercent()) > 0.05;
+		return Math.abs(frontLeft.getMotorOutputPercent()) > 0.05 || 
+      Math.abs(frontRight.getMotorOutputPercent()) > 0.05;
 	}
 	
 	public double getHeading() {
@@ -113,12 +131,9 @@ public class Drivetrain extends PIDSubsystem {
 		frontRight.set(ControlMode.PercentOutput, 0.0);
 	}
 	
-	
-	
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoysticks());
 	}
-
 
 	public void resetGyro() {
 		navx.reset();
@@ -136,13 +151,44 @@ public class Drivetrain extends PIDSubsystem {
 		getPIDController().setI(SmartDashboard.getNumber("Turn KI", Constants.TURN_KI));
 		getPIDController().setD(SmartDashboard.getNumber("Turn KD", Constants.TURN_KD));
 		turn(output);
-//		pidGet = output;
+  }	
+
+	public double getRawEncoder() {
+		return frontRight.getSelectedSensorPosition(0);
 	}
-	/*
-	public void getCenterRotationDisplacement() {
-		getHeading() % 180
-		
-		
+	
+	public double getRawQuad() {
+		return frontRight.getSensorCollection().getQuadraturePosition();
 	}
-	*/
+	
+	public double getWheelRotation() {
+		return getRawEncoder() / 3;
+	}
+	
+	public double getDistanceInches() {
+		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
+		return (((getRawEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
+				Constants.ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
+	}
+	
+	public double getTicks(double distanceInInches) {
+//		return (distance * 9 * Constants.ENCODER_COUNTS_PER_REVOLUTION * Constants.ENCODER_RATIO_TO_WHEEL * 
+//				Math.PI * Constants.WHEEL_DIAMETER) / 12;
+		
+		int ticksPerInch = 71;
+		return -1*(ticksPerInch * distanceInInches);
+	}
+	
+	public void resetEncoder() {
+		frontRight.getSensorCollection().setQuadraturePosition(0, 0);
+	}
+	
+	public void driveDistance(double inches) {
+		double ticks = getTicks(inches);
+		System.out.println("num Ticks for " + inches + " inches : " + ticks);
+		frontRight.set(ControlMode.Position, ticks);
+		frontLeft.set(ControlMode.PercentOutput, -1*frontRight.getMotorOutputPercent());
+//		frontRight.set(ControlMode.Position, -3000);
+	}
 }
+	
