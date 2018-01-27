@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
+import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.TurnToAngle;
 import org.usfirst.frc.team1024.robot.commands.DriveDistance;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
@@ -93,7 +94,7 @@ public class Robot extends TimedRobot {
 		
 		// try to drive 1 revolution of wheel
 		double inchesPerRevolution = 19.24;
-		m_autonomousCommand = new DriveDistance(48);
+		m_autonomousCommand = new DriveAndTurn();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

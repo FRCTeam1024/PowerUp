@@ -8,7 +8,6 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
-import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -68,7 +67,6 @@ public class Drivetrain extends PIDSubsystem {
         
 
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		
 		frontRight.configNominalOutputForward(0, 10);
         frontRight.configNominalOutputReverse(0, 10);
         frontRight.configPeakOutputForward(1, 10);
@@ -99,6 +97,9 @@ public class Drivetrain extends PIDSubsystem {
 	
 	public void prepareTurn(double angle) {
 		resetGyro();
+		//This is a temp fix. Remove later
+		frontLeft.setInverted(false);
+		rearLeft.setInverted(false);
 		getPIDController().setSetpoint(angle);
 		getPIDController().enable();
 	}
@@ -187,7 +188,12 @@ public class Drivetrain extends PIDSubsystem {
 		double ticks = getTicks(inches);
 		System.out.println("num Ticks for " + inches + " inches : " + ticks);
 		frontRight.set(ControlMode.Position, ticks);
-		frontLeft.set(ControlMode.PercentOutput, -1*frontRight.getMotorOutputPercent());
+		//this is a temp fix and should not be on the actual robot. 
+		//We did this because there is an encoder on only one side of the drivetrain
+		frontLeft.follow(frontRight); 
+		frontLeft.setInverted(true);
+		rearLeft.setInverted(true);
+		//frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent());
 //		frontRight.set(ControlMode.Position, -3000);
 	}
 }
