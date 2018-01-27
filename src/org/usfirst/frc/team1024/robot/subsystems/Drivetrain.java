@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
@@ -37,7 +39,7 @@ public class Drivetrain extends PIDSubsystem {
 	
 	public double rotateToAngleRate;
 	
-	public double pidGet;
+//	public double pidGet;
 	
 	//Remove these and any references when set properly
 	public double turnkP = Constants.TURN_KP;
@@ -48,7 +50,7 @@ public class Drivetrain extends PIDSubsystem {
 	public PIDController posPID;
 	
 	public Drivetrain() {
-		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, Constants.TURN_KF);
+		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD);
 		//setFollower(middleLeft, frontLeft);
 		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
@@ -58,10 +60,11 @@ public class Drivetrain extends PIDSubsystem {
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
         getPIDController().setInputRange(-180,180);
         getPIDController().setContinuous();
-        getPIDController().setOutputRange(-1,1);
+        getPIDController().setOutputRange(-0.5,0.5);
         //getPIDController().setSetpoint(setpointInit);
         getPIDController().setAbsoluteTolerance(2);
-        getPIDController().enable();
+        getPIDController().setPercentTolerance(10);
+        //getPIDController().enable();
         
 		
         //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
@@ -74,6 +77,16 @@ public class Drivetrain extends PIDSubsystem {
 	
 	public double getHeading() {
 		return navx.getAngle();
+	}
+	
+	public void prepareTurn(double angle) {
+		resetGyro();
+		getPIDController().setSetpoint(angle);
+		getPIDController().enable();
+	}
+	
+	public void turn(double rotatePower) {
+    	drive(-rotatePower, rotatePower);
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -113,12 +126,17 @@ public class Drivetrain extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
+		SmartDashboard.putNumber("navx pidGet", navx.pidGet());
 		return navx.pidGet();
 	}
-
+	
 	@Override
 	protected void usePIDOutput(double output) {
-		pidGet = output;
+		getPIDController().setP(SmartDashboard.getNumber("Turn KP", Constants.TURN_KP));
+		getPIDController().setI(SmartDashboard.getNumber("Turn KI", Constants.TURN_KI));
+		getPIDController().setD(SmartDashboard.getNumber("Turn KD", Constants.TURN_KD));
+		turn(output);
+//		pidGet = output;
 	}
 	/*
 	public void getCenterRotationDisplacement() {

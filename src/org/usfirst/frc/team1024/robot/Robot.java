@@ -117,14 +117,19 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 	}
+	
+	private void log(String msg) {
+		System.out.println(msg);
+	}
 
 	/**
 	 * This function is called periodically during operator control.
 	 */
 	@Override
-	public void teleopPeriodic() {	
+	public void teleopPeriodic() {
+		log("In teleopPeriodic");
 		Scheduler.getInstance().run();
-		SmartDashboard.putData("Turn to Angle", new TurnToAngle(SmartDashboard.getNumber("Turn Setpoint", 0)));
+		SmartDashboard.putData("Turn to Angle2", new TurnToAngle(/*SmartDashboard.getNumber("Turn Setpoint", 0)*/ 90));
 		SmartDashboard.putNumber("Angle", Robot.drivetrain.getHeading());
 	}
 
