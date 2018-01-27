@@ -35,6 +35,9 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public boolean isDone = false;
 	
+	private DriveDistance driveCommand;
+	private TurnToAngle turnCommand;
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -60,6 +63,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
 		drivetrain.resetEncoder();
 		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+		SmartDashboard.putNumber("Drive Distance: ", 0);
+		SmartDashboard.putNumber("Turn Angle: ", 0);
 	}
 	
 	/**
@@ -133,6 +138,12 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		SmartDashboard.putData("Turn to Angle", new TurnToAngle(/*SmartDashboard.getNumber("Turn Setpoint", 0)*/ 90));
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+		
+		SmartDashboard.putData("Turn Angle", new TurnToAngle(SmartDashboard.getNumber("Turn Angle: ", 0)));
+		driveCommand = new DriveDistance(0);
+		turnCommand = new TurnToAngle(0);
 	}
 	
 	private void log(String msg) {
@@ -146,13 +157,16 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		log("In teleopPeriodic");
 		Scheduler.getInstance().run();
-		SmartDashboard.putData("Turn to Angle", new TurnToAngle(/*SmartDashboard.getNumber("Turn Setpoint", 0)*/ 90));
-		SmartDashboard.putNumber("Angle", Robot.drivetrain.getHeading());
-		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
-		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
-		SmartDashboard.putNumber("Raw Encoder Quad", drivetrain.getRawQuad());
-		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
-		SmartDashboard.putBoolean("isMoving", drivetrain.isMoving());
+		/*if (SmartDashboard.getData("Drive Distance").equals(true)) {
+			new DriveDistance(SmartDashboard.getNumber("Drive Distance: ", 0));
+		}*/
+		printSmartDashboard();
+		driveCommand.setDistance(SmartDashboard.getNumber("Drive Distance: ", 0));
+		SmartDashboard.putData("Drive Distance", driveCommand);
+		
+		turnCommand.setAngle(SmartDashboard.getNumber("Turn Angle: ", 0));
+		SmartDashboard.putData("Turn Angle", turnCommand);
+
 	}
 
 	/**
@@ -160,5 +174,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	
+	public void printSmartDashboard() {
+		SmartDashboard.putNumber("Angle", Robot.drivetrain.getHeading());
+		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
+		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
+		SmartDashboard.putNumber("Raw Encoder Quad", drivetrain.getRawQuad());
+		SmartDashboard.putBoolean("isMoving", drivetrain.isMoving());
 	}
 }

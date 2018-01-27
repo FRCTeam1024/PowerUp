@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1024.robot.commands;
 
+import org.usfirst.frc.team1024.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -8,8 +10,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveAndTurn extends CommandGroup {
 
     public DriveAndTurn() {
-    	addSequential(new DriveDistance(24));
+    	requires(Robot.drivetrain);
+    	addSequential(new DriveDistance(30));
     	addSequential(new TurnToAngle(90));
+    	addSequential(new ResetEncoder());
+    	addSequential(new DriveDistance(96));
+    	addSequential(new TurnToAngle(-90));
+    	addSequential(new ResetEncoder());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

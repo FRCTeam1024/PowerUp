@@ -18,6 +18,10 @@ public class TurnToAngle extends Command {
     	requires(Robot.drivetrain);
     	this.targetAngle = angle;
     }
+    
+    public void setAngle(double angle) {
+    	this.targetAngle = angle;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -29,7 +33,7 @@ public class TurnToAngle extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	SmartDashboard.putNumber("Encoder Distance (In.)", Robot.drivetrain.getDistanceInches());
     	SmartDashboard.putNumber("rotatePower", rotatePower);
     	SmartDashboard.putNumber("Angle from Turn To Angle: ", Robot.drivetrain.getHeading());
     	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
@@ -38,17 +42,17 @@ public class TurnToAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	Timer.delay(5);
-    	return true;
-//      return initialized 
-//        		&& !Robot.drivetrain.isMoving() ;
-//        		&& Math.abs(targetAngle - Robot.drivetrain.getHeading()) < 5; //fiddle with the 10 number
-//    	return false;
+    	if(Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 2) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drivetrain.stop();
+    	Robot.drivetrain.getPIDController().disable();
     	initialized = false;
     }
 

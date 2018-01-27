@@ -69,8 +69,8 @@ public class Drivetrain extends PIDSubsystem {
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		frontRight.configNominalOutputForward(0, 10);
         frontRight.configNominalOutputReverse(0, 10);
-        frontRight.configPeakOutputForward(1, 10);
-        frontRight.configPeakOutputReverse(-1, 10);
+        frontRight.configPeakOutputForward(0.5, 10);
+        frontRight.configPeakOutputReverse(-0.5, 10);
         /* set the allowable closed-loop error,
          * Closed-Loop output will be neutral within this range.
          * See Table in Section 17.2.1 for native units per rotation. 
@@ -97,15 +97,15 @@ public class Drivetrain extends PIDSubsystem {
 	
 	public void prepareTurn(double angle) {
 		resetGyro();
-		//This is a temp fix. Remove later
-		frontLeft.setInverted(false);
-		rearLeft.setInverted(false);
 		getPIDController().setSetpoint(angle);
 		getPIDController().enable();
 	}
 	
 	public void turn(double rotatePower) {
     	drive(-rotatePower, rotatePower);
+    	//This is a temp fix. Remove later
+    	frontLeft.setInverted(false);
+		rearLeft.setInverted(false);
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -181,7 +181,9 @@ public class Drivetrain extends PIDSubsystem {
 	}
 	
 	public void resetEncoder() {
-		frontRight.getSensorCollection().setQuadraturePosition(0, 0);
+		// frontRight.getSensorCollection().setQuadraturePosition(0, 10);
+		// frontRight.get
+		frontRight.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	public void driveDistance(double inches) {
@@ -195,6 +197,7 @@ public class Drivetrain extends PIDSubsystem {
 		rearLeft.setInverted(true);
 		//frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent());
 //		frontRight.set(ControlMode.Position, -3000);
+		SmartDashboard.putNumber("Encoder Distance (In.)", getDistanceInches());
 	}
 }
 	
