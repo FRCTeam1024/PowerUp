@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -27,13 +28,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class Drivetrain extends PIDSubsystem {
+public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(42);
 	//private TalonSRX middleLeft = new TalonSRX(1);
 	private TalonSRX rearLeft = new TalonSRX(1);
 	private TalonSRX frontRight = new TalonSRX(2);
 	//private TalonSRX middleRight = new TalonSRX(4);
 	private TalonSRX rearRight = new TalonSRX(3);
+	
 	
 	private AHRS navx;
 	
@@ -47,25 +49,22 @@ public class Drivetrain extends PIDSubsystem {
 	public double turnkD = Constants.TURN_KD;
 	public double turnkF = Constants.TURN_KF;
 	
+	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B);
 	public PIDController posPID;
 	public TrimPID trimPid;
+	
+	
+	public PIDController trimPID;
 	public Drivetrain() {
-		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD);
 		frontRight.setInverted(false);
 		rearRight.setInverted(false);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
 		navx = new AHRS(Port.kMXP);
 		
-		trimPid = new TrimPID();
+		//trimPid = new TrimPID();
 		
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
-        getPIDController().setInputRange(-180,180);
-        getPIDController().setContinuous();
-        getPIDController().setOutputRange(-0.5,0.5);
-        //getPIDController().setSetpoint(setpointInit);
-        getPIDController().setAbsoluteTolerance(2);
-        getPIDController().setPercentTolerance(10);
         
 
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
@@ -86,6 +85,12 @@ public class Drivetrain extends PIDSubsystem {
 		
         //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
         //turnPID.setContinuous(true);
+        
+        
+        trimPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, navx, output->{});
+        trimPID.setInputRange(-180, 180);
+        trimPID.setContinuous(true);
+        trimPID.setOutputRange(-1.0, 1.0); //probably will be much less
 	}
 	
 	public boolean isMoving() {
@@ -97,10 +102,26 @@ public class Drivetrain extends PIDSubsystem {
 		return navx.getAngle();
 	}
 	
+	/*
 	public void prepareTurn(double angle) {
 		resetGyro();
 		getPIDController().setSetpoint(angle);
 		getPIDController().enable();
+	}
+	*/
+	
+	public void pidDrive(double distance) {
+		pidDrive(distance, true);
+	}
+	
+	public void pidDrive(double distance, boolean maintainAngle) {
+		posPID.setSetpoint(distance);
+		posPID.enable();
+		if (maintainAngle) {
+			drive(posPID.get() * trimPID.get(), posPID.get() * -trimPID.get());
+		} else {
+			drive(posPID.get(), posPID.get());
+		}
 	}
 	
 	public void turn(double rotatePower) {
@@ -142,20 +163,6 @@ public class Drivetrain extends PIDSubsystem {
 		navx.reset();
 	}
 
-	@Override
-	protected double returnPIDInput() {
-		SmartDashboard.putNumber("navx pidGet", navx.pidGet());
-		return navx.pidGet();
-	}
-	
-	@Override
-	protected void usePIDOutput(double output) {
-		getPIDController().setP(SmartDashboard.getNumber("Turn KP", Constants.TURN_KP));
-		getPIDController().setI(SmartDashboard.getNumber("Turn KI", Constants.TURN_KI));
-		getPIDController().setD(SmartDashboard.getNumber("Turn KD", Constants.TURN_KD));
-		turn(output);
-  }	
-
 	public double getRawEncoder() {
 		return frontRight.getSelectedSensorPosition(0);
 	}
@@ -187,7 +194,7 @@ public class Drivetrain extends PIDSubsystem {
 		// frontRight.get
 		frontRight.setSelectedSensorPosition(0, 0, 0);
 	}
-	
+	/*
 	public void driveDistance(double inches, double angle) {
 		double ticks = getTicks(inches);
 		trimPid.getPIDController().setSetpoint(angle);
@@ -202,6 +209,6 @@ public class Drivetrain extends PIDSubsystem {
 		//frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent());
 //		frontRight.set(ControlMode.Position, -3000);
 		SmartDashboard.putNumber("Encoder Distance (In.)", getDistanceInches());
-	}
+	}*/
 }
 	
