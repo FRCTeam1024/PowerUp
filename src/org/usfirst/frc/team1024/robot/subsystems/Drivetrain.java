@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
+import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -14,19 +16,22 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
 public class Drivetrain extends Subsystem {
-	private TalonSRX frontLeft  = new TalonSRX(42);
+	public TalonSRX frontLeft  = new TalonSRX(42);
 	//private TalonSRX middleLeft = new TalonSRX(1);
 	private TalonSRX rearLeft = new TalonSRX(1);
 	private TalonSRX frontRight = new TalonSRX(2);
 	//private TalonSRX middleRight = new TalonSRX(4);
 	private TalonSRX rearRight = new TalonSRX(3);
+	//public Encoder encoderMain = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 	
 	public PIDController posPID;
 	public PIDController turnPID;
@@ -39,7 +44,7 @@ public class Drivetrain extends Subsystem {
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
 		
-		
+
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		//frontRight.setSensorPhase(true);
 		
@@ -80,6 +85,7 @@ public class Drivetrain extends Subsystem {
 		slave.set(ControlMode.Follower, master.getDeviceID());
 	}
 	
+	
 	public void stop() {
 		frontLeft.set(ControlMode.PercentOutput, 0.0);
 		frontRight.set(ControlMode.PercentOutput, 0.0);
@@ -87,6 +93,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoysticks());
+	}
+	
+	
+	
+	public double getEncoderValue() {
+		return frontLeft.getSensorCollection().getQuadraturePosition();
 	}
 	
 	public double getRawEncoder() {
@@ -103,7 +115,7 @@ public class Drivetrain extends Subsystem {
 	
 	public double getDistanceInches() {
 		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
+		return (((getRawEncoder() / Constants.ENCODER_TO_WHEEL_RATIO * Math.PI * Constants.WHEEL_DIAMETER) / 
 				Constants.ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
 	}
 	
@@ -113,7 +125,7 @@ public class Drivetrain extends Subsystem {
 		
 		int ticksPerInch = 71;
 		return -1*(ticksPerInch * distanceInInches);
-	}
+	} 
 	
 	public void resetEncoder() {
 		frontRight.getSensorCollection().setQuadraturePosition(0, 0);

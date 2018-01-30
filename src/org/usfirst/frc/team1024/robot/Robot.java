@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
+import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
+import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
 import org.usfirst.frc.team1024.robot.commands.DriveDistance;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
@@ -29,6 +31,7 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
  */
 public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
+	public static final SmarterDashboard smartdash = new SmarterDashboard();
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 	public boolean isDone = false;
@@ -46,12 +49,19 @@ public class Robot extends TimedRobot {
 //		m_chooser.addDefault("Default Auto", new Auto());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+
+		SmartDashboard.putData("Encoder Calibrate", new EncoderCalibrate());
+		
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+
 		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
 		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
+
 		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
 		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
 		drivetrain.resetEncoder();
 		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+		SmartDashboard.putNumber("SET DISTANCE", 0);
 	}
 	
 	/**
@@ -133,11 +143,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Raw Encoder", drivetrain.getRawEncoder());
-		SmartDashboard.putNumber("Encoder Distance (In.)", drivetrain.getDistanceInches());
-		SmartDashboard.putNumber("Raw Encoder Quad", drivetrain.getRawQuad());
-		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
-		SmartDashboard.putBoolean("isMoving", drivetrain.isMoving());
+		Robot.smartdash.smartDash();
 	}
 
 	/**
