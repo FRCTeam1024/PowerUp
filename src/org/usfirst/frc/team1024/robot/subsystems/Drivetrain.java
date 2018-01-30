@@ -48,7 +48,7 @@ public class Drivetrain extends PIDSubsystem {
 	public double turnkF = Constants.TURN_KF;
 	
 	public PIDController posPID;
-	
+	public TrimPID trimPid;
 	public Drivetrain() {
 		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD);
 		frontRight.setInverted(false);
@@ -56,6 +56,8 @@ public class Drivetrain extends PIDSubsystem {
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
 		navx = new AHRS(Port.kMXP);
+		
+		trimPid = new TrimPID();
 		
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
         getPIDController().setInputRange(-180,180);
@@ -186,13 +188,15 @@ public class Drivetrain extends PIDSubsystem {
 		frontRight.setSelectedSensorPosition(0, 0, 0);
 	}
 	
-	public void driveDistance(double inches) {
+	public void driveDistance(double inches, double angle) {
 		double ticks = getTicks(inches);
+		trimPid.getPIDController().setSetpoint(angle);
+		SmartDashboard.putNumber("trim error", trimPid.getPIDController().getError());
 		System.out.println("num Ticks for " + inches + " inches : " + ticks);
 		frontRight.set(ControlMode.Position, ticks);
 		//this is a temp fix and should not be on the actual robot. 
 		//We did this because there is an encoder on only one side of the drivetrain
-		frontLeft.follow(frontRight); 
+		frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent()+trimPid.getOutput()); 
 		frontLeft.setInverted(true);
 		rearLeft.setInverted(true);
 		//frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent());

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveDistance extends Command {
 	double distance; // in inches
 	double targetTicks;
-	
+	double startAngle;
     public DriveDistance(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,16 +24,18 @@ public class DriveDistance extends Command {
     public void setDistance(double distance) {
     	this.distance = distance;
     }
-
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.resetEncoder();
+    	startAngle = Robot.drivetrain.getHeading();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveDistance(distance);
+    	Robot.drivetrain.driveDistance(distance, startAngle);
+    	SmartDashboard.putNumber("startAngle", startAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
