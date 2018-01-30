@@ -13,14 +13,21 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class Drivetrain extends Subsystem {
+public class Drivetrain extends PIDSubsystem {
 	private TalonSRX frontLeft  = new TalonSRX(42);
 	//private TalonSRX middleLeft = new TalonSRX(1);
 	private TalonSRX rearLeft = new TalonSRX(1);
@@ -28,25 +35,42 @@ public class Drivetrain extends Subsystem {
 	//private TalonSRX middleRight = new TalonSRX(4);
 	private TalonSRX rearRight = new TalonSRX(3);
 	
-	public PIDController posPID;
-	public PIDController turnPID;
+	private AHRS navx;
 	
-	public Drivetrain () {
+	public double rotateToAngleRate;
+	
+//	public double pidGet;
+	
+	//Remove these and any references when set properly
+	public double turnkP = Constants.TURN_KP;
+	public double turnkI = Constants.TURN_KI;
+	public double turnkD = Constants.TURN_KD;
+	public double turnkF = Constants.TURN_KF;
+	
+	public PIDController posPID;
+	
+	public Drivetrain() {
+		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD);
 		frontRight.setInverted(false);
 		rearRight.setInverted(false);
-		//setFollower(middleLeft, frontLeft);
-		//setFollower(middleRight, frontRight);
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
+		navx = new AHRS(Port.kMXP);
 		
-		
+		navx.setPIDSourceType(PIDSourceType.kDisplacement);
+        getPIDController().setInputRange(-180,180);
+        getPIDController().setContinuous();
+        getPIDController().setOutputRange(-0.5,0.5);
+        //getPIDController().setSetpoint(setpointInit);
+        getPIDController().setAbsoluteTolerance(2);
+        getPIDController().setPercentTolerance(10);
+        
+
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		//frontRight.setSensorPhase(true);
-		
 		frontRight.configNominalOutputForward(0, 10);
         frontRight.configNominalOutputReverse(0, 10);
-        frontRight.configPeakOutputForward(1, 10);
-        frontRight.configPeakOutputReverse(-1, 10);
+        frontRight.configPeakOutputForward(0.5, 10);
+        frontRight.configPeakOutputReverse(-0.5, 10);
         /* set the allowable closed-loop error,
          * Closed-Loop output will be neutral within this range.
          * See Table in Section 17.2.1 for native units per rotation. 
@@ -58,7 +82,30 @@ public class Drivetrain extends Subsystem {
         frontRight.config_kI(0, 0.0, 10);
         frontRight.config_kD(0, 0.0, 10);
 		
-        
+        //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
+        //turnPID.setContinuous(true);
+	}
+	
+	public boolean isMoving() {
+		return Math.abs(frontLeft.getMotorOutputPercent()) > 0.05 || 
+      Math.abs(frontRight.getMotorOutputPercent()) > 0.05;
+	}
+	
+	public double getHeading() {
+		return navx.getAngle();
+	}
+	
+	public void prepareTurn(double angle) {
+		resetGyro();
+		getPIDController().setSetpoint(angle);
+		getPIDController().enable();
+	}
+	
+	public void turn(double rotatePower) {
+    	drive(-rotatePower, rotatePower);
+    	//This is a temp fix. Remove later
+    	frontLeft.setInverted(false);
+		rearLeft.setInverted(false);
 	}
 	
 	public void drive(double leftPower, double rightPower) {
@@ -88,7 +135,25 @@ public class Drivetrain extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoysticks());
 	}
+
+	public void resetGyro() {
+		navx.reset();
+	}
+
+	@Override
+	protected double returnPIDInput() {
+		SmartDashboard.putNumber("navx pidGet", navx.pidGet());
+		return navx.pidGet();
+	}
 	
+	@Override
+	protected void usePIDOutput(double output) {
+		getPIDController().setP(SmartDashboard.getNumber("Turn KP", Constants.TURN_KP));
+		getPIDController().setI(SmartDashboard.getNumber("Turn KI", Constants.TURN_KI));
+		getPIDController().setD(SmartDashboard.getNumber("Turn KD", Constants.TURN_KD));
+		turn(output);
+  }	
+
 	public double getRawEncoder() {
 		return frontRight.getSelectedSensorPosition(0);
 	}
@@ -116,23 +181,23 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void resetEncoder() {
-		frontRight.getSensorCollection().setQuadraturePosition(0, 0);
-	}
-	
-	public boolean isMoving() {
-		if (frontRight.getMotorOutputPercent() > 0.1) {
-			return true;
-		} else {
-			return false;
-		}
+		// frontRight.getSensorCollection().setQuadraturePosition(0, 10);
+		// frontRight.get
+		frontRight.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	public void driveDistance(double inches) {
 		double ticks = getTicks(inches);
 		System.out.println("num Ticks for " + inches + " inches : " + ticks);
 		frontRight.set(ControlMode.Position, ticks);
-		frontLeft.set(ControlMode.PercentOutput, -1*frontRight.getMotorOutputPercent());
+		//this is a temp fix and should not be on the actual robot. 
+		//We did this because there is an encoder on only one side of the drivetrain
+		frontLeft.follow(frontRight); 
+		frontLeft.setInverted(true);
+		rearLeft.setInverted(true);
+		//frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent());
 //		frontRight.set(ControlMode.Position, -3000);
+		SmartDashboard.putNumber("Encoder Distance (In.)", getDistanceInches());
 	}
 }
 	
