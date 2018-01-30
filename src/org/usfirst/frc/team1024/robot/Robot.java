@@ -17,6 +17,8 @@ import org.usfirst.frc.team1024.robot.commands.Auto;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
 import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.TurnToAngle;
+import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.DriveDistance;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new Auto());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
 		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
 		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
 		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
@@ -65,6 +68,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
 		SmartDashboard.putNumber("Drive Distance: ", 0);
 		SmartDashboard.putNumber("Turn Angle: ", 0);
+		
+		m_chooser.addObject("Drive And Turn", new DriveAndTurn());
+		m_chooser.addObject("Right Position Auto", new RightPositionAuto());
+		m_chooser.addObject("Left Position Auto", new LeftPositionAuto());
 	}
 	
 	/**
@@ -95,12 +102,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//m_autonomousCommand = m_chooser.getSelected();
+		
 		
 		// try to drive 1 revolution of wheel
 		double inchesPerRevolution = 19.24;
-		m_autonomousCommand = new DriveAndTurn();
+	//	m_autonomousCommand = new DriveAndTurn();
 		
+		m_autonomousCommand = m_chooser.getSelected();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
