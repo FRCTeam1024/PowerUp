@@ -7,35 +7,43 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveDistance extends Command {
-	double distance;
+public class AutoPos1CrossLine extends Command {
+	/*
+	double distance;										//create double for set distance to drive to
+	boolean initialized = false;
 	
-    public DriveDistance(double distance) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	 */
+    public AutoPos1CrossLine() {
+    	/*
     	requires(Robot.drivetrain);
-    	this.distance = distance;
+    	
+    	*/
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.resetEncoder();
-    	
+    	//initialized = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveDistance(distance);
+    	/*
+    	
+    	Robot.drivetrain.driveDistance(distance);			//Make Robot drive forward for a set distance
+    	Robot.drivetrain.prepareTurn(angle);				//Prepare to turn to the set angle and let PIDController turn the robot
+    	*/
     }
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.drivetrain.isMoving();
+    	//Check to see if turn is correct and then set is finished to true
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.stop();
+    	/*
+    	Robot.drivetrain.stop();						//Stop the robot's drivetrain
+    	*/
     }
 
     // Called when another command which requires one or more of the same

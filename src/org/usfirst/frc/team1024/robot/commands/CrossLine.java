@@ -4,33 +4,40 @@ import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+
 /**
  *
  */
-public class DriveDistance extends Command {
-	double distance;
+public class CrossLine extends Command {
+
+	public double distance;
+
 	
-    public DriveDistance(double distance) {
+    public CrossLine() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	this.distance = distance;
+    	requires(Robot.sensors);
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.resetEncoder();
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.driveDistance(distance);
+    	Robot.drivetrain.drive(1.0, 1.0);
+    	 distance = Robot.sensors.getDistanceInches();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.drivetrain.isMoving();
+    	if(distance < 20.0) {
+    		return true;
+    	}
+        return false;
     }
 
     // Called once after isFinished returns true
