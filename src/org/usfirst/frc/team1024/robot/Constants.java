@@ -14,6 +14,6 @@ public class Constants {
 	
 	
 	//Robot Constants:
-	public static final double ROBOT_LENGTH_IN = 32.0; //front-to-back
-	public static final double ROBOT_WIDTH_IN = 41.0; //side-to-side
+	public static final double ROBOT_LENGTH_IN = 32.0; //front-to-back For 2018 Bot 39
+	public static final double ROBOT_WIDTH_IN = 41.0; //side-to-side For 2018 Bot 35.5
 }
