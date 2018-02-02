@@ -7,12 +7,15 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -29,7 +32,8 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontRight = new TalonSRX(2);
 	//private TalonSRX middleRight = new TalonSRX(4);
 	private TalonSRX rearRight = new TalonSRX(3);
-	//public Encoder encoderMain = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+	public Encoder encoderMain = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
+	public AHRS navx = new AHRS(RobotMap.NAVX_PORT);
 	
 	public PIDController posPID;
 	public PIDController turnPID;
@@ -45,8 +49,8 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void drive(double leftPower, double rightPower) {
-		frontLeft.set(ControlMode.PercentOutput, -leftPower);
-		frontRight.set(ControlMode.PercentOutput, rightPower);
+		frontLeft.set(ControlMode.PercentOutput, leftPower);
+		frontRight.set(ControlMode.PercentOutput, -rightPower);
 	}
 	
 	public void setPositionMode() {
@@ -63,6 +67,10 @@ public class Drivetrain extends Subsystem {
 		slave.set(ControlMode.Follower, master.getDeviceID());
 	}
 	
+	public void turn(double power) {
+		frontLeft.set(ControlMode.PercentOutput, power);
+		frontRight.set(ControlMode.PercentOutput, power);
+	}
 	
 	public void stop() {
 		frontLeft.set(ControlMode.PercentOutput, 0.0);
@@ -74,18 +82,18 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void smartDash() {
-		//SmartDashboard.putNumber("Encoder Value Raw", encoderMain.getRaw());
+		SmartDashboard.putNumber("Encoder Value Raw", encoderMain.getRaw());
 		//SmartDashboard.putData("Reset Encoder", new EncoderCalibrate());
-		SmartDashboard.putNumber("Encoder Value: ", frontLeft.getSensorCollection().getQuadraturePosition());
+//		SmartDashboard.putNumber("Encoder Value: ", frontLeft.getSensorCollection().getQuadraturePosition());
+		//SmartDashboard.putData("Turn", );
 	}
 	
 	public void encoderReset() {
-		//encoderMain.reset();
-		frontLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		encoderMain.reset();
+//		frontLeft.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
 	public double getEncoderValue() {
-		return frontLeft.getSensorCollection().getQuadraturePosition();
-		
+		return encoderMain.getRaw() / 71.0;
 	}
 }

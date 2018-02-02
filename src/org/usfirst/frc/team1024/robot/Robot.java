@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commands.Auto;
 import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
+import org.usfirst.frc.team1024.robot.commands.Turn;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Sensors;
@@ -84,7 +85,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//m_autonomousCommand = m_chooser.getSelected();
-		m_autonomousCommand = new CrossLine();
+//		m_autonomousCommand = new CrossLine(12);
+		
+		m_autonomousCommand = new Turn(90);
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -104,6 +108,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		drivetrain.smartDash();
 	}
 
 	@Override

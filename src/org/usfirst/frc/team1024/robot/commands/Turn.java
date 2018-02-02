@@ -8,35 +8,35 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CrossLine extends Command {
+public class Turn extends Command {
 
-	public double distance;
+	public double targetAngle;
 
 	
-    public CrossLine(double distance) {
+    public Turn(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
     	requires(Robot.sensors);
-    	this.distance = distance;
+    	this.targetAngle = angle;
     	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.encoderReset();
+    	Robot.drivetrain.navx.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.drive(.5, .5);
+    	Robot.drivetrain.turn(0.5);
     	 //double distanceDriven = Robot.drivetrain.getEncoderValue();
-    	System.out.println("Driving");
+    	System.out.println("Turning");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if( Robot.drivetrain.getEncoderValue() > distance) {
+    	if( Math.abs( Robot.drivetrain.navx.getAngle() ) > targetAngle) {
     		System.out.println("Done");
     		return true;
     		
