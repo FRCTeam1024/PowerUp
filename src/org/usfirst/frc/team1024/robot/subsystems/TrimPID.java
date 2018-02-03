@@ -1,9 +1,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
+import org.usfirst.frc.team1024.robot.Robot;
 
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TrimPID extends PIDSubsystem {
     // Initialize your subsystem here
-	AHRS navx = new AHRS(Port.kMXP);
 	double output = 0;
 
     public TrimPID() {
@@ -38,7 +35,7 @@ public class TrimPID extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return navx.getAngle();
+        return Robot.drivetrain.getHeading();
     }
 
     protected void usePIDOutput(double output) {

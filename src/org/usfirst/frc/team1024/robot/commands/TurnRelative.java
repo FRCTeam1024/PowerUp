@@ -12,26 +12,30 @@ public class TurnRelative extends Command {
     }
 
     protected void initialize() {
-    	
+    	Robot.drivetrain.resetGyro();
+    	Robot.drivetrain.turnPID.setSetpoint(targetAngle);
+    	Robot.drivetrain.turnPID.enable();
     }
 
     protected void execute() {
-    	if (targetAngle != Robot.drivetrain.getHeading()) {
-    		if (targetAngle < 180 && targetAngle > 0) {
-    			//turn clockwise
-    		} else if (targetAngle > -180 && targetAngle < 0) {
-    			//turn counter-clockwise
-    		}
-    	}
+    	Robot.drivetrain.pidTurn();
     }
 
     protected boolean isFinished() {
-        return false;
+    	if(Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 10) { //if the robot is within 2 degrees of the target, stop
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     protected void end() {
+    	Robot.drivetrain.stop();
+    	Robot.drivetrain.turnPID.disable();
     }
 
     protected void interrupted() {
+    	Robot.drivetrain.stop();
+    	Robot.drivetrain.turnPID.disable();
     }
 }

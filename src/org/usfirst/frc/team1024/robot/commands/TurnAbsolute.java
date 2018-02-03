@@ -1,20 +1,17 @@
 package org.usfirst.frc.team1024.robot.commands;
 
-import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class TurnToAngle extends Command {
+public class TurnAbsolute extends Command {
 	double targetAngle;
 	boolean initialized = false;
 	double rotatePower;
-    public TurnToAngle(double angle) {
+    public TurnAbsolute(double angle) {
     	requires(Robot.drivetrain);
     	this.targetAngle = angle;
     }
@@ -25,7 +22,7 @@ public class TurnToAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.prepareTurn(targetAngle);
+    	//Robot.drivetrain.prepareTurn(targetAngle);
     	
 		initialized = true;
 		
@@ -33,16 +30,11 @@ public class TurnToAngle extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("Encoder Distance (In.)", Robot.drivetrain.getDistanceInches());
-    	SmartDashboard.putNumber("rotatePower", rotatePower);
-    	SmartDashboard.putNumber("Angle from Turn To Angle: ", Robot.drivetrain.getHeading());
-    	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
-    	System.out.println("I got here");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 2) {
+    	if(Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 2) { //if the robot is within 2 degrees of the target, stop
     		return true;
     	} else {
     		return false;
@@ -52,7 +44,7 @@ public class TurnToAngle extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drivetrain.stop();
-    	Robot.drivetrain.getPIDController().disable();
+    	//Robot.drivetrain.getPIDController().disable();
     	initialized = false;
     }
 
