@@ -21,19 +21,20 @@ public class DriveStraight extends Command {
     	Robot.drivetrain.resetMagneticEncoder();
     	double currentAngle = Robot.drivetrain.getHeading();
     	Robot.drivetrain.posPID.setSetpoint(targetDistance);
-    	Robot.drivetrain.turnPID.setSetpoint(currentAngle);
+    	Robot.drivetrain.trimPID.setSetpoint(currentAngle);
     	Robot.drivetrain.posPID.enable();
-    	Robot.drivetrain.turnPID.enable();
+    	Robot.drivetrain.trimPID.enable();
     }
     
     protected void execute() {
-    	System.out.println("I am here");
+    	//System.out.println("I am here");
     	SmartDashboard.putNumber("targetDistance", targetDistance);
-    	if(targetDistance < 0) {
+    	Robot.drivetrain.pidDriveForwardStraight();
+    	/*if(targetDistance < 0) {
     		Robot.drivetrain.pidDriveBackwardStraight();
     	} else {
     		Robot.drivetrain.pidDriveForwardStraight();
-    	}
+    	}*/
     }
 
     protected boolean isFinished() {
@@ -45,18 +46,18 @@ public class DriveStraight extends Command {
     }
     
     protected void end() {
-    	System.out.println("In end()");
+    	//System.out.println("In end()");
     	Robot.drivetrain.stop();
     	Robot.drivetrain.resetOpticalEncoder();
     	Robot.drivetrain.posPID.disable();
-    	Robot.drivetrain.turnPID.disable();
+    	Robot.drivetrain.trimPID.disable();
     }
     
     protected void interrupted() {
-    	System.out.print("In interrupted()");
+    	//System.out.print("In interrupted()");
     	Robot.drivetrain.stop();
     	Robot.drivetrain.resetOpticalEncoder();
     	Robot.drivetrain.posPID.disable();
-    	Robot.drivetrain.turnPID.disable();
+    	Robot.drivetrain.trimPID.disable();
     }
 }

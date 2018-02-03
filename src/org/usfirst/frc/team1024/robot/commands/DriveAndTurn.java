@@ -11,8 +11,10 @@ public class DriveAndTurn extends CommandGroup {
 
     public DriveAndTurn() {
     	requires(Robot.drivetrain);
-    	addSequential(new DriveStraight(36));
+    	addSequential(new DriveStraight(120));
+    	addSequential(new DriveStraight(-120));
+    	/*
     	addSequential(new TurnRelative(-90));
-    	addSequential(new DriveStraight(36));
+    	addSequential(new DriveStraight(36));*/
     }
 }

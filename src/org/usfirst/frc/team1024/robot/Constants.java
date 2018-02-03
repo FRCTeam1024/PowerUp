@@ -3,15 +3,21 @@ package org.usfirst.frc.team1024.robot;
 public class Constants {
 	
 	public static final double NAVX_TOLERANCE = 2.0f;
-	public static final double TURN_KP = 0.055;
+	public static final double TURN_KP = 0.05; //was 0.055
 	public static final double TURN_KI = 0.0;
-	public static final double TURN_KD = 0.1;
+	public static final double TURN_KD = 0.05; //was 0.1
 	public static final double TURN_KF = 0.0;
 	
 	public static final double POS_KP = 0.1;
 	public static final double POS_KI = 0.0;
 	public static final double POS_KD = 0.0;
 	public static final double POS_KF = 0.0;
+
+	public static final double TRIM_KP = 0.055;
+	public static final double TRIM_KI = 0.0;
+	public static final double TRIM_KD = 0.1;
+	public static final double TRIM_KF = 0.0;
+	
 	
 	public static final double WHEEL_DIAMETER_IN = 6.125;
 	public static final double MAGNETIC_ENCODER_COUNTS_PER_REVOLUTION = 1024;

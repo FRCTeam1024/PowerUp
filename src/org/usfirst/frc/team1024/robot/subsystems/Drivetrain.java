@@ -12,6 +12,7 @@ import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
+import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -52,6 +53,7 @@ public class Drivetrain extends Subsystem {
 	
 	public PIDController posPID;
 	public PIDController turnPID;
+	public PIDController trimPID;
 	
 	public Drivetrain() {
 		frontRight.setInverted(false); //might take this out
@@ -63,22 +65,30 @@ public class Drivetrain extends Subsystem {
 		navx = new AHRS(RobotMap.NAVX_PORT);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
+		
 		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
         turnPID.setInputRange(-180, 180);
         turnPID.setContinuous(true);
         turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
-        //turnPID.setAbsoluteTolerance(0.5);
-        turnPID.setPercentTolerance(1.0/360.0);
+        turnPID.setAbsoluteTolerance(0.5);
+        //turnPID.setPercentTolerance(2.0/360.0);
+        
+        trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
+        trimPID.setInputRange(-180, 180);
+        trimPID.setContinuous(true);
+        trimPID.setOutputRange(-0.25, 0.25); //probably will be much less
+        //trimPID.setAbsoluteTolerance(0.5);
         
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
         encoder.setDistancePerPulse((1.0/71.0)*4.0);
         encoder.setReverseDirection(true);
         
-        posPID = new PIDController(Constants.POS_KP, Constants.TURN_KI, Constants.TURN_KD, encoder, output->{});
-        posPID.setOutputRange(-0.75, 0.75);
+        posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
+        posPID.setOutputRange(-0.5, 0.5);
         
         //turnPID.setPercentTolerance(1.0);
+        
         
 	}
 	
@@ -114,9 +124,8 @@ public class Drivetrain extends Subsystem {
 	 * Maintains the current angle in order to drive straight
 	 */
 	public void pidDriveForwardStraight() {
-		System.out.println("In pidDriveStraight Function");
 		//drive(posPID.get() + turnPID.get(), posPID.get() + -1*turnPID.get());
-		drive(-posPID.get() - turnPID.get(), -posPID.get() + turnPID.get());
+		drive(-posPID.get() - trimPID.get(), -posPID.get() + trimPID.get());
 	}
 	
 	/**
@@ -125,7 +134,7 @@ public class Drivetrain extends Subsystem {
 	 * (This is a separate function because the gyro is backwards)
 	 */
 	public void pidDriveBackwardStraight() {
-		drive(-posPID.get() + turnPID.get(), -posPID.get() - turnPID.get());
+		drive(-posPID.get() + trimPID.get(), -posPID.get() - trimPID.get());
 	}
 
 	/**
@@ -153,6 +162,7 @@ public class Drivetrain extends Subsystem {
 
 	public void resetGyro() {
 		navx.reset();
+		//navx.zeroYaw();
 	}
 
 	public double getRawMagneticEncoder() {

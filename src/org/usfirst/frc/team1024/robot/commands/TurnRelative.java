@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnRelative extends Command {
 	double targetAngle;
+	int onTargetCount = 0;
     public TurnRelative(double targetAngle) {
     	requires(Robot.drivetrain);
     	this.targetAngle = targetAngle;
@@ -22,8 +23,8 @@ public class TurnRelative extends Command {
     }
     
     private boolean isOnTarget() {
-    	//return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;
-    	return Robot.drivetrain.turnPID.onTarget();
+    	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;
+    	//return Robot.drivetrain.turnPID.onTarget();
     }
     
     private boolean motorsDone() {
@@ -32,7 +33,13 @@ public class TurnRelative extends Command {
 
     
     protected boolean isFinished() {
-    	if(isOnTarget()) { //if the robot is within 2 degrees of the target, stop
+    	if (isOnTarget()) {
+    		onTargetCount++;
+    	} else {
+    		onTargetCount = 0;
+    	}
+    	
+    	if(onTargetCount == 30) { //if the robot is within 2 degrees of the target, stop
     		return true;
     	} else {
     		return false;
@@ -42,10 +49,12 @@ public class TurnRelative extends Command {
     protected void end() {
     	Robot.drivetrain.stop();
     	Robot.drivetrain.turnPID.disable();
+    	onTargetCount = 0;
     }
 
     protected void interrupted() {
     	Robot.drivetrain.stop();
     	Robot.drivetrain.turnPID.disable();
+    	onTargetCount = 0;
     }
 }
