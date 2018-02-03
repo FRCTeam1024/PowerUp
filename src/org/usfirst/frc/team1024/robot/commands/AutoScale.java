@@ -1,0 +1,36 @@
+package org.usfirst.frc.team1024.robot.commands;
+
+import org.usfirst.frc.team1024.robot.Constants;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+/**
+ *
+ */
+public class AutoScale extends CommandGroup {
+	private double WALL_TO_SCALE_DROPOFF_DISTANCE = 324 - Constants.ROBOT_LENGTH_IN;
+	private int INITIAL_DRIVE_DISTANCE = 12;
+	
+	/*
+	 * scaleSide 1 = Left
+	 * 			-1 = Right
+	 * 
+	 * position = distance of robot from the left wall in inches. ADD 17.75 TO COMPENSATE FROM BUMPER TO MIDDLE
+	 * 
+	 * scalePos = Distance of the scale drop position from the left wall in inches.
+	 * 		    52.07 = Left drop position
+	 * 		   271.31 = Right drop position
+	 */
+    public AutoScale(int position, int scaleSide, int scalePos) {
+    	addSequential(new DriveDistance(INITIAL_DRIVE_DISTANCE));
+    	addSequential(new TurnRelative(-90 * scaleSide));
+    	addSequential(new DriveDistance(Math.abs(position - scalePos) + 12));
+    	addSequential(new TurnRelative(90 * scaleSide));
+    	addSequential(new DriveDistance(WALL_TO_SCALE_DROPOFF_DISTANCE -INITIAL_DRIVE_DISTANCE));
+    	addSequential(new TurnRelative(90 * scaleSide));
+    	//TODO Lift Cube
+    	addSequential(new DriveDistance(12));
+    	//TODO Drop Cube
+    	
+    }
+}
