@@ -6,16 +6,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 
 /**
- * Drives straight at lower power, like 0.5
- * 
+ * Tries to use navx gyro to auto-correct. DOES NOT WORK, DO NOT USE.
  */
-public class CrossLine extends Command {
+public class DriveStraight extends Command {
 
 	public double distance;
 	public double power;
-
+	private double startHeading;
+	private double leftPower, rightPower;
 	
-    public CrossLine(double distance) {
+    public DriveStraight(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
@@ -27,13 +27,24 @@ public class CrossLine extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.encoderReset();
+    	Robot.drivetrain.navx.reset();
+    	startHeading = Robot.drivetrain.navx.getAngle();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.drive(power, power);
+    	double currentHeading = Robot.drivetrain.navx.getAngle();
+    	if(currentHeading > startHeading) {
+    		rightPower += 0.02;
+    		leftPower -= 0.02;
+    	} else if (currentHeading < startHeading) {
+    		leftPower += 0.02;
+    		rightPower -= 0.02;
+    	}
+    	Robot.drivetrain.drive(leftPower, rightPower);
     	 //double distanceDriven = Robot.drivetrain.getEncoderValue();
-    	System.out.println("Driving");
+    	System.out.println("Driving Straight, leftPower : " + leftPower + ", rightPower : " + rightPower);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -60,8 +71,11 @@ public class CrossLine extends Command {
 		return power;
 	}
 
+	// from SmartDashboard
 	public void setPower(double power) {
 		this.power = power;
+		leftPower = power;
+    	rightPower = power;
 	}
 
 	// Called once after isFinished returns true

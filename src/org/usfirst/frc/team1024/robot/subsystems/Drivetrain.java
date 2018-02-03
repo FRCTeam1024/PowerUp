@@ -53,6 +53,14 @@ public class Drivetrain extends Subsystem {
 		frontRight.set(ControlMode.PercentOutput, -rightPower);
 	}
 	
+	public double leftOutput() {
+		return frontLeft.getMotorOutputPercent();	
+	}
+	
+	public double rightOutput() {
+		return frontRight.getMotorOutputPercent();
+	}
+	
 	public void setPositionMode() {
 		frontLeft.set(ControlMode.Position, 0);
 		frontRight.set(ControlMode.Position, 0);
@@ -86,7 +94,7 @@ public class Drivetrain extends Subsystem {
 		//SmartDashboard.putData("Reset Encoder", new EncoderCalibrate());
 //		SmartDashboard.putNumber("Encoder Value: ", frontLeft.getSensorCollection().getQuadraturePosition());
 		//SmartDashboard.putData("Turn", );
-	}
+		}
 	
 	public void encoderReset() {
 		encoderMain.reset();

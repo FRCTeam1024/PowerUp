@@ -17,6 +17,7 @@ import org.usfirst.frc.team1024.robot.commands.EncoderCalibrate;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 import org.usfirst.frc.team1024.robot.commands.Turn;
 import org.usfirst.frc.team1024.robot.commands.CrossLine;
+import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 
@@ -35,6 +36,9 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	CrossLine crossLine = new CrossLine(120);
+	DriveStraight driveStraight = new DriveStraight(120);
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,14 +49,19 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		m_chooser.addDefault("Default Auto", new Auto());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		//SmartDashboard.putData("Auto mode", m_chooser);
 
-		SmartDashboard.putData("Encoder Calibrate", new EncoderCalibrate());
+		//SmartDashboard.putData("Encoder Calibrate", new EncoderCalibrate());
 		
 		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+		SmartDashboard.putData("Cross Line", crossLine);
+		SmartDashboard.putNumber("Drive Straight Distance", 100);
+		SmartDashboard.putNumber("Drive Straight Power", 0.6);
+		SmartDashboard.putData("Drive Straight", driveStraight);
 
-		SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
-		SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
+
+		//SmartDashboard.putNumber("Raw Ultrasonic", sensors.getRawUltrasonic());
+		//SmartDashboard.putNumber("Ultrasonic Distance In Inches", sensors.getDistanceInches());
 
 	}
 	
@@ -85,9 +94,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//m_autonomousCommand = m_chooser.getSelected();
-//		m_autonomousCommand = new CrossLine(12);
+		m_autonomousCommand = new CrossLine(120);
 		
-		m_autonomousCommand = new Turn(90);
+//		m_autonomousCommand = new Turn(90);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -121,6 +130,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		driveStraight.setPower(0.6);
 	}
 
 	/**
@@ -129,6 +139,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+//		driveStraight.setDistance(SmartDashboard.getNumber("Drive Straight Distance", 0));
+//		driveStraight.setPower(SmartDashboard.getNumber("Drive Straight Power", 0));
+		SmartDashboard.putNumber("Left Power:", Robot.drivetrain.leftOutput());
+		SmartDashboard.putNumber("Right Power:", Robot.drivetrain.rightOutput());	
 		Robot.drivetrain.smartDash();
 	}
 
