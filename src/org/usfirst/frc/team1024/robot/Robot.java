@@ -7,11 +7,14 @@
 
 package org.usfirst.frc.team1024.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team1024.robot.commands.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
@@ -29,6 +32,7 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
  * project.
  */
 public class Robot extends TimedRobot {
+	public static FieldConfig fieldConfig;
 	public static Drivetrain drivetrain;
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
@@ -37,6 +41,8 @@ public class Robot extends TimedRobot {
 	Command m_autonomousCommand;
 	SendableChooser<Command> autoChooser = new SendableChooser<>();
 	SendableChooser<Command> testChooser = new SendableChooser<>();
+	
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -59,6 +65,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", new RightPositionAuto());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
+		//autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
 		
 		
@@ -101,9 +108,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		//m_autonomousCommand = autoChooser.getSelected();
-		m_autonomousCommand = testChooser.getSelected();
+		//m_autonomousCommand = testChooser.getSelected();
+		m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
 		// schedule the autonomous command (example)
+		
+		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
 		if (m_autonomousCommand != null) {
@@ -144,7 +155,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		Scheduler.getInstance().add(testChooser.getSelected());
+		
 		drivetrain.outputToSmartDashboard();
 	}
 

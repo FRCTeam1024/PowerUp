@@ -22,14 +22,14 @@ public class AutoScale extends CommandGroup {
 	 * 		   271.31 = Right drop position
 	 */
     public AutoScale(int position, int scaleSide, int scalePos) {
-    	addSequential(new DriveDistance(INITIAL_DRIVE_DISTANCE));
+    	addSequential(new DriveStraight(INITIAL_DRIVE_DISTANCE));
     	addSequential(new TurnRelative(-90 * scaleSide));
-    	addSequential(new DriveDistance(Math.abs(position - scalePos) + 12));
+    	addSequential(new DriveStraight(Math.abs(position - scalePos) + 12));
     	addSequential(new TurnRelative(90 * scaleSide));
-    	addSequential(new DriveDistance(WALL_TO_SCALE_DROPOFF_DISTANCE -INITIAL_DRIVE_DISTANCE));
+    	addSequential(new DriveStraight(WALL_TO_SCALE_DROPOFF_DISTANCE -INITIAL_DRIVE_DISTANCE));
     	addSequential(new TurnRelative(90 * scaleSide));
     	//TODO Lift Cube
-    	addSequential(new DriveDistance(12));
+    	addSequential(new DriveStraight(12));
     	//TODO Drop Cube
     	
     }

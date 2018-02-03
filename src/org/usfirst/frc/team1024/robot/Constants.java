@@ -32,4 +32,17 @@ public class Constants {
 	//Robot Constants:
 	public static final double ROBOT_LENGTH_IN = 32.0; //front-to-back For 2018 Bot 39
 	public static final double ROBOT_WIDTH_IN = 41.0; //side-to-side For 2018 Bot 35.5
+	
+	//Field Constants:
+	public static final double FIELD_WIDTH = 324.0;
+	public static final double FIELD_LENGTH = 648.0;
+	public static final double WALL_TO_SWITCH_DISTANCE = 140.0;
+	public static final double WALL_TO_SCALE_DISTANCE = 299.65;
+	
+	
+	
+	
+	
+	
+	
 }
