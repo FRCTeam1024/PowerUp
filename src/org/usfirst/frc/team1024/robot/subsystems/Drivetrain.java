@@ -66,15 +66,24 @@ public class Drivetrain extends Subsystem {
 		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
         turnPID.setInputRange(-180, 180);
         turnPID.setContinuous(true);
-        turnPID.setOutputRange(-0.25, 0.25); //probably will be much less
+        turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
+        //turnPID.setAbsoluteTolerance(0.5);
+        turnPID.setPercentTolerance(1.0/360.0);
+        
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
         encoder.setDistancePerPulse((1.0/71.0)*4.0);
+        encoder.setReverseDirection(true);
+        
         posPID = new PIDController(Constants.POS_KP, Constants.TURN_KI, Constants.TURN_KD, encoder, output->{});
-        posPID.setOutputRange(-0.5, 0.5);
-        turnPID.setAbsoluteTolerance(.1);
+        posPID.setOutputRange(-0.75, 0.75);
+        
         //turnPID.setPercentTolerance(1.0);
         
+	}
+	
+	public boolean isRotating() {
+		return navx.isRotating();
 	}
 	
 	/**
@@ -104,10 +113,19 @@ public class Drivetrain extends Subsystem {
 	 * Drives the motors toward the current distance setpoint
 	 * Maintains the current angle in order to drive straight
 	 */
-	public void pidDriveStraight() {
+	public void pidDriveForwardStraight() {
 		System.out.println("In pidDriveStraight Function");
 		//drive(posPID.get() + turnPID.get(), posPID.get() + -1*turnPID.get());
-		drive(posPID.get(), posPID.get());
+		drive(-posPID.get() - turnPID.get(), -posPID.get() + turnPID.get());
+	}
+	
+	/**
+	 * Drives the motors toward the current distance setpoint
+	 * Maintains the current angle in order to drive straight
+	 * (This is a separate function because the gyro is backwards)
+	 */
+	public void pidDriveBackwardStraight() {
+		drive(-posPID.get() + turnPID.get(), -posPID.get() - turnPID.get());
 	}
 
 	/**
@@ -196,6 +214,7 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
+    	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
 	}
 }
 	

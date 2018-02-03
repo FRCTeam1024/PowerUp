@@ -20,9 +20,19 @@ public class TurnRelative extends Command {
     protected void execute() {
     	Robot.drivetrain.pidTurn();
     }
+    
+    private boolean isOnTarget() {
+    	//return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;
+    	return Robot.drivetrain.turnPID.onTarget();
+    }
+    
+    private boolean motorsDone() {
+    	return Robot.drivetrain.turnPID.get() < 0.01; //might be bigger
+    }
 
+    
     protected boolean isFinished() {
-    	if(Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 10) { //if the robot is within 2 degrees of the target, stop
+    	if(isOnTarget()) { //if the robot is within 2 degrees of the target, stop
     		return true;
     	} else {
     		return false;

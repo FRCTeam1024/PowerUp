@@ -67,8 +67,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("DriveStraightDistance", 0);
 		SmartDashboard.putNumber("TurnRelativeDistance", 0);
 		testChooser.addDefault("Default Do Nothing", new DoNothing());
-		testChooser.addObject("DriveStraight", new DriveStraight(12));
+		testChooser.addObject("DriveStraight", new DriveStraight(-120));
 		testChooser.addObject("TurnRelative", new TurnRelative(90));
+		testChooser.addObject("Drive And Turn", new DriveAndTurn());
 		SmartDashboard.putData(testChooser);
 	}
 	
@@ -103,9 +104,12 @@ public class Robot extends TimedRobot {
 		//m_autonomousCommand = autoChooser.getSelected();
 		m_autonomousCommand = testChooser.getSelected();
 		// schedule the autonomous command (example)
+		Robot.drivetrain.resetOpticalEncoder();
+		Robot.drivetrain.resetGyro();
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
-		}	
+		}
+		
 	}
 
 	/**

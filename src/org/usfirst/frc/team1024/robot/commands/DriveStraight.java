@@ -29,17 +29,19 @@ public class DriveStraight extends Command {
     protected void execute() {
     	System.out.println("I am here");
     	SmartDashboard.putNumber("targetDistance", targetDistance);
-    	Robot.drivetrain.pidDriveStraight();
+    	if(targetDistance < 0) {
+    		Robot.drivetrain.pidDriveBackwardStraight();
+    	} else {
+    		Robot.drivetrain.pidDriveForwardStraight();
+    	}
     }
 
     protected boolean isFinished() {
-    	return false;
-    	/*
     	if(Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < 1.0) { //If the robot is within 1 inch of the target, stop.
     		return true;
     	} else {
     		return false;
-    	}*/
+    	}
     }
     
     protected void end() {
