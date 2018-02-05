@@ -24,6 +24,8 @@ public class Constants {
 	public static final double OPTICAL_ENCODER_COUNTS_PER_REVOLUTION = 250;
 	public static final double ENCODER_RATIO_TO_WHEEL = 3;
 	
+	public static final double ENCODER_RATIO_TO_LIFT_SHAFT = 64;
+	
 	//Ultrasonic Constants:
 	public static final double MILLIMETER_SCALE_FACTOR = 124;
 	public static final double INCH_SCALE_FACTOR = 48.8188; //MILLIMETER_SCALE_FACTOR * 0.3937;
