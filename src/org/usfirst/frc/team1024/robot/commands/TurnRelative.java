@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.Robot;
@@ -26,12 +27,7 @@ public class TurnRelative extends Command {
     	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;
     	//return Robot.drivetrain.turnPID.onTarget();
     }
-    
-    private boolean motorsDone() {
-    	return Robot.drivetrain.turnPID.get() < 0.01; //might be bigger
-    }
-
-    
+        
     protected boolean isFinished() {
     	if (isOnTarget()) {
     		onTargetCount++;
