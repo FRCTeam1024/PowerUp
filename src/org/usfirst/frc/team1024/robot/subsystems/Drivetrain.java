@@ -28,10 +28,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
-	//private TalonSRX middleLeft = new TalonSRX(1);
+	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
 	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
-	//private TalonSRX middleRight = new TalonSRX(4);
+	//private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
 	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
 	
@@ -65,25 +65,26 @@ public class Drivetrain extends Subsystem {
 		navx.reset();
 		
 		turnPID = new PIDController(RobotMap.TURN_KP, RobotMap.TURN_KI, RobotMap.TURN_KD, navx, output->{});
-        turnPID.setInputRange(-180, 180);
+        turnPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
         turnPID.setContinuous(true);
-        turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
-        turnPID.setAbsoluteTolerance(0.5);
+        turnPID.setOutputRange(Constants.TURN_PID_MIN_OUTPUT, Constants.TURN_PID_MAX_OUTPUT); //probably will be much less
+        turnPID.setAbsoluteTolerance(Constants.TURN_PID_ABSOLUTE_TOLERANCE);
         //turnPID.setPercentTolerance(2.0/360.0);
         
         trimPID = new PIDController(RobotMap.TRIM_KP, RobotMap.TRIM_KI, RobotMap.TRIM_KD, navx, output->{});
-        trimPID.setInputRange(-180, 180);
+        trimPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
         trimPID.setContinuous(true);
-        trimPID.setOutputRange(-0.25, 0.25); //probably will be much less
+        trimPID.setOutputRange(RobotMap.TRIM_PID_MIN_OUTPUT, RobotMap.TRIM_PID_MAX_OUTPUT); //probably will be much less
         //trimPID.setAbsoluteTolerance(0.5);
         
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        encoder.setDistancePerPulse((1.0/71.0)*4.0);
+        encoder.setDistancePerPulse(RobotMap.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
         encoder.setReverseDirection(true);
         
         posPID = new PIDController(RobotMap.POS_KP, RobotMap.POS_KI, RobotMap.POS_KD, encoder, output->{});
-        posPID.setOutputRange(-0.5, 0.5);
+	
+        posPID.setOutputRange(RobotMap.POS_PID_MIN_OUTPUT, RobotMap.POS_PID_MAX_OUTPUT);
         
         //turnPID.setPercentTolerance(1.0);
         
@@ -191,21 +192,9 @@ public class Drivetrain extends Subsystem {
 		encoder.reset();
 	}
 	
-	public void initDashboard() {
-		SmartDashboard.putNumber("Raw Ultrasonic", Robot.sensors.getRawUltrasonic());
-		SmartDashboard.putNumber("Ultrasonic Distance In Inches", Robot.sensors.getDistanceInches());
-		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
-		SmartDashboard.putNumber("Turn KI", Robot.drivetrain.turnkI);
-		SmartDashboard.putNumber("Turn KD", Robot.drivetrain.turnkD);
-		SmartDashboard.putNumber("Turn KF", Robot.drivetrain.turnkF);
-		SmartDashboard.putNumber("Turn Setpoint", 0);
-		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
-	}
-	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Gyro Angle", getHeading());
     	SmartDashboard.putNumber("Optical Encoder Distance (IN)", getOpticalDistanceInches());
-    	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
     	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());

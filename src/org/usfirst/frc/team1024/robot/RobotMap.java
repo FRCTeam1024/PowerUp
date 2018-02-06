@@ -46,6 +46,17 @@ public class RobotMap {
 	//I2C
 	public static final Port NAVX_PORT = Port.kMXP;
 	public static final double NAVX_TOLERANCE = 2.0f;
+	public static final double MIN_ROTATION_ANGLE = -180;
+	public static final double MAX_ROTATION_ANGLE = 180;
+
+	public static final double TRIM_PID_MIN_OUTPUT = -1.0;
+	public static final double TRIM_PID_MAX_OUTPUT = 1.0;
+
+	public static final double POS_PID_MIN_OUTPUT = -0.5;
+	public static final double POS_PID_MAX_OUTPUT = 0.5;
+
+	public static final double DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE = 71;
+	
 	
 	//Analog
 	public static final int ULTRASONIC_PORT = 0;
