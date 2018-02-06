@@ -164,30 +164,17 @@ public class Drivetrain extends Subsystem {
 		navx.reset();
 		//navx.zeroYaw();
 	}
-
-	public double getRawMagneticEncoder() {
-		return frontRight.getSelectedSensorPosition(0);
-	}
 	
-	public double getRawOpticalEncoder() {
+	public double getRawRightEncoder() {
 		return encoder.get();
 	}
 	
-	public double getWheelRotation() {
-		return getRawMagneticEncoder() / 3;
-	}
 	
 	public double getOpticalDistanceInches() {
 		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
 		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
 				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
 		return encoder.getDistance(); //must have a specified distance per pulse set
-	}
-	
-	public double getMagneticDistanceInches() {
-		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawMagneticEncoder() / Constants.DRIVETRAIN_ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER_IN) / 
-				Constants.MAGNETIC_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
 	}
 	
 	public double getTicks(double distanceInInches) {
