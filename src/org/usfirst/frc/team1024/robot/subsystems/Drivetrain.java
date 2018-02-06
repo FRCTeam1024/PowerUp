@@ -8,32 +8,34 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
+import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.RobotMap;
+import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
+import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example subsystem.  You can replace me with your own Subsystem.
  */
-public class Drivetrain extends PIDSubsystem {
-	private TalonSRX frontLeft  = new TalonSRX(42);
+public class Drivetrain extends Subsystem {
+	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
 	//private TalonSRX middleLeft = new TalonSRX(1);
-	private TalonSRX rearLeft = new TalonSRX(1);
-	private TalonSRX frontRight = new TalonSRX(2);
+	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
+	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
 	//private TalonSRX middleRight = new TalonSRX(4);
-	private TalonSRX rearRight = new TalonSRX(3);
+	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
+	
 	
 	private AHRS navx;
 	
@@ -47,80 +49,102 @@ public class Drivetrain extends PIDSubsystem {
 	public double turnkD = Constants.TURN_KD;
 	public double turnkF = Constants.TURN_KF;
 	
+	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B, false, EncodingType.k4X);
+	
 	public PIDController posPID;
+	public PIDController turnPID;
+	public PIDController trimPID;
 	
 	public Drivetrain() {
-		super("turnPID", Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD);
-		frontRight.setInverted(false);
+		frontRight.setInverted(false); //might take this out
 		rearRight.setInverted(false);
+		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
-		navx = new AHRS(Port.kMXP);
-		
+		navx = new AHRS(RobotMap.NAVX_PORT);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
-        getPIDController().setInputRange(-180,180);
-        getPIDController().setContinuous();
-        getPIDController().setOutputRange(-0.5,0.5);
-        //getPIDController().setSetpoint(setpointInit);
-        getPIDController().setAbsoluteTolerance(2);
-        getPIDController().setPercentTolerance(10);
-        
-
-		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		frontRight.configNominalOutputForward(0, 10);
-        frontRight.configNominalOutputReverse(0, 10);
-        frontRight.configPeakOutputForward(0.5, 10);
-        frontRight.configPeakOutputReverse(-0.5, 10);
-        /* set the allowable closed-loop error,
-         * Closed-Loop output will be neutral within this range.
-         * See Table in Section 17.2.1 for native units per rotation. 
-         */
-        //frontRight.configAllowableClosedloopError(0, 0, 10); /* always servo */
-        /* set closed loop gains in slot0 */
-        frontRight.config_kF(0, 0.0, 10);
-        frontRight.config_kP(0, 1.0, 10);
-        frontRight.config_kI(0, 0.0, 10);
-        frontRight.config_kD(0, 0.0, 10);
+		navx.reset();
 		
-        //turnPID.setAbsoluteTolerance(Constants.NAVX_TOLERANCE);
-        //turnPID.setContinuous(true);
+		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
+        turnPID.setInputRange(-180, 180);
+        turnPID.setContinuous(true);
+        turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
+        turnPID.setAbsoluteTolerance(0.5);
+        //turnPID.setPercentTolerance(2.0/360.0);
+        
+        trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
+        trimPID.setInputRange(-180, 180);
+        trimPID.setContinuous(true);
+        trimPID.setOutputRange(-0.25, 0.25); //probably will be much less
+        //trimPID.setAbsoluteTolerance(0.5);
+        
+        
+        encoder.setPIDSourceType(PIDSourceType.kDisplacement);
+        encoder.setDistancePerPulse((1.0/71.0)*4.0);
+        encoder.setReverseDirection(true);
+        
+        posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
+        posPID.setOutputRange(-0.5, 0.5);
+        
+        //turnPID.setPercentTolerance(1.0);
+        
+        
 	}
 	
+	public boolean isRotating() {
+		return navx.isRotating();
+	}
+	
+	/**
+	 * @returns true if the robot is moving.
+	 */
 	public boolean isMoving() {
 		return Math.abs(frontLeft.getMotorOutputPercent()) > 0.05 || 
-      Math.abs(frontRight.getMotorOutputPercent()) > 0.05;
+			   Math.abs(frontRight.getMotorOutputPercent()) > 0.05;
 	}
 	
+	/**
+	 * @returns The heading from the navx (in degrees).
+	 */
 	public double getHeading() {
 		return navx.getAngle();
 	}
 	
-	public void prepareTurn(double angle) {
-		resetGyro();
-		getPIDController().setSetpoint(angle);
-		getPIDController().enable();
+	/**
+	 * Drives the motors toward the current angle setpoint
+	 * Assumes that there is a setpoint set and that the pid has been enabled
+	 */
+	public void pidTurn() {
+		drive(-turnPID.get(), turnPID.get());
 	}
 	
-	public void turn(double rotatePower) {
-    	drive(-rotatePower, rotatePower);
-    	//This is a temp fix. Remove later
-    	frontLeft.setInverted(false);
-		rearLeft.setInverted(false);
+	/**
+	 * Drives the motors toward the current distance setpoint
+	 * Maintains the current angle in order to drive straight
+	 */
+	public void pidDriveForwardStraight() {
+		//drive(posPID.get() + turnPID.get(), posPID.get() + -1*turnPID.get());
+		drive(-posPID.get() - trimPID.get(), -posPID.get() + trimPID.get());
 	}
 	
+	/**
+	 * Drives the motors toward the current distance setpoint
+	 * Maintains the current angle in order to drive straight
+	 * (This is a separate function because the gyro is backwards)
+	 */
+	public void pidDriveBackwardStraight() {
+		drive(-posPID.get() + trimPID.get(), -posPID.get() - trimPID.get());
+	}
+
+	/**
+	 * Drives the motors based on a percent
+	 * @param leftPower value from -1.0 to 1.0
+	 * @param rightPower value from -1.0 to 1.0
+	 */
 	public void drive(double leftPower, double rightPower) {
 		frontLeft.set(ControlMode.PercentOutput, -leftPower);
 		frontRight.set(ControlMode.PercentOutput, rightPower);
-	}
-	
-	public void setPositionMode() {
-		frontLeft.set(ControlMode.Position, 0);
-		frontRight.set(ControlMode.Position, 0);
-	}
-	
-	public void setPercentMode() {
-		frontLeft.set(ControlMode.PercentOutput, 0);
-		frontRight.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public void setFollower(TalonSRX slave, TalonSRX master) {
@@ -138,38 +162,32 @@ public class Drivetrain extends PIDSubsystem {
 
 	public void resetGyro() {
 		navx.reset();
+		//navx.zeroYaw();
 	}
 
-	@Override
-	protected double returnPIDInput() {
-		SmartDashboard.putNumber("navx pidGet", navx.pidGet());
-		return navx.pidGet();
-	}
-	
-	@Override
-	protected void usePIDOutput(double output) {
-		getPIDController().setP(SmartDashboard.getNumber("Turn KP", Constants.TURN_KP));
-		getPIDController().setI(SmartDashboard.getNumber("Turn KI", Constants.TURN_KI));
-		getPIDController().setD(SmartDashboard.getNumber("Turn KD", Constants.TURN_KD));
-		turn(output);
-  }	
-
-	public double getRawEncoder() {
+	public double getRawMagneticEncoder() {
 		return frontRight.getSelectedSensorPosition(0);
 	}
 	
-	public double getRawQuad() {
-		return frontRight.getSensorCollection().getQuadraturePosition();
+	public double getRawOpticalEncoder() {
+		return encoder.get();
 	}
 	
 	public double getWheelRotation() {
-		return getRawEncoder() / 3;
+		return getRawMagneticEncoder() / 3;
 	}
 	
-	public double getDistanceInches() {
+	public double getOpticalDistanceInches() {
+		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
+		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
+				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
+		return encoder.getDistance(); //must have a specified distance per pulse set
+	}
+	
+	public double getMagneticDistanceInches() {
 		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
-				Constants.ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
+		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER_IN) / 
+				Constants.MAGNETIC_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
 	}
 	
 	public double getTicks(double distanceInInches) {
@@ -180,24 +198,33 @@ public class Drivetrain extends PIDSubsystem {
 		return -1*(ticksPerInch * distanceInInches);
 	}
 	
-	public void resetEncoder() {
-		// frontRight.getSensorCollection().setQuadraturePosition(0, 10);
-		// frontRight.get
+	public void resetMagneticEncoder() {
 		frontRight.setSelectedSensorPosition(0, 0, 0);
 	}
 	
-	public void driveDistance(double inches) {
-		double ticks = getTicks(inches);
-		System.out.println("num Ticks for " + inches + " inches : " + ticks);
-		frontRight.set(ControlMode.Position, ticks);
-		//this is a temp fix and should not be on the actual robot. 
-		//We did this because there is an encoder on only one side of the drivetrain
-		frontLeft.follow(frontRight); 
-		frontLeft.setInverted(true);
-		rearLeft.setInverted(true);
-		//frontLeft.set(ControlMode.PercentOutput, frontRight.getMotorOutputPercent());
-//		frontRight.set(ControlMode.Position, -3000);
-		SmartDashboard.putNumber("Encoder Distance (In.)", getDistanceInches());
+	public void resetOpticalEncoder() {
+		encoder.reset();
+	}
+	
+	public void initDashboard() {
+		SmartDashboard.putNumber("Raw Ultrasonic", Robot.sensors.getRawUltrasonic());
+		SmartDashboard.putNumber("Ultrasonic Distance In Inches", Robot.sensors.getDistanceInches());
+		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
+		SmartDashboard.putNumber("Turn KI", Robot.drivetrain.turnkI);
+		SmartDashboard.putNumber("Turn KD", Robot.drivetrain.turnkD);
+		SmartDashboard.putNumber("Turn KF", Robot.drivetrain.turnkF);
+		SmartDashboard.putNumber("Turn Setpoint", 0);
+		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
+	}
+	
+	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber("Gyro Angle", getHeading());
+    	SmartDashboard.putNumber("Optical Encoder Distance (IN)", getOpticalDistanceInches());
+    	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
+    	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
+    	SmartDashboard.putNumber("posPID.get()", posPID.get());
+    	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
+    	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
 	}
 }
 	
