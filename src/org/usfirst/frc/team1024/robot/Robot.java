@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		drivetrain = new Drivetrain();
 		
-		drivetrain.resetOpticalEncoder();
+		drivetrain.resetRightEncoder();
 		
 		
 		
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
 		// schedule the autonomous command (example)
 		
 		
-		Robot.drivetrain.resetOpticalEncoder();
+		Robot.drivetrain.resetRightEncoder();
 		Robot.drivetrain.resetGyro();
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();

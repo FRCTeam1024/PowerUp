@@ -8,9 +8,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
-import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
-import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -169,10 +167,10 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	
-	public double getOpticalDistanceInches() {
+	public double getRightDistanceInches() {
 		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
 		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
-				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
+				Constants.RIGHT_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
 		return encoder.getDistance(); //must have a specified distance per pulse set
 	}
 	
@@ -184,17 +182,15 @@ public class Drivetrain extends Subsystem {
 		return -1*(ticksPerInch * distanceInInches);
 	}
 	
-	public void resetMagneticEncoder() {
-		frontRight.setSelectedSensorPosition(0, 0, 0);
-	}
 	
-	public void resetOpticalEncoder() {
+
+	public void resetRightEncoder() {
 		encoder.reset();
 	}
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Gyro Angle", getHeading());
-    	SmartDashboard.putNumber("Optical Encoder Distance (IN)", getOpticalDistanceInches());
+    	SmartDashboard.putNumber("Right Encoder Distance (IN)", getRightDistanceInches());
     	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());

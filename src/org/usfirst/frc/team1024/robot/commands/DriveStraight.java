@@ -17,8 +17,7 @@ public class DriveStraight extends Command {
     }
 
     protected void initialize() {
-    	Robot.drivetrain.resetOpticalEncoder();
-    	Robot.drivetrain.resetMagneticEncoder();
+    	Robot.drivetrain.resetRightEncoder();
     	double currentAngle = Robot.drivetrain.getHeading();
     	Robot.drivetrain.posPID.setSetpoint(targetDistance);
     	Robot.drivetrain.trimPID.setSetpoint(currentAngle);
@@ -39,7 +38,7 @@ public class DriveStraight extends Command {
     }
 
     protected boolean isFinished() {
-    	if(Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < 1.0) { //If the robot is within 1 inch of the target, stop.
+    	if(Math.abs(Robot.drivetrain.getRightDistanceInches() - targetDistance) < 1.0) { //If the robot is within 1 inch of the target, stop.
     		return true;
     	} else {
     		return false;
@@ -49,7 +48,7 @@ public class DriveStraight extends Command {
     protected void end() {
     	//System.out.println("In end()");
     	Robot.drivetrain.stop();
-    	Robot.drivetrain.resetOpticalEncoder();
+    	Robot.drivetrain.resetRightEncoder();
     	Robot.drivetrain.posPID.disable();
     	Robot.drivetrain.trimPID.disable();
     }
@@ -57,7 +56,7 @@ public class DriveStraight extends Command {
     protected void interrupted() {
     	//System.out.print("In interrupted()");
     	Robot.drivetrain.stop();
-    	Robot.drivetrain.resetOpticalEncoder();
+    	Robot.drivetrain.resetRightEncoder();
     	Robot.drivetrain.posPID.disable();
     	Robot.drivetrain.trimPID.disable();
     }

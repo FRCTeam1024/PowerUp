@@ -30,7 +30,7 @@ public class Constants {
 	
 	public static final double WHEEL_DIAMETER_IN = 6.125;
 	public static final double MAGNETIC_ENCODER_COUNTS_PER_REVOLUTION = 1024.0;
-	public static final double OPTICAL_ENCODER_COUNTS_PER_REVOLUTION = 250.0;
+	public static final double RIGHT_ENCODER_COUNTS_PER_REVOLUTION = 250.0;
 	public static final double DRIVETRAIN_ENCODER_RATIO_TO_WHEEL = 3.0;
 
 	public static final double DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE = ((1.0/71.0)*4.0); //1.0/71.0 is counts per inch traveled 
