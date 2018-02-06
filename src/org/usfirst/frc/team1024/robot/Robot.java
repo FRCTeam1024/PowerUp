@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
 		
 		
 		Robot.drivetrain.resetOpticalEncoder();
-		Robot.drivetrain.resetGyro();
+		Robot.drivetrain.resetNavx();
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}

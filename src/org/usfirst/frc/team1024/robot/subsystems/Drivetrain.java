@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -162,8 +163,14 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new DriveWithJoysticks());
 	}
 
-	public void resetGyro() {
+	/**
+	 * Resets the gyro angle reading
+	 * CAUTION: This method contains a delay, which might not seem like much, 
+	 * but if called in a periodic block, it WILL crash the code
+	 */
+	public void resetNavx() {
 		navx.reset();
+		Timer.delay(0.2); //Delay so we can't read the gyro while it is doing its reset calibration
 		//navx.zeroYaw();
 	}
 	
@@ -214,10 +221,6 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
     	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
-    	SmartDashboard.putNumber("Left Joystick", Robot.oi.lJoy.getY());
-    	SmartDashboard.putNumber("Right Joystick", Robot.oi.rJoy.getY());
-    	SmartDashboard.putNumber("Right Motor Output", frontRight.getMotorOutputPercent());
-    	SmartDashboard.putNumber("Right Rear Output", rearRight.getMotorOutputPercent());
 	}
 }
 	
