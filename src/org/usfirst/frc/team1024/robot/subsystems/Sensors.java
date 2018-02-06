@@ -19,11 +19,11 @@ public class Sensors extends Subsystem {
     }
     
     public double getDistanceInMillimeters() {
-    	return getRawUltrasonic() * Constants.MILLIMETER_SCALE_FACTOR;
+    	return getRawUltrasonic() * Constants.ULTRASONIC_MILLIMETER_SCALE_FACTOR;
     }
     
     public double getDistanceInches() {
-		return getRawUltrasonic() * Constants.INCH_SCALE_FACTOR;
+		return getRawUltrasonic() * Constants.ULTRASONIC_INCH_SCALE_FACTOR;
     }
     
     

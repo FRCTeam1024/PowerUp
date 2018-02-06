@@ -30,10 +30,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
-	//private TalonSRX middleLeft = new TalonSRX(1);
+	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
 	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
-	//private TalonSRX middleRight = new TalonSRX(4);
+	//private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
 	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
 	
@@ -67,25 +67,25 @@ public class Drivetrain extends Subsystem {
 		navx.reset();
 		
 		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
-        turnPID.setInputRange(-180, 180);
+        turnPID.setInputRange(Constants.MIN_ROTATION_ANGLE, Constants.MAX_ROTATION_ANGLE);
         turnPID.setContinuous(true);
-        turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
-        turnPID.setAbsoluteTolerance(0.5);
+        turnPID.setOutputRange(Constants.TURN_PID_MIN_OUTPUT, Constants.TURN_PID_MAX_OUTPUT); //probably will be much less
+        turnPID.setAbsoluteTolerance(Constants.TURN_PID_ABSOLUTE_TOLERANCE);
         //turnPID.setPercentTolerance(2.0/360.0);
         
         trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
-        trimPID.setInputRange(-180, 180);
+        trimPID.setInputRange(Constants.MIN_ROTATION_ANGLE, Constants.MAX_ROTATION_ANGLE);
         trimPID.setContinuous(true);
-        trimPID.setOutputRange(-0.25, 0.25); //probably will be much less
+        trimPID.setOutputRange(Constants.TRIM_PID_MIN_OUTPUT, Constants.TRIM_PID_MAX_OUTPUT); //probably will be much less
         //trimPID.setAbsoluteTolerance(0.5);
         
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        encoder.setDistancePerPulse((1.0/71.0)*4.0);
+        encoder.setDistancePerPulse(Constants.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
         encoder.setReverseDirection(true);
         
         posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
-        posPID.setOutputRange(-0.5, 0.5);
+        posPID.setOutputRange(Constants.POS_PID_MIN_OUTPUT, Constants.POS_PID_MAX_OUTPUT);
         
         //turnPID.setPercentTolerance(1.0);
         
