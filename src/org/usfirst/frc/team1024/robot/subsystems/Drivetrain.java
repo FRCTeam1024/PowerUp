@@ -7,12 +7,10 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
-import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -31,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
-	//private TalonSRX middleLeft = new TalonSRX(1);
+	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
 	private TalonSRX frontRight = new TalonSRX(/*RobotMap.FRONT_RIGHT_MOTOR_PORT*/ 6);
 	//private TalonSRX middleRight = new TalonSRX(4);
@@ -45,10 +43,10 @@ public class Drivetrain extends Subsystem {
 //	public double pidGet;
 	
 	//Remove these and any references when set properly
-	public double turnkP = Constants.TURN_KP;
-	public double turnkI = Constants.TURN_KI;
-	public double turnkD = Constants.TURN_KD;
-	public double turnkF = Constants.TURN_KF;
+	public double turnkP = RobotMap.TURN_KP;
+	public double turnkI = RobotMap.TURN_KI;
+	public double turnkD = RobotMap.TURN_KD;
+	public double turnkF = RobotMap.TURN_KF;
 	
 	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	
@@ -67,26 +65,27 @@ public class Drivetrain extends Subsystem {
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
 		
-		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
-        turnPID.setInputRange(-180, 180);
+		turnPID = new PIDController(RobotMap.TURN_KP, RobotMap.TURN_KI, RobotMap.TURN_KD, navx, output->{});
+        turnPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
         turnPID.setContinuous(true);
-        turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
-        turnPID.setAbsoluteTolerance(0.5);
+        turnPID.setOutputRange(RobotMap.TURN_PID_MIN_OUTPUT, RobotMap.TURN_PID_MAX_OUTPUT); //probably will be much less
+        turnPID.setAbsoluteTolerance(RobotMap.TURN_PID_ABSOLUTE_TOLERANCE);
         //turnPID.setPercentTolerance(2.0/360.0);
         
-        trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
-        trimPID.setInputRange(-180, 180);
+        trimPID = new PIDController(RobotMap.TRIM_KP, RobotMap.TRIM_KI, RobotMap.TRIM_KD, navx, output->{});
+        trimPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
         trimPID.setContinuous(true);
-        trimPID.setOutputRange(-0.25, 0.25); //probably will be much less
+        trimPID.setOutputRange(RobotMap.TRIM_PID_MIN_OUTPUT, RobotMap.TRIM_PID_MAX_OUTPUT); //probably will be much less
         //trimPID.setAbsoluteTolerance(0.5);
         
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        encoder.setDistancePerPulse((1.0/71.0)*4.0);
+        encoder.setDistancePerPulse(RobotMap.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
         encoder.setReverseDirection(true);
         
-        posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
-        posPID.setOutputRange(-0.5, 0.5);
+        posPID = new PIDController(RobotMap.POS_KP, RobotMap.POS_KI, RobotMap.POS_KD, encoder, output->{});
+	
+        posPID.setOutputRange(RobotMap.POS_PID_MIN_OUTPUT, RobotMap.POS_PID_MAX_OUTPUT);
         
         //turnPID.setPercentTolerance(1.0);
         
@@ -180,15 +179,15 @@ public class Drivetrain extends Subsystem {
 	
 	
 	public double getOpticalDistanceInches() {
-		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
-				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
+		/*//getWheelRotation() = distance / (Math.PI * RobotMap.WHEEL_DIAMETER) * RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
+		return (((getRawMagneticEncoder() / RobotMap.ENCODER_RATIO_TO_WHEEL * Math.PI * RobotMap.WHEEL_DIAMETER) / 
+				RobotMap.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
 		return encoder.getDistance(); //must have a specified distance per pulse set
 	}
 	
 	public double getTicks(double distanceInInches) {
-//		return (distance * 9 * Constants.ENCODER_COUNTS_PER_REVOLUTION * Constants.ENCODER_RATIO_TO_WHEEL * 
-//				Math.PI * Constants.WHEEL_DIAMETER) / 12;
+//		return (distance * 9 * RobotMap.ENCODER_COUNTS_PER_REVOLUTION * RobotMap.ENCODER_RATIO_TO_WHEEL * 
+//				Math.PI * RobotMap.WHEEL_DIAMETER) / 12;
 		
 		int ticksPerInch = 71;
 		return -1*(ticksPerInch * distanceInInches);
@@ -202,21 +201,9 @@ public class Drivetrain extends Subsystem {
 		encoder.reset();
 	}
 	
-	public void initDashboard() {
-		SmartDashboard.putNumber("Raw Ultrasonic", Robot.sensors.getRawUltrasonic());
-		SmartDashboard.putNumber("Ultrasonic Distance In Inches", Robot.sensors.getDistanceInches());
-		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
-		SmartDashboard.putNumber("Turn KI", Robot.drivetrain.turnkI);
-		SmartDashboard.putNumber("Turn KD", Robot.drivetrain.turnkD);
-		SmartDashboard.putNumber("Turn KF", Robot.drivetrain.turnkF);
-		SmartDashboard.putNumber("Turn Setpoint", 0);
-		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
-	}
-	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Gyro Angle", getHeading());
     	SmartDashboard.putNumber("Optical Encoder Distance (IN)", getOpticalDistanceInches());
-    	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
     	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());

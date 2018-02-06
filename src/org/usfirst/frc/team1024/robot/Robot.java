@@ -40,7 +40,6 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> autoChooser = new SendableChooser<>();
-	SendableChooser<Command> testChooser = new SendableChooser<>();
 	
 	
 
@@ -53,9 +52,6 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		drivetrain = new Drivetrain();
 		
-		drivetrain.initDashboard();
-		
-		drivetrain.resetMagneticEncoder();
 		drivetrain.resetOpticalEncoder();
 		
 		
@@ -70,14 +66,7 @@ public class Robot extends TimedRobot {
 		
 		
 		//Testing Space
-		SmartDashboard.putBoolean("Test?", false);
-		SmartDashboard.putNumber("DriveStraightDistance", 0);
-		SmartDashboard.putNumber("TurnRelativeDistance", 0);
-		testChooser.addDefault("Default Do Nothing", new DoNothing());
-		testChooser.addObject("DriveStraight", new DriveStraight(100));
-		testChooser.addObject("TurnRelative", new TurnRelative(90));
-		testChooser.addObject("Drive And Turn", new DriveAndTurn());
-		SmartDashboard.putData(testChooser);
+		
 	}
 	
 	/**
@@ -141,12 +130,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		/*if (SmartDashboard.getBoolean("Test?", false) == true) {
-			if (testChooser.getSelected() != null) {
-				System.out.println(testChooser.getSelected());
-				testChooser.getSelected().start();
-			}
-		}*/
 	}
 
 	/**

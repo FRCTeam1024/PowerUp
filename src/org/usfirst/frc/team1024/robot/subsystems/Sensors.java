@@ -2,7 +2,6 @@ package org.usfirst.frc.team1024.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -19,11 +18,11 @@ public class Sensors extends Subsystem {
     }
     
     public double getDistanceInMillimeters() {
-    	return getRawUltrasonic() * Constants.MILLIMETER_SCALE_FACTOR;
+    	return getRawUltrasonic() * RobotMap.MILLIMETER_SCALE_FACTOR;
     }
     
     public double getDistanceInches() {
-		return getRawUltrasonic() * Constants.INCH_SCALE_FACTOR;
+		return getRawUltrasonic() * RobotMap.INCH_SCALE_FACTOR;
     }
     
     
