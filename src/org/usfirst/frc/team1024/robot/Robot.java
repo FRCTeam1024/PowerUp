@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		//m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = testChooser.getSelected();
-		m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
+		m_autonomousCommand = new AutoSwitchFront(324/2 - 37, 124 + 85.25);
 		// schedule the autonomous command (example)
 		
 		
