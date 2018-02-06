@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
@@ -43,10 +42,10 @@ public class Drivetrain extends Subsystem {
 //	public double pidGet;
 	
 	//Remove these and any references when set properly
-	public double turnkP = Constants.TURN_KP;
-	public double turnkI = Constants.TURN_KI;
-	public double turnkD = Constants.TURN_KD;
-	public double turnkF = Constants.TURN_KF;
+	public double turnkP = RobotMap.TURN_KP;
+	public double turnkI = RobotMap.TURN_KI;
+	public double turnkD = RobotMap.TURN_KD;
+	public double turnkF = RobotMap.TURN_KF;
 	
 	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	
@@ -65,14 +64,14 @@ public class Drivetrain extends Subsystem {
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
 		
-		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
+		turnPID = new PIDController(RobotMap.TURN_KP, RobotMap.TURN_KI, RobotMap.TURN_KD, navx, output->{});
         turnPID.setInputRange(-180, 180);
         turnPID.setContinuous(true);
         turnPID.setOutputRange(-0.5, 0.5); //probably will be much less
         turnPID.setAbsoluteTolerance(0.5);
         //turnPID.setPercentTolerance(2.0/360.0);
         
-        trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
+        trimPID = new PIDController(RobotMap.TRIM_KP, RobotMap.TRIM_KI, RobotMap.TRIM_KD, navx, output->{});
         trimPID.setInputRange(-180, 180);
         trimPID.setContinuous(true);
         trimPID.setOutputRange(-0.25, 0.25); //probably will be much less
@@ -83,7 +82,7 @@ public class Drivetrain extends Subsystem {
         encoder.setDistancePerPulse((1.0/71.0)*4.0);
         encoder.setReverseDirection(true);
         
-        posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
+        posPID = new PIDController(RobotMap.POS_KP, RobotMap.POS_KI, RobotMap.POS_KD, encoder, output->{});
         posPID.setOutputRange(-0.5, 0.5);
         
         //turnPID.setPercentTolerance(1.0);
@@ -170,15 +169,15 @@ public class Drivetrain extends Subsystem {
 	
 	
 	public double getOpticalDistanceInches() {
-		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
-				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
+		/*//getWheelRotation() = distance / (Math.PI * RobotMap.WHEEL_DIAMETER) * RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
+		return (((getRawMagneticEncoder() / RobotMap.ENCODER_RATIO_TO_WHEEL * Math.PI * RobotMap.WHEEL_DIAMETER) / 
+				RobotMap.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
 		return encoder.getDistance(); //must have a specified distance per pulse set
 	}
 	
 	public double getTicks(double distanceInInches) {
-//		return (distance * 9 * Constants.ENCODER_COUNTS_PER_REVOLUTION * Constants.ENCODER_RATIO_TO_WHEEL * 
-//				Math.PI * Constants.WHEEL_DIAMETER) / 12;
+//		return (distance * 9 * RobotMap.ENCODER_COUNTS_PER_REVOLUTION * RobotMap.ENCODER_RATIO_TO_WHEEL * 
+//				Math.PI * RobotMap.WHEEL_DIAMETER) / 12;
 		
 		int ticksPerInch = 71;
 		return -1*(ticksPerInch * distanceInInches);
