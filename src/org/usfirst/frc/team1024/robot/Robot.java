@@ -141,12 +141,12 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		if (SmartDashboard.getBoolean("Test?", false) == true) {
+		/*if (SmartDashboard.getBoolean("Test?", false) == true) {
 			if (testChooser.getSelected() != null) {
 				System.out.println(testChooser.getSelected());
 				testChooser.getSelected().start();
 			}
-		}
+		}*/
 	}
 
 	/**
