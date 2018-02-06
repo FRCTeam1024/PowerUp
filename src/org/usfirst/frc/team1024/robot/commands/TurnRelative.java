@@ -14,7 +14,7 @@ public class TurnRelative extends Command {
     }
 
     protected void initialize() {
-    	Robot.drivetrain.resetGyro();
+    	Robot.drivetrain.resetNavx();
     	Robot.drivetrain.turnPID.setSetpoint(targetAngle);
     	Robot.drivetrain.turnPID.enable();
     }

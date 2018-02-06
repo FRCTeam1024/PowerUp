@@ -14,11 +14,10 @@ package org.usfirst.frc.team1024.robot;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	/*public final Joystick lJoy = new Joystick(0);
+	
+/*	public final Joystick lJoy = new Joystick(0);
 	public final Joystick rJoy = new Joystick(1);
-	
 	*/
-	
 	public OI () {
 		
 	}

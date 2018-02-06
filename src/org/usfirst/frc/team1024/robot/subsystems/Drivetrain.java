@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -30,9 +31,9 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
 	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
-	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
-	//private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
-	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
+	private TalonSRX frontRight = new TalonSRX(/*RobotMap.FRONT_RIGHT_MOTOR_PORT*/ 6);
+	//private TalonSRX middleRight = new TalonSRX(4);
+	private TalonSRX rearRight = new TalonSRX(/*RobotMap.REAR_RIGHT_MOTOR_PORT*/ 7);
 	
 	
 	private AHRS navx;
@@ -54,12 +55,12 @@ public class Drivetrain extends Subsystem {
 	public PIDController trimPID;
 	
 	public Drivetrain() {
-		frontRight.setInverted(false); //might take this out
-		rearRight.setInverted(false);
+		//frontRight.setInverted(false); //might take this out
+		//rearRight.setInverted(false); //IDS ARE WRONG!!!
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		
-		setFollower(rearLeft, frontLeft);
-		setFollower(rearRight, frontRight);
+		//setFollower(rearLeft, frontLeft);
+		//setFollower(rearRight, frontRight);
 		navx = new AHRS(RobotMap.NAVX_PORT);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
@@ -144,6 +145,8 @@ public class Drivetrain extends Subsystem {
 	public void drive(double leftPower, double rightPower) {
 		frontLeft.set(ControlMode.PercentOutput, -leftPower);
 		frontRight.set(ControlMode.PercentOutput, rightPower);
+		rearLeft.set(ControlMode.PercentOutput, -leftPower);
+		rearRight.set(ControlMode.PercentOutput, rightPower);
 	}
 	
 	public void setFollower(TalonSRX slave, TalonSRX master) {
@@ -159,8 +162,14 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new DriveWithJoysticks());
 	}
 
-	public void resetGyro() {
+	/**
+	 * Resets the gyro angle reading
+	 * CAUTION: This method contains a delay, which might not seem like much, 
+	 * but if called in a periodic block, it WILL crash the code
+	 */
+	public void resetNavx() {
 		navx.reset();
+		Timer.delay(0.2); //Delay so we can't read the gyro while it is doing its reset calibration
 		//navx.zeroYaw();
 	}
 	
