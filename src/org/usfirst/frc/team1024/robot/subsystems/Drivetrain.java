@@ -32,9 +32,9 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
 	//private TalonSRX middleLeft = new TalonSRX(1);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
-	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
+	private TalonSRX frontRight = new TalonSRX(/*RobotMap.FRONT_RIGHT_MOTOR_PORT*/ 6);
 	//private TalonSRX middleRight = new TalonSRX(4);
-	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
+	private TalonSRX rearRight = new TalonSRX(/*RobotMap.REAR_RIGHT_MOTOR_PORT*/ 7);
 	
 	
 	private AHRS navx;
@@ -56,12 +56,12 @@ public class Drivetrain extends Subsystem {
 	public PIDController trimPID;
 	
 	public Drivetrain() {
-		frontRight.setInverted(false); //might take this out
-		rearRight.setInverted(false);
+		//frontRight.setInverted(false); //might take this out
+		//rearRight.setInverted(false); //IDS ARE WRONG!!!
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		
-		setFollower(rearLeft, frontLeft);
-		setFollower(rearRight, frontRight);
+		//setFollower(rearLeft, frontLeft);
+		//setFollower(rearRight, frontRight);
 		navx = new AHRS(RobotMap.NAVX_PORT);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
@@ -145,6 +145,8 @@ public class Drivetrain extends Subsystem {
 	public void drive(double leftPower, double rightPower) {
 		frontLeft.set(ControlMode.PercentOutput, -leftPower);
 		frontRight.set(ControlMode.PercentOutput, rightPower);
+		rearLeft.set(ControlMode.PercentOutput, -leftPower);
+		rearRight.set(ControlMode.PercentOutput, rightPower);
 	}
 	
 	public void setFollower(TalonSRX slave, TalonSRX master) {
@@ -164,30 +166,17 @@ public class Drivetrain extends Subsystem {
 		navx.reset();
 		//navx.zeroYaw();
 	}
-
-	public double getRawMagneticEncoder() {
-		return frontRight.getSelectedSensorPosition(0);
-	}
 	
-	public double getRawOpticalEncoder() {
+	public double getRawRightEncoder() {
 		return encoder.get();
 	}
 	
-	public double getWheelRotation() {
-		return getRawMagneticEncoder() / 3;
-	}
 	
 	public double getOpticalDistanceInches() {
 		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
 		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
 				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
 		return encoder.getDistance(); //must have a specified distance per pulse set
-	}
-	
-	public double getMagneticDistanceInches() {
-		//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER_IN) / 
-				Constants.MAGNETIC_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;
 	}
 	
 	public double getTicks(double distanceInInches) {
@@ -225,6 +214,10 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
     	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
+    	SmartDashboard.putNumber("Left Joystick", Robot.oi.lJoy.getY());
+    	SmartDashboard.putNumber("Right Joystick", Robot.oi.rJoy.getY());
+    	SmartDashboard.putNumber("Right Motor Output", frontRight.getMotorOutputPercent());
+    	SmartDashboard.putNumber("Right Rear Output", rearRight.getMotorOutputPercent());
 	}
 }
 	
