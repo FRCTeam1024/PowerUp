@@ -24,7 +24,7 @@ public class TurnRelative extends Command {
     }
     
     private boolean isOnTarget() {
-    	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;
+    	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;  //if the robot is within 1 degrees of the target, stop
     	//return Robot.drivetrain.turnPID.onTarget();
     }
         
@@ -35,7 +35,7 @@ public class TurnRelative extends Command {
     		onTargetCount = 0;
     	}
     	
-    	if(onTargetCount == 30) { //if the robot is within 2 degrees of the target, stop
+    	if(onTargetCount == 30) {
     		return true;
     	} else {
     		return false;
