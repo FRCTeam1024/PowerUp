@@ -192,21 +192,9 @@ public class Drivetrain extends Subsystem {
 		encoder.reset();
 	}
 	
-	public void initDashboard() {
-		SmartDashboard.putNumber("Raw Ultrasonic", Robot.sensors.getRawUltrasonic());
-		SmartDashboard.putNumber("Ultrasonic Distance In Inches", Robot.sensors.getDistanceInches());
-		SmartDashboard.putNumber("Turn KP", Robot.drivetrain.turnkP);
-		SmartDashboard.putNumber("Turn KI", Robot.drivetrain.turnkI);
-		SmartDashboard.putNumber("Turn KD", Robot.drivetrain.turnkD);
-		SmartDashboard.putNumber("Turn KF", Robot.drivetrain.turnkF);
-		SmartDashboard.putNumber("Turn Setpoint", 0);
-		SmartDashboard.putData("Reset Encoder", new ResetEncoder());
-	}
-	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Gyro Angle", getHeading());
     	SmartDashboard.putNumber("Optical Encoder Distance (IN)", getOpticalDistanceInches());
-    	SmartDashboard.putBoolean("isMoving", Robot.drivetrain.isMoving());
     	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
