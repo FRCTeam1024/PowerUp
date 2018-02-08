@@ -22,7 +22,7 @@ import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team1024.robot.subsystems.Sensors;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +34,6 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 public class Robot extends TimedRobot {
 	public static FieldConfig fieldConfig;
 	public static Drivetrain drivetrain;
-	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 	public boolean isDone = false;
 	
@@ -61,8 +60,12 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", new RightPositionAuto());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
-		//autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
+
+		autoChooser.addObject("drive straight 20", new DriveStraight(100));
+		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
+//autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
+		SmartDashboard.putData(drivetrain.posPID);
 		
 		
 		//Testing Space
@@ -98,8 +101,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		m_autonomousCommand = autoChooser.getSelected();
+//		m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
+		m_autonomousCommand = new DriveAndTurn();
 		// schedule the autonomous command (example)
 		
 		

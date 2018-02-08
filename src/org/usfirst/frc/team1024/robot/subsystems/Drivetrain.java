@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
@@ -21,6 +20,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,9 +31,9 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
 	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
-	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
+	private TalonSRX frontRight = new TalonSRX(7); //RobotMap.FRONT_RIGHT_MOTOR_PORT);
 	//private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
-	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
+	private TalonSRX rearRight = new TalonSRX(6); //RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
 	
 	private AHRS navx;
@@ -43,10 +43,10 @@ public class Drivetrain extends Subsystem {
 //	public double pidGet;
 	
 	//Remove these and any references when set properly
-	public double turnkP = Constants.TURN_KP;
-	public double turnkI = Constants.TURN_KI;
-	public double turnkD = Constants.TURN_KD;
-	public double turnkF = Constants.TURN_KF;
+	public double turnkP = RobotMap.TURN_KP;
+	public double turnkI = RobotMap.TURN_KI;
+	public double turnkD = RobotMap.TURN_KD;
+	public double turnkF = RobotMap.TURN_KF;
 	
 	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	
@@ -65,26 +65,27 @@ public class Drivetrain extends Subsystem {
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
 		
-		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
-        turnPID.setInputRange(Constants.MIN_ROTATION_ANGLE, Constants.MAX_ROTATION_ANGLE);
+		turnPID = new PIDController(RobotMap.TURN_KP, RobotMap.TURN_KI, RobotMap.TURN_KD, navx, output->{});
+        turnPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
         turnPID.setContinuous(true);
-        turnPID.setOutputRange(Constants.TURN_PID_MIN_OUTPUT, Constants.TURN_PID_MAX_OUTPUT); //probably will be much less
-        turnPID.setAbsoluteTolerance(Constants.TURN_PID_ABSOLUTE_TOLERANCE);
+        turnPID.setOutputRange(RobotMap.TURN_PID_MIN_OUTPUT, RobotMap.TURN_PID_MAX_OUTPUT); //probably will be much less
+        turnPID.setAbsoluteTolerance(RobotMap.TURN_PID_ABSOLUTE_TOLERANCE);
         //turnPID.setPercentTolerance(2.0/360.0);
         
-        trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
-        trimPID.setInputRange(Constants.MIN_ROTATION_ANGLE, Constants.MAX_ROTATION_ANGLE);
+        trimPID = new PIDController(RobotMap.TRIM_KP, RobotMap.TRIM_KI, RobotMap.TRIM_KD, navx, output->{});
+        trimPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
         trimPID.setContinuous(true);
-        trimPID.setOutputRange(Constants.TRIM_PID_MIN_OUTPUT, Constants.TRIM_PID_MAX_OUTPUT); //probably will be much less
+        trimPID.setOutputRange(RobotMap.TRIM_PID_MIN_OUTPUT, RobotMap.TRIM_PID_MAX_OUTPUT); //probably will be much less
         //trimPID.setAbsoluteTolerance(0.5);
         
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        encoder.setDistancePerPulse(Constants.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
+        encoder.setDistancePerPulse(RobotMap.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
         encoder.setReverseDirection(true);
         
-        posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
-        posPID.setOutputRange(Constants.POS_PID_MIN_OUTPUT, Constants.POS_PID_MAX_OUTPUT);
+        posPID = new PIDController(RobotMap.POS_KP, RobotMap.POS_KI, RobotMap.POS_KD, encoder, output->{});
+	
+        posPID.setOutputRange(RobotMap.POS_PID_MIN_OUTPUT, RobotMap.POS_PID_MAX_OUTPUT);
         
         //turnPID.setPercentTolerance(1.0);
         
@@ -133,7 +134,7 @@ public class Drivetrain extends Subsystem {
 	 * (This is a separate function because the gyro is backwards)
 	 */
 	public void pidDriveBackwardStraight() {
-		drive(-posPID.get() + trimPID.get(), -posPID.get() - trimPID.get());
+		drive(-posPID.get() - trimPID.get(), -posPID.get() + trimPID.get());
 	}
 
 	/**
@@ -161,6 +162,7 @@ public class Drivetrain extends Subsystem {
 
 	public void resetGyro() {
 		navx.reset();
+		Timer.delay(0.2);
 		//navx.zeroYaw();
 	}
 	
@@ -170,15 +172,15 @@ public class Drivetrain extends Subsystem {
 	
 	
 	public double getOpticalDistanceInches() {
-		/*//getWheelRotation() = distance / (Math.PI * Constants.WHEEL_DIAMETER) * Constants.ENCODER_COUNTS_PER_REVOLUTION;
-		return (((getRawMagneticEncoder() / Constants.ENCODER_RATIO_TO_WHEEL * Math.PI * Constants.WHEEL_DIAMETER) / 
-				Constants.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
+		/*//getWheelRotation() = distance / (Math.PI * RobotMap.WHEEL_DIAMETER) * RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
+		return (((getRawMagneticEncoder() / RobotMap.ENCODER_RATIO_TO_WHEEL * Math.PI * RobotMap.WHEEL_DIAMETER) / 
+				RobotMap.OPTICAL_ENCODER_COUNTS_PER_REVOLUTION)/ 4) * 3 * 3;*/
 		return encoder.getDistance(); //must have a specified distance per pulse set
 	}
 	
 	public double getTicks(double distanceInInches) {
-//		return (distance * 9 * Constants.ENCODER_COUNTS_PER_REVOLUTION * Constants.ENCODER_RATIO_TO_WHEEL * 
-//				Math.PI * Constants.WHEEL_DIAMETER) / 12;
+//		return (distance * 9 * RobotMap.ENCODER_COUNTS_PER_REVOLUTION * RobotMap.ENCODER_RATIO_TO_WHEEL * 
+//				Math.PI * RobotMap.WHEEL_DIAMETER) / 12;
 		
 		int ticksPerInch = 71;
 		return -1*(ticksPerInch * distanceInInches);
