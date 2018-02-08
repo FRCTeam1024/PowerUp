@@ -23,6 +23,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -100,8 +101,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		m_autonomousCommand = autoChooser.getSelected();
+//		m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
+		m_autonomousCommand = new DriveAndTurn();
 		// schedule the autonomous command (example)
 		
 		
