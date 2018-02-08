@@ -37,7 +37,7 @@ public class RobotMap {
 	public static final int LIFT_CLAMP_FOWARD_PORT = 1;
 	public static final int LIFT_CLAMP_REVERSE_PORT = 2;
 	
-	public static final int INTAKE_IN_PORT = 3;
+	public static final int INTAKE_SLIDE_PORT = 3;
 	public static final int INTAKE_OUT_PORT = 4;
 	
 	public static final int INTAKE_MANIPULATE_PORT = 5;

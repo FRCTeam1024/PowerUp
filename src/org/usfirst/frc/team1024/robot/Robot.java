@@ -22,6 +22,7 @@ import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team1024.robot.subsystems.Intake;
 import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 
 /**
@@ -34,6 +35,7 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 public class Robot extends TimedRobot {
 	public static FieldConfig fieldConfig;
 	public static Drivetrain drivetrain;
+	public static Intake intake;
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 	public boolean isDone = false;
@@ -98,8 +100,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		m_autonomousCommand = autoChooser.getSelected();
+//		m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
+		m_autonomousCommand = new DriveAndTurn();
 		// schedule the autonomous command (example)
 		
 		
