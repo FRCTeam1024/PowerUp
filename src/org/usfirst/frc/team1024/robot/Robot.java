@@ -61,8 +61,12 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", new RightPositionAuto());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
-		//autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
+
+		autoChooser.addObject("drive straight 20", new DriveStraight(20));
+		autoChooser.addObject("drive backward 20", new DriveStraight(-20));
+//autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
+		SmartDashboard.putData(drivetrain.posPID);
 		
 		
 		//Testing Space
