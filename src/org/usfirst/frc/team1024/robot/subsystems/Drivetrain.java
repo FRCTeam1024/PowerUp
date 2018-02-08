@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -133,7 +134,7 @@ public class Drivetrain extends Subsystem {
 	 * (This is a separate function because the gyro is backwards)
 	 */
 	public void pidDriveBackwardStraight() {
-		drive(posPID.get() - trimPID.get(), posPID.get() + trimPID.get());
+		drive(-posPID.get() - trimPID.get(), -posPID.get() + trimPID.get());
 	}
 
 	/**
@@ -161,6 +162,7 @@ public class Drivetrain extends Subsystem {
 
 	public void resetGyro() {
 		navx.reset();
+		Timer.delay(0.2);
 		//navx.zeroYaw();
 	}
 	

@@ -52,8 +52,8 @@ public class RobotMap {
 	public static final double TRIM_PID_MIN_OUTPUT = -0.2;
 	public static final double TRIM_PID_MAX_OUTPUT = 0.2;
 
-	public static final double POS_PID_MIN_OUTPUT = -0.3;
-	public static final double POS_PID_MAX_OUTPUT = 0.3;
+	public static final double POS_PID_MIN_OUTPUT = -1.0;
+	public static final double POS_PID_MAX_OUTPUT = 1.0;
 	
 	public static final double TURN_PID_MIN_OUTPUT = -1.0;
 	public static final double TURN_PID_MAX_OUTPUT = 1.0;
