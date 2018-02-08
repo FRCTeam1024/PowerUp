@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team1024.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 //import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -16,8 +18,9 @@ package org.usfirst.frc.team1024.robot;
 public class OI {
 	/*public final Joystick lJoy = new Joystick(0);
 	public final Joystick rJoy = new Joystick(1);
-	
 	*/
+	public final Joystick intakeJoy = new Joystick(2);
+	
 	
 	public OI () {
 		
