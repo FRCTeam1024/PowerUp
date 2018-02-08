@@ -22,8 +22,7 @@ import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team1024.robot.subsystems.Intake;
-import org.usfirst.frc.team1024.robot.subsystems.Sensors;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,8 +34,6 @@ import org.usfirst.frc.team1024.robot.subsystems.Sensors;
 public class Robot extends TimedRobot {
 	public static FieldConfig fieldConfig;
 	public static Drivetrain drivetrain;
-	public static Intake intake;
-	public static final Sensors sensors = new Sensors();
 	public static OI oi;
 	public boolean isDone = false;
 	

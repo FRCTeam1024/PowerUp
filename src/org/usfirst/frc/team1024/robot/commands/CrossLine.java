@@ -17,7 +17,6 @@ public class CrossLine extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	requires(Robot.sensors);
     	
     }
 
@@ -28,7 +27,6 @@ public class CrossLine extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drivetrain.drive(1.0, 1.0);
-    	 distance = Robot.sensors.getDistanceInches();
     	
     }
 
