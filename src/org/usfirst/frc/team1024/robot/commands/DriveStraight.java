@@ -30,12 +30,12 @@ public class DriveStraight extends Command {
     	//System.out.println("I am here");
     	
     	SmartDashboard.putNumber("targetDistance", targetDistance);
-    	Robot.drivetrain.pidDriveForwardStraight();
-    	/*if(targetDistance < 0) {
+    	// Robot.drivetrain.pidDriveForwardStraight();
+    	if(targetDistance < 0) {
     		Robot.drivetrain.pidDriveBackwardStraight();
     	} else {
     		Robot.drivetrain.pidDriveForwardStraight();
-    	}*/
+    	}
     }
 
     protected boolean isFinished() {
