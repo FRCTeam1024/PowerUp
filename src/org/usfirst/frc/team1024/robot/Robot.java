@@ -22,7 +22,7 @@ import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
-
+import org.usfirst.frc.team1024.robot.subsystems.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
 	public static Drivetrain drivetrain;
 	public static OI oi;
 	public boolean isDone = false;
+	public static Intake Intake;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> autoChooser = new SendableChooser<>();

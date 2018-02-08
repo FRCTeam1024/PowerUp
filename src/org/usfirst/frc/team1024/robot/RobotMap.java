@@ -31,17 +31,17 @@ public class RobotMap {
 	public static final int LEFT_INTAKE_MOTOR_PORT = 8;
 	public static final int RIGHT_INTAKE_MOTOR_PORT = 9;
 	
+	//These are not final ports!
 	//Pnuematics:
 	public static final int SHIFTER_PORT = 0;
 	
 	public static final int LIFT_CLAMP_FOWARD_PORT = 1;
 	public static final int LIFT_CLAMP_REVERSE_PORT = 2;
 	
-	public static final int INTAKE_SLIDE_PORT = 3;
-	public static final int INTAKE_OUT_PORT = 4;
-	
-	public static final int INTAKE_MANIPULATE_PORT = 5;
-	
+	public static final int RIGHT_INTAKE_SLIDE_PORT = 3;
+	public static final int LEFT_INTAKE_SLIDE_PORT = 4;
+	public static final int LEFT_INTAKE_POS_PORT = 5;
+	public static final int RIGHT_INTAKE_POS_PORT = 6;
 	
 	//I2C
 	public static final Port NAVX_PORT = Port.kMXP;
