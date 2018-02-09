@@ -48,7 +48,7 @@ public class Drivetrain extends Subsystem {
 	public double turnkD = RobotMap.TURN_KD;
 	public double turnkF = RobotMap.TURN_KF;
 	
-	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B, false, EncodingType.k4X);
+	public Encoder encoder = new Encoder(RobotMap.DRIVE_ENCODER_CHANNEL_A, RobotMap.DRIVE_ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	
 	public PIDController posPID;
 	public PIDController turnPID;

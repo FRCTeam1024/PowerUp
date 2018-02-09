@@ -19,8 +19,7 @@ public class OI {
 	/*public final Joystick lJoy = new Joystick(0);
 	public final Joystick rJoy = new Joystick(1);
 	*/
-	public final Joystick intakeJoy = new Joystick(2);
-	
+	public final Joystick logi = new Joystick(RobotMap.LOGITECH_JOYSTICK_PORT);
 	
 	public OI () {
 		

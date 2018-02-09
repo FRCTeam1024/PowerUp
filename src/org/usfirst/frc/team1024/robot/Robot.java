@@ -22,6 +22,7 @@ import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team1024.robot.subsystems.Lift;
 
 
 /**
@@ -34,6 +35,7 @@ import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 public class Robot extends TimedRobot {
 	public static FieldConfig fieldConfig;
 	public static Drivetrain drivetrain;
+	public static Lift lift = new Lift();
 	public static OI oi;
 	public boolean isDone = false;
 	

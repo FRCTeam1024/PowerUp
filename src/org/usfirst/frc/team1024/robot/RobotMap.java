@@ -68,8 +68,11 @@ public class RobotMap {
 	public static final int ULTRASONIC_PORT = 0;
 	
 	//Digital
-	public static final int ENCODER_CHANNEL_A = 0;
-	public static final int ENCODER_CHANNEL_B = 1;
+	public static final int DRIVE_ENCODER_CHANNEL_A = 0;
+	public static final int DRIVE_ENCODER_CHANNEL_B = 1;
+	
+	public static final int LIFT_ENCODER_CHANNEL_A = 2;
+	public static final int LIFT_ENCODER_CHANNEL_B = 3;
 	
 	//PID Constants
 	public static final double TURN_KP = 0.05; //was 0.055
@@ -109,4 +112,22 @@ public class RobotMap {
 	public static final double FIELD_LENGTH = 648.0;
 	public static final double WALL_TO_SWITCH_DISTANCE = 140.0;
 	public static final double WALL_TO_SCALE_DISTANCE = 299.65;
+	
+	public static final double INTAKE_HEIGHT = 0.0;
+	public static final double SWITCH_HEIGHT = 0.0;
+	public static final double SCALE_OWNERSHIP_HEIGHT = 0.0;
+	public static final double SCALE_NEUTRAL_HEIGHT = 0.0;
+	public static final double SCALE_LOSS_HEIGHT = 0.0;
+	
+	//Controller Constants:
+	public static final int LEFT_JOYSTICK_PORT = 0;
+	public static final int RIGHT_JOYSTICK_PORT = 1;
+	public static final int LOGITECH_JOYSTICK_PORT = 2;
+	
+	//
+	public static final int LIFT_STICK_AXIS = 0;
+	
+	public static final int LIFT_OVERRIDE_BUTTON = 0;
+	
+	
 }

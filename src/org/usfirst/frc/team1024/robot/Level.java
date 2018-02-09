@@ -1,17 +1,18 @@
 package org.usfirst.frc.team1024.robot;
 
 public enum Level {
-	INTAKE (0.0),
-	SWITCH (0.0),
-	SCALE_OWNERSHIP (0.0),
-	SCALE_NEUTRAL (0.0),
-	SCALE_LOSS (0.0);
+	INTAKE (RobotMap.INTAKE_HEIGHT),
+	SWITCH (RobotMap.SWITCH_HEIGHT),
+	SCALE_OWNERSHIP (RobotMap.SCALE_OWNERSHIP_HEIGHT),
+	SCALE_NEUTRAL (RobotMap.SCALE_NEUTRAL_HEIGHT),
+	SCALE_LOSS (RobotMap.SCALE_LOSS_HEIGHT);
 	private final double height;
+	
 	Level(double height) {
 		this.height = height;
 	}
 	
-	private double height() {
+	public double getHeight() {
 		return height;
 	}
 }
