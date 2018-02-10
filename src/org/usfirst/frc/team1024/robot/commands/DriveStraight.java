@@ -27,7 +27,7 @@ public class DriveStraight extends Command {
     }
     
     protected void execute() {
-    	//System.out.println("I am here");
+    	System.out.println("executing DriveStraight");
     	
     	SmartDashboard.putNumber("targetDistance", targetDistance);
     	// Robot.drivetrain.pidDriveForwardStraight();
@@ -47,7 +47,7 @@ public class DriveStraight extends Command {
     }
     
     protected void end() {
-    	//System.out.println("In end()");
+    	System.out.println("In end()");
     	Robot.drivetrain.stop();
     	Robot.drivetrain.resetOpticalEncoder();
     	Robot.drivetrain.posPID.disable();
