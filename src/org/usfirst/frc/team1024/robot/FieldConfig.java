@@ -3,7 +3,17 @@ package org.usfirst.frc.team1024.robot;
 public class FieldConfig {
 	
 	public enum POSITION {
-		RIGHT, LEFT, UNKNOWN;
+		RIGHT(-1), LEFT(1), UNKNOWN(0);
+		
+		int intValue;
+		
+		private POSITION(int intValue) {
+			this.intValue = intValue;
+		}
+		
+		public int intValue() {
+			return intValue;
+		}
 	}
 	
 	private POSITION switchPos = POSITION.UNKNOWN;
