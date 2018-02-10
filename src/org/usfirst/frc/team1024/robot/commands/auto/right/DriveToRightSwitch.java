@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RightPositionAuto extends CommandGroup {
+public class DriveToRightSwitch extends CommandGroup {
 
-    public RightPositionAuto() {
+    public DriveToRightSwitch() {
     	requires(Robot.drivetrain);
     	addSequential(new DriveStraight(140));
     	addSequential(new TurnLeft(90));
