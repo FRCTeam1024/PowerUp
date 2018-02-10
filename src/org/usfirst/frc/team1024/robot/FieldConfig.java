@@ -10,7 +10,6 @@ public class FieldConfig {
 		if (combinationString.charAt(1) == 'L') {
 			scalePos = -1;
 		}
-		
 	}
 	
 	public int getSwitchPosition() {

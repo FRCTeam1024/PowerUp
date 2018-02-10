@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commands.AutoSwitchFront;
+import org.usfirst.frc.team1024.robot.commands.AutoSwitchMiddle;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
@@ -24,7 +25,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
-
+import org.usfirst.frc.team1024.robot.subsystems.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
 	public static Lift lift = new Lift();
 	public static OI oi;
 	public boolean isDone = false;
+	public static Intake Intake;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -63,7 +65,6 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", new RightPositionAuto());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
-
 		autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
 		autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
@@ -107,9 +108,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-//		m_autonomousCommand = autoChooser.getSelected();
+		m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
-		m_autonomousCommand = new DriveAndTurn();
+		//m_autonomousCommand = new DriveAndTurn();
 		// schedule the autonomous command (example)
 		
 		

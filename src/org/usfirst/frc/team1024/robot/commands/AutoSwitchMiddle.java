@@ -23,7 +23,7 @@ public class AutoSwitchMiddle extends CommandGroup {
 	 */
     public AutoSwitchMiddle(int position, int switchSide, int switchPos) {
     	addSequential(new DriveStraight(INITIAL_DRIVE_DISTANCE));
-    	addSequential(new TurnRelative(-90 * switchSide));
+    	addSequential(new TurnRelative((-90 * switchSide)));
     	addSequential(new DriveStraight(Math.abs(position - switchPos) + 12));
     	addSequential(new TurnRelative(90 * switchSide));
     	addSequential(new DriveStraight(WALL_TO_SWITCH_DROPOFF_DISTANCE -INITIAL_DRIVE_DISTANCE));

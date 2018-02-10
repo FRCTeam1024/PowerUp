@@ -3,6 +3,7 @@ package org.usfirst.frc.team1024.robot.commands.auto;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.TurnAbsolute;
+import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -14,8 +15,14 @@ public class RightPositionAuto extends CommandGroup {
     public RightPositionAuto() {
     	requires(Robot.drivetrain);
     	addSequential(new DriveStraight(140));
-    	addSequential(new TurnAbsolute(-90));
-    	addSequential(new DriveStraight(6));
+    	addSequential(new TurnRelative(-90));
+    	addSequential(new DriveStraight(10));
     	// TODO put cube on switch
+    	/* To scale:
+    	 * addSequential(new DriveStraight(-10));
+    	 * addSequential(new TurnRelative(90));
+    	 * addSequential(new DriveStraight(20));
+    	 * 
+    	 */
     }
 }

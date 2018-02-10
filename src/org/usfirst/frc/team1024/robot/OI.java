@@ -7,7 +7,13 @@
 
 package org.usfirst.frc.team1024.robot;
 
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeFlat;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 //import edu.wpi.first.wpilibj.Joystick;
 
@@ -18,10 +24,19 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
 	public final Joystick lJoy = new Joystick(0);
 	public final Joystick rJoy = new Joystick(1);
-	
 	public final Joystick logi = new Joystick(RobotMap.LOGITECH_JOYSTICK_PORT);
-	
+
+	JoystickButton intakeExtendButton = new JoystickButton(logi, 2);
+	JoystickButton intakeRetractButton = new JoystickButton(logi, 3);
+	JoystickButton intakeFlatButton = new JoystickButton(logi, 1);
+	JoystickButton intakeNarrowButton = new JoystickButton(logi,4);
+
 	public OI () {
+		intakeExtendButton.whenPressed(new IntakeExtend());
+		intakeRetractButton.whenPressed(new IntakeRetract());
+		intakeFlatButton.whenPressed(new IntakeFlat());
+		intakeNarrowButton.whenPressed(new IntakeNarrow());
+		
 		
 	}
 }
