@@ -29,11 +29,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
-	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
+	private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
-	private TalonSRX frontRight = new TalonSRX(7); //RobotMap.FRONT_RIGHT_MOTOR_PORT);
-	//private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
-	private TalonSRX rearRight = new TalonSRX(6); //RobotMap.REAR_RIGHT_MOTOR_PORT);
+	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
+	private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
+	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
 	
 	private AHRS navx;
@@ -61,6 +61,9 @@ public class Drivetrain extends Subsystem {
 		
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
+		setFollower(middleLeft, frontLeft);
+		setFollower(middleRight, frontRight);
+		
 		navx = new AHRS(RobotMap.NAVX_PORT);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();

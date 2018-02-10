@@ -18,6 +18,7 @@ import org.usfirst.frc.team1024.robot.commands.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
 
 		autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
+		autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
 		SmartDashboard.putData(drivetrain.posPID);
@@ -87,6 +89,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
 	}
 
 	/**
@@ -124,6 +128,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
 	}
 
 	@Override
@@ -144,8 +149,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
 		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
 	}
 
 	/**
