@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class DriveToRightSwitch extends CommandGroup {
+public class DriveToRightScale extends CommandGroup {
 
-    public DriveToRightSwitch() {
+    public DriveToRightScale() {
     	requires(Robot.drivetrain);
-    	addSequential(new DriveStraight(AutoDriveConstants.BACK_WALL_TO_END_OF_SWITCH_INCHES));
+    	addSequential(new DriveStraight(AutoDriveConstants.BACK_WALL_TO_END_OF_SCALE_INCHES));
     	addSequential(new TurnLeft(90));
     	addSequential(new DriveStraight(6));
     	// TODO put cube on switch
