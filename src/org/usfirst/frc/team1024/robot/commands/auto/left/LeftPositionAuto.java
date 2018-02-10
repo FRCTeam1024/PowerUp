@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands.auto;
+package org.usfirst.frc.team1024.robot.commands.auto.left;
 
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RightPositionAuto extends CommandGroup {
+public class LeftPositionAuto extends CommandGroup {
 
-    public RightPositionAuto() {
+    public LeftPositionAuto() {
     	requires(Robot.drivetrain);
     	addSequential(new DriveStraight(140));
-    	addSequential(new TurnAbsolute(-90));
+    	addSequential(new TurnAbsolute(90));
     	addSequential(new DriveStraight(6));
-    	// TODO put cube on switch
+      	// TODO put cube on switch
     }
 }

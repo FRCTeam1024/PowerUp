@@ -1,8 +1,10 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commandgroups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import java.lang.Math;
 
 import org.usfirst.frc.team1024.robot.RobotMap;
+import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.Robot;
 /**
  *
@@ -22,7 +24,7 @@ public class AutoSwitchFront extends CommandGroup {
 	 * 			229.13 = Right
 	 */
     public AutoSwitchFront(double position, double switchPos) {
-    	int switchSide = Robot.fieldConfig.getSwitchPosition();
+    	int switchSide = Robot.fieldConfig.getSwitchPosition().intValue();
        	addSequential(new DriveStraight(INITIAL_DRIVE_DISTANCE));
     	addSequential(new TurnRelative(90 * switchSide));
     	addSequential(new DriveStraight(Math.abs(position - switchPos)));
