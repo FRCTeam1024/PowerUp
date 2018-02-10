@@ -7,10 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Delay extends Command {
+	
+	double delay;
 
-    public Delay() {
+    public Delay(double delay) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.delay = delay;
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +22,7 @@ public class Delay extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Timer.delay(1);
+    	Timer.delay(delay);
     }
 
     // Make this return true when this Command no longer needs to run execute()

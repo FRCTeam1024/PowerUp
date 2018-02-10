@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CubeGet extends Command {
+public class IntakeExtend extends Command {
 
-    public CubeGet() {
+    public IntakeExtend() {
         requires(Robot.Intake);
     }
 
@@ -19,6 +19,7 @@ public class CubeGet extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.Intake.slideOut();
     }
 
     // Make this return true when this Command no longer needs to run execute()

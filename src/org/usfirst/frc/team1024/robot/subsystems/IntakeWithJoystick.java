@@ -1,13 +1,15 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.subsystems;
+
+import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExtendIntake extends Command {
+public class IntakeWithJoystick extends Command {
 
-    public ExtendIntake() {
+    public IntakeWithJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -18,6 +20,7 @@ public class ExtendIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.Intake.intakeSpeed(Robot.oi.logi.getY());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -27,10 +30,12 @@ public class ExtendIntake extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.Intake.intakeStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.Intake.intakeStop();
     }
 }
