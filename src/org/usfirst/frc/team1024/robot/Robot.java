@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commands.AutoSwitchFront;
+import org.usfirst.frc.team1024.robot.commands.AutoSwitchMiddle;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
@@ -61,7 +62,6 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", new RightPositionAuto());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
-
 		autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
@@ -102,9 +102,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-//		m_autonomousCommand = autoChooser.getSelected();
+		m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
-		m_autonomousCommand = new DriveAndTurn();
+		//m_autonomousCommand = new DriveAndTurn();
 		// schedule the autonomous command (example)
 		
 		

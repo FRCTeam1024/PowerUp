@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeEject extends Command {
 
     public IntakeEject() {
-       requires(Robot.Intake);
+       
     }
 
     // Called just before this Command runs the first time
