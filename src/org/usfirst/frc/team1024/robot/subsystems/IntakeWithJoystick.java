@@ -20,7 +20,7 @@ public class IntakeWithJoystick extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.Intake.intakeSpeed(Robot.oi.logi.getY());
+    	Robot.Intake.intakeSpeed(Robot.oi.logi.getRawAxis(3));
     }
 
     // Make this return true when this Command no longer needs to run execute()
