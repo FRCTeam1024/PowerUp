@@ -16,20 +16,29 @@ import edu.wpi.first.wpilibj.I2C.Port;
  * floating around.
  */
 public class RobotMap {
+	public static final int LEFT_INTAKE_MOTOR_PORT = 0;
+	public static final int RIGHT_INTAKE_MOTOR_PORT = 1;
 	
-	//Motors:
-	public static final int FRONT_LEFT_MOTOR_PORT = 42;
-	public static final int MIDDLE_LEFT_MOTOR_PORT = 1;
-	public static final int REAR_LEFT_MOTOR_PORT = 1; //will be 2
-	public static final int FRONT_RIGHT_MOTOR_PORT = 2; //will be 3
-	public static final int MIDDLE_RIGHT_MOTOR_PORT = 4;
-	public static final int REAR_RIGHT_MOTOR_PORT = 3; //will be 5
+	public static final int FRONT_LEFT_MOTOR_PORT = 2;
+	public static final int MIDDLE_LEFT_MOTOR_PORT = 3;
+	public static final int REAR_LEFT_MOTOR_PORT = 4;
+	
+	public static final int FRONT_RIGHT_MOTOR_PORT = 5;
 	
 	public static final int LIFT_MOTOR_1_PORT = 6; //motors will go the same direction
 	public static final int LIFT_MOTOR_2_PORT = 7;
 	
-	public static final int LEFT_INTAKE_MOTOR_PORT = 8;
-	public static final int RIGHT_INTAKE_MOTOR_PORT = 9;
+	public static final int MIDDLE_RIGHT_MOTOR_PORT = 8;
+	public static final int REAR_RIGHT_MOTOR_PORT = 9;
+	//Motors:
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//Pnuematics:
 	public static final int SHIFTER_PORT = 0;
@@ -125,9 +134,7 @@ public class RobotMap {
 	public static final int LOGITECH_JOYSTICK_PORT = 2;
 	
 	//
-	public static final int LIFT_STICK_AXIS = 0;
+	public static final int LIFT_STICK_AXIS = 1;
 	
 	public static final int LIFT_OVERRIDE_BUTTON = 0;
-	
-	
 }
