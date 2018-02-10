@@ -37,16 +37,16 @@ public class Lift extends Subsystem {
 		liftMotor1.config_kP(0, LIFT_KP, 10);
 		liftMotor1.config_kI(0, LIFT_KI, 10);
 		liftMotor1.config_kD(0, LIFT_KD, 10);
-		liftMotor1.configPeakOutputForward(0.25, 10);
-		liftMotor1.configPeakOutputReverse(-0.25, 10);
-		liftMotor2.configPeakOutputForward(0.25, 10); //can maybe remove?
-		liftMotor2.configPeakOutputReverse(-0.25, 10);
+		liftMotor1.configPeakOutputForward(1.0, 10);
+		liftMotor1.configPeakOutputReverse(-1.0, 10);
+		liftMotor2.configPeakOutputForward(1.0, 10); //can maybe remove?
+		liftMotor2.configPeakOutputReverse(-1.0, 10);
 		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 	}
 	
 	public void moveCarriage(double power) {
-		liftMotor1.set(ControlMode.PercentOutput, power);
-		liftMotor2.set(ControlMode.PercentOutput, power);
+		liftMotor1.set(ControlMode.PercentOutput, -power);
+		liftMotor2.set(ControlMode.PercentOutput, -power);
 	}
 	
 	public void setPIDSetpoint(double setpoint) {
