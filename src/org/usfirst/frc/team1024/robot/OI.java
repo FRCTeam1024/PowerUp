@@ -7,10 +7,10 @@
 
 package org.usfirst.frc.team1024.robot;
 
-import org.usfirst.frc.team1024.robot.commands.IntakeExtend;
-import org.usfirst.frc.team1024.robot.commands.IntakeFlat;
-import org.usfirst.frc.team1024.robot.commands.IntakeNarrow;
-import org.usfirst.frc.team1024.robot.commands.IntakeRetract;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeFlat;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
