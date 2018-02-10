@@ -20,7 +20,6 @@ import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
-import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 
@@ -104,7 +103,7 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 //		m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
-		m_autonomousCommand = new DriveToRightScale();
+		m_autonomousCommand = new DriveToRightSwitch();
 		// schedule the autonomous command (example)
 		
 		
