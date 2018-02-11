@@ -14,17 +14,16 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1024.robot.commands.AutoSwitchFront;
-import org.usfirst.frc.team1024.robot.commands.AutoSwitchMiddle;
+import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
+import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
-import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
-import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
-import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
-import org.usfirst.frc.team1024.robot.subsystems.DriveWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
 import org.usfirst.frc.team1024.robot.subsystems.Intake;
@@ -65,7 +64,7 @@ public class Robot extends TimedRobot {
 		
 		autoChooser.addDefault("Default Do Nothing", new DoNothing());
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
-		autoChooser.addObject("Right Position Auto", new RightPositionAuto());
+		autoChooser.addObject("Right Position Auto", new DriveToRightSwitch());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
 		autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
@@ -110,9 +109,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		m_autonomousCommand = autoChooser.getSelected();
+		//m_autonomousCommand = autoChooser.getSelected();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
+
 		//m_autonomousCommand = new DriveAndTurn();
+
+		m_autonomousCommand = new DriveToRightSwitch();
+
 		// schedule the autonomous command (example)
 		
 		
