@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		drivetrain.setCoast();
 
 	}
 
@@ -110,7 +111,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		//m_autonomousCommand = autoChooser.getSelected();
-		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
+		drivetrain.setBrake();
+		//m_autonomousCommand = new AutoSwitchFront(324/2 + 134-27.5, 124 + 85.25);
 
 		//m_autonomousCommand = new DriveAndTurn();
 
@@ -139,6 +141,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		drivetrain.setBrake();
+		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

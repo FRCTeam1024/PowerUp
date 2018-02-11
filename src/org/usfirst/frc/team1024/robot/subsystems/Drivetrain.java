@@ -14,6 +14,7 @@ import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -95,6 +96,24 @@ public class Drivetrain extends Subsystem {
         //turnPID.setPercentTolerance(1.0);
         
         
+	}
+	
+	public void setCoast() {
+		frontLeft.setNeutralMode(NeutralMode.Coast);
+		middleLeft.setNeutralMode(NeutralMode.Coast);
+		rearLeft.setNeutralMode(NeutralMode.Coast);
+		frontRight.setNeutralMode(NeutralMode.Coast);
+		middleRight.setNeutralMode(NeutralMode.Coast);
+		rearRight.setNeutralMode(NeutralMode.Coast);
+	}
+	
+	public void setBrake() {
+		frontLeft.setNeutralMode(NeutralMode.Brake);
+		middleLeft.setNeutralMode(NeutralMode.Brake);
+		rearLeft.setNeutralMode(NeutralMode.Brake);
+		frontRight.setNeutralMode(NeutralMode.Brake);
+		middleRight.setNeutralMode(NeutralMode.Brake);
+		rearRight.setNeutralMode(NeutralMode.Brake);
 	}
 	
 	public void shiftLow() {

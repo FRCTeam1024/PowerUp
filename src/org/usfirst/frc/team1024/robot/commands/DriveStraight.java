@@ -27,8 +27,6 @@ public class DriveStraight extends Command {
     }
     
     protected void execute() {
-    	System.out.println("executing DriveStraight");
-    	
     	SmartDashboard.putNumber("targetDistance", targetDistance);
     	// Robot.drivetrain.pidDriveForwardStraight();
     	if(targetDistance < 0) {

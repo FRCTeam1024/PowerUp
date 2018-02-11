@@ -14,9 +14,9 @@ public class DriveToRightSwitch extends CommandGroup {
 
     public DriveToRightSwitch() {
     	requires(Robot.drivetrain);
-    	addSequential(new DriveStraight(140));
+    	addSequential(new DriveStraight(146));
     	addSequential(new TurnLeft(90));
-    	addSequential(new DriveStraight(6));
+    	addSequential(new DriveStraight(20));
 
     	// TODO put cube on switch
     	/* To scale:
