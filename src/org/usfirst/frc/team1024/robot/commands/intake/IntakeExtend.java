@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeExtend extends Command {
 
     public IntakeExtend() {
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -18,7 +19,7 @@ public class IntakeExtend extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.Intake.slideOut();
+    	Robot.intake.slideOut();
     }
 
     // Make this return true when this Command no longer needs to run execute()

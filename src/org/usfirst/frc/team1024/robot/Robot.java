@@ -20,12 +20,15 @@ import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
+import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.RightPositionAuto;
+import org.usfirst.frc.team1024.robot.subsystems.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
 import org.usfirst.frc.team1024.robot.subsystems.Intake;
+import org.usfirst.frc.team1024.robot.subsystems.IntakeWithJoystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,11 +39,11 @@ import org.usfirst.frc.team1024.robot.subsystems.Intake;
  */
 public class Robot extends TimedRobot {
 	public static FieldConfig fieldConfig;
-	public static Drivetrain drivetrain;
+	public static Drivetrain drivetrain = new Drivetrain();
 	public static Lift lift = new Lift();
+	public static Intake intake = new Intake();
 	public static OI oi;
 	public boolean isDone = false;
-	public static Intake Intake;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -54,7 +57,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		drivetrain = new Drivetrain();
 		
 		drivetrain.resetOpticalEncoder();
 		
@@ -91,7 +93,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
 	}
 
 	/**
@@ -129,7 +131,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
 	}
 
 	@Override
@@ -150,8 +152,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		Scheduler.getInstance().add(new DriveWithJoysticks());
+		Scheduler.getInstance().add(new IntakeWithJoystick());
+		Scheduler.getInstance().add(new MoveLiftWithJoysticks());
+		
 		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
 	}
 
 	/**

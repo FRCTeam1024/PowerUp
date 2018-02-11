@@ -19,7 +19,7 @@ public class IntakeEject extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.Intake.intakeSpeed(-1.0);
+    	Robot.intake.intakeSpeed(-1.0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,12 +29,12 @@ public class IntakeEject extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.Intake.intakeStop();
+    	Robot.intake.intakeStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.Intake.intakeStop();
+    	Robot.intake.intakeStop();
     }
 }

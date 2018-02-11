@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,6 +25,7 @@ public class Lift extends Subsystem {
 	private TalonSRX liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PORT);
 	private TalonSRX liftMotor2 = new TalonSRX(RobotMap.LIFT_MOTOR_2_PORT);
 	public Encoder liftEncoder = new Encoder(RobotMap.LIFT_ENCODER_CHANNEL_A, RobotMap.LIFT_ENCODER_CHANNEL_B, false, EncodingType.k4X);
+	private Solenoid clamp = new Solenoid(RobotMap.LIFT_CLAMP_PORT);
 	
 	private final double LIFT_KP = 0.1;
 	private final double LIFT_KI = 0.0;
@@ -37,10 +39,10 @@ public class Lift extends Subsystem {
 		liftMotor1.config_kP(0, LIFT_KP, 10);
 		liftMotor1.config_kI(0, LIFT_KI, 10);
 		liftMotor1.config_kD(0, LIFT_KD, 10);
-		liftMotor1.configPeakOutputForward(1.0, 10);
-		liftMotor1.configPeakOutputReverse(-1.0, 10);
-		liftMotor2.configPeakOutputForward(1.0, 10); //can maybe remove?
-		liftMotor2.configPeakOutputReverse(-1.0, 10);
+		liftMotor1.configPeakOutputForward(0.25, 10);
+		liftMotor1.configPeakOutputReverse(-0.25, 10);
+		liftMotor2.configPeakOutputForward(0.25, 10); //can maybe remove?
+		liftMotor2.configPeakOutputReverse(-0.25, 10);
 		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 	}
 	
@@ -51,6 +53,10 @@ public class Lift extends Subsystem {
 	
 	public void setPIDSetpoint(double setpoint) {
 		liftMotor1.set(ControlMode.Position, setpoint);
+	}
+	
+	public void clamp(boolean value) {
+		clamp.set(value);
 	}
 	
 	public void stopLift() {

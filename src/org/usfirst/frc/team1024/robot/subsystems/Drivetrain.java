@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +36,7 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
 	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
-	
+	private Solenoid shifter = new Solenoid(RobotMap.SHIFTER_PORT);
 	private AHRS navx;
 	
 	public double rotateToAngleRate;
@@ -93,6 +94,14 @@ public class Drivetrain extends Subsystem {
         //turnPID.setPercentTolerance(1.0);
         
         
+	}
+	
+	public void shiftLow() {
+		shifter.set(false);
+	}
+	
+	public void shiftHigh() {
+		shifter.set(true);
 	}
 	
 	public boolean isRotating() {

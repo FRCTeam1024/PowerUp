@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1024.robot;
 
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
  * floating around.
  */
 public class RobotMap {
-	public static final int LEFT_INTAKE_MOTOR_PORT = 0;
+	public static final int LEFT_INTAKE_MOTOR_PORT = 42;
 	public static final int RIGHT_INTAKE_MOTOR_PORT = 1;
 	
 	public static final int FRONT_LEFT_MOTOR_PORT = 2;
@@ -40,17 +41,14 @@ public class RobotMap {
 	
 	
 	
-	//These are not final ports!
 	//Pnuematics:
-	public static final int SHIFTER_PORT = 0;
+	public static final int SHIFTER_PORT = 2;
 	
-	public static final int LIFT_CLAMP_FOWARD_PORT = 1;
-	public static final int LIFT_CLAMP_REVERSE_PORT = 2;
+	public static final int LIFT_CLAMP_PORT = 5;
 	
-	public static final int RIGHT_INTAKE_SLIDE_PORT = 3;
-	public static final int LEFT_INTAKE_SLIDE_PORT = 4;
-	public static final int LEFT_INTAKE_POS_PORT = 5;
-	public static final int RIGHT_INTAKE_POS_PORT = 6;
+	public static final int INTAKE_SLIDE_PORT = 1;
+	
+	public static final int INTAKE_POS_PORT = 0;
 	
 	//I2C
 	public static final Port NAVX_PORT = Port.kMXP;
@@ -135,6 +133,17 @@ public class RobotMap {
 	
 	//
 	public static final int LIFT_STICK_AXIS = 1;
+	
+	public static final int LEFT_SHIFT_HIGH_BUTTON = 13;
+	public static final int LEFT_SHIFT_LOW_BUTTON = 16;
+	public static final int RIGHT_SHIFT_HIGH_BUTTON = 13;
+	public static final int RIGHT_SHIFT_LOW_BUTTON = 16;
+	
+	public static final int INTAKE_SLIDE_IN_BUTTON = 8;
+	public static final int INTAKE_SLIDE_OUT_BUTTON = 6;
+	
+	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
+	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
 	
 	public static final int LIFT_OVERRIDE_BUTTON = 0;
 }

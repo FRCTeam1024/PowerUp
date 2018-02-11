@@ -15,13 +15,15 @@ public class Intake extends Subsystem {
 	//2 Motors, 4 Solenoids.
 	//2 Solenoids per arm (to slide & manipulate).
 	//1 Motor per arm (each arm having two wheels controlled by one).
-    TalonSRX leftIntake = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR_PORT);
-    Solenoid leftIntakeSlide = new Solenoid(RobotMap.LEFT_INTAKE_SLIDE_PORT);
-    Solenoid leftIntakePos = new Solenoid(RobotMap.LEFT_INTAKE_POS_PORT);
+    private TalonSRX leftIntake = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR_PORT);
+    private Solenoid leftIntakeSlide = new Solenoid(RobotMap.INTAKE_SLIDE_PORT);
+    private Solenoid leftIntakePos = new Solenoid(RobotMap.INTAKE_POS_PORT);
     
-    TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
-    Solenoid rightIntakeSlide = new Solenoid(RobotMap.RIGHT_INTAKE_SLIDE_PORT);
-    Solenoid rightIntakePos = new Solenoid(RobotMap.RIGHT_INTAKE_POS_PORT);
+    private TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
+    
+    public Intake () {
+    	
+    }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -42,21 +44,17 @@ public class Intake extends Subsystem {
     
     public void slideOut() {
     	leftIntakeSlide.set(true);
-    	rightIntakeSlide.set(true);
     }
     
     public void slideIn() {
     	leftIntakeSlide.set(false);
-    	rightIntakeSlide.set(false);
     }
     
     public void posOut() {
     	leftIntakePos.set(true);
-    	rightIntakePos.set(true);
     }
     
     public void posIn() {
     	leftIntakePos.set(true);
-    	rightIntakePos.set(true);
     }
 }
