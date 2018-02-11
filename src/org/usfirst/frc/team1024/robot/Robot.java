@@ -21,8 +21,10 @@ import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
@@ -69,6 +71,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
 		autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
+		autoChooser.addObject("Turn 90", new TurnLeft(90));
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
 		SmartDashboard.putData(drivetrain.posPID);
@@ -110,13 +113,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		//m_autonomousCommand = autoChooser.getSelected();
+		m_autonomousCommand = autoChooser.getSelected();
 		drivetrain.setBrake();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 + 134-27.5, 124 + 85.25);
 
 		//m_autonomousCommand = new DriveAndTurn();
 
-		m_autonomousCommand = new DriveToRightSwitch();
+		//m_autonomousCommand = new DriveToRightSwitch();
+		//m_autonomousCommand = new CrossToLeftScale();
 
 		// schedule the autonomous command (example)
 		

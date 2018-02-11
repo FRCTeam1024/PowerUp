@@ -2,6 +2,7 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
+import org.usfirst.frc.team1024.robot.commands.Delay;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.TurnAbsolute;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
@@ -24,7 +25,11 @@ public class CrossToLeftScale extends CommandGroup {
     	// turn right to face scale
     	addSequential(new TurnRight(90));
     	// drive forward to scale
-    	addSequential(new DriveStraight(24));
+    	addSequential(new DriveStraight(48));
+    	addSequential(new Delay(1));
+    	addSequential(new DriveStraight(-48));
+    	addSequential(new TurnLeft(180));
+    	addSequential(new DriveStraight(12));
     	// TODO put cube on scale
     }
 }

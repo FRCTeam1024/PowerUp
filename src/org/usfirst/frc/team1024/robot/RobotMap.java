@@ -56,14 +56,14 @@ public class RobotMap {
 	public static final double MIN_ROTATION_ANGLE = -180;
 	public static final double MAX_ROTATION_ANGLE = 180;
 
-	public static final double TRIM_PID_MIN_OUTPUT = -0.2;
-	public static final double TRIM_PID_MAX_OUTPUT = 0.2;
+	public static final double TRIM_PID_MIN_OUTPUT = -0.1;
+	public static final double TRIM_PID_MAX_OUTPUT = 0.1;
 
 	public static final double POS_PID_MIN_OUTPUT = -0.5;
 	public static final double POS_PID_MAX_OUTPUT = 0.5;
 	
-	public static final double TURN_PID_MIN_OUTPUT = -0.5;
-	public static final double TURN_PID_MAX_OUTPUT = 0.5;
+	public static final double TURN_PID_MIN_OUTPUT = -1.0;
+	public static final double TURN_PID_MAX_OUTPUT = 1.0;
 	
 	public static final double TURN_PID_ABSOLUTE_TOLERANCE = 0.5;
 
