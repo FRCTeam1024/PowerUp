@@ -3,6 +3,7 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.OpenClamp;
 import org.usfirst.frc.team1024.robot.commands.TurnAbsolute;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 
@@ -21,5 +22,6 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	addSequential(new TurnLeft(90));
     	addSequential(new DriveStraight(6));
     	// TODO put cube on scale
+    	addSequential(new OpenClamp());
     }
 }

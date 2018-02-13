@@ -3,6 +3,7 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.OpenClamp;
 import org.usfirst.frc.team1024.robot.commands.TurnAbsolute;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 
@@ -20,11 +21,7 @@ public class DriveToRightSwitch extends CommandGroup {
     	addSequential(new DriveStraight(20));
 
     	// TODO put cube on switch
-    	/* To scale:
-    	 * addSequential(new DriveStraight(-10));
-    	 * addSequential(new TurnRelative(90));
-    	 * addSequential(new DriveStraight(20));
-    	 * 
-    	 */
+    	//addSequential(new MoveLiftPID());    Add lift level height
+    	//addSequential(new OpenClamp());
     }
 }
