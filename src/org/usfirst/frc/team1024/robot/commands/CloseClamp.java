@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class CloseClamp extends Command {
 
+	boolean isDone;
+	
     public CloseClamp() {
     	requires(Robot.lift);
+    	isDone = false;
     }
 
     // Called just before this Command runs the first time
@@ -20,11 +23,16 @@ public class CloseClamp extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.lift.clamp(false);
+    	isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if (Robot.lift.getClampValue() == false) {
+    		return isDone;
+    	} else {
         return false;
+    	}
     }
 
     // Called once after isFinished returns true

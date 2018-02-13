@@ -2,6 +2,7 @@ package org.usfirst.frc.team1024.robot.commands.intake;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,8 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeEject extends Command {
 
-    public IntakeEject() {
-       
+	boolean isDone;
+	double delay;
+	
+    public IntakeEject(double delay) {
+       isDone = false;
+       this.delay = delay;
     }
 
     // Called just before this Command runs the first time
@@ -20,11 +25,13 @@ public class IntakeEject extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.intake.intakeSpeed(-1.0);
+    	Timer.delay(delay);
+    	isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     // Called once after isFinished returns true

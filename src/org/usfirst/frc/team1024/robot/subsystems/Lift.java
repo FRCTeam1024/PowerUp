@@ -59,6 +59,10 @@ public class Lift extends Subsystem {
 		clamp.set(value);
 	}
 	
+	public boolean getClampValue() {
+		return clamp.get();
+	}
+	
 	public void stopLift() {
 		moveCarriage(0.0);
 	}

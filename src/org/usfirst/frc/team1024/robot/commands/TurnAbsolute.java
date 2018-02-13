@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnAbsolute extends Command {
 	double targetAngle;
-	boolean initialized = false;
+	boolean isDone = false;
 	double rotatePower;
     public TurnAbsolute(double angle) {
     	requires(Robot.drivetrain);
@@ -24,7 +24,7 @@ public class TurnAbsolute extends Command {
     protected void initialize() {
     	//Robot.drivetrain.prepareTurn(targetAngle);
     	
-		initialized = true;
+		isDone = true;
 		
     }
     
@@ -45,13 +45,13 @@ public class TurnAbsolute extends Command {
     protected void end() {
     	Robot.drivetrain.stop();
     	//Robot.drivetrain.getPIDController().disable();
-    	initialized = false;
+    	isDone = false;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.drivetrain.stop();
-    	initialized = false;
+    	isDone = false;
     }
 }

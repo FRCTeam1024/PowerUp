@@ -7,10 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnRelative extends Command {
 	double targetAngle;
+	boolean isDone;
 	int onTargetCount = 0;
     public TurnRelative(double targetAngle) {
     	requires(Robot.drivetrain);
     	this.targetAngle = targetAngle;
+    	isDone = false;
     }
 
     protected void initialize() {
@@ -21,6 +23,7 @@ public class TurnRelative extends Command {
 
     protected void execute() {
     	Robot.drivetrain.pidTurn();
+    	isDone = true;
     }
     
     private boolean isOnTarget() {
@@ -36,7 +39,7 @@ public class TurnRelative extends Command {
     	}
     	
     	if(onTargetCount == 30) {
-    		return true;
+    		return isDone;
     	} else {
     		return false;
     	}

@@ -9,10 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShiftHigh extends Command {
 
+	boolean isDone;
+	
     public ShiftHigh() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
+    	isDone = false;
     }
 
     // Called just before this Command runs the first time
@@ -22,11 +25,17 @@ public class ShiftHigh extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drivetrain.shiftHigh();
+    	isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	if(Robot.drivetrain.getShiftValue() == true) {
+    		return	isDone;
+    	} else {
+    		  return false;
+    	}
+      
     }
 
     // Called once after isFinished returns true

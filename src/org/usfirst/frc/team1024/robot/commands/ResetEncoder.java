@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ResetEncoder extends Command {
-	boolean done = false;
+	boolean isDone = false;
     public ResetEncoder() {
     	requires(Robot.drivetrain);
         // Use requires() here to declare subsystem dependencies
@@ -22,12 +22,12 @@ public class ResetEncoder extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drivetrain.resetMagneticEncoder();
-    	done = true;
+    	isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return done;
+        return isDone;
     }
 
     // Called once after isFinished returns true

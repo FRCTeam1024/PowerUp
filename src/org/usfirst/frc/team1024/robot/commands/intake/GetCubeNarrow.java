@@ -14,7 +14,7 @@ public class GetCubeNarrow extends CommandGroup {
     	addSequential(new Delay(1));
     	addSequential(new IntakeNarrow());
     	addSequential(new Delay(1));
-    	addSequential(new IntakeAcquire());
+    	addSequential(new IntakeAcquire(10)); //set actual time for acquiring cube later
     	addSequential(new Delay(1));
     	addSequential(new IntakeFlat());
     	addSequential(new Delay(1));

@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveCurve extends Command {
+	
+	boolean isDone;
 
 	private int targetHeading;
 	private double leftPower;
@@ -18,6 +20,7 @@ public class DriveCurve extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
+    	isDone = false;
     }
 
     // Called just before this Command runs the first time
@@ -33,12 +36,13 @@ public class DriveCurve extends Command {
     protected void execute() {
     	// it's inverted, for some reason?
     	Robot.drivetrain.drive(-leftPower, -rightPower);
+    	isDone = true; 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 2)
-    		return true;
+    		return isDone;
     	else
     		return false;
     }

@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class CrossLine extends Command {
 
 	public double distance;
-
+	boolean isDone;
 	
     public CrossLine() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	
+    	isDone = false;
     }
 
     // Called just before this Command runs the first time
@@ -27,13 +27,13 @@ public class CrossLine extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drivetrain.drive(1.0, 1.0);
-    	
+    	isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(distance < 20.0) {
-    		return true;
+    		return isDone;
     	}
         return false;
     }

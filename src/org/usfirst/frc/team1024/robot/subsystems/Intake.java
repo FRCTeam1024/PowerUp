@@ -50,11 +50,19 @@ public class Intake extends Subsystem {
     	leftIntakeSlide.set(false);
     }
     
+    public boolean getSlideValue() {
+    	return leftIntakeSlide.get();
+    }
+    
     public void posOut() {
     	leftIntakePos.set(true);
     }
     
     public void posIn() {
     	leftIntakePos.set(true);
+    }
+    
+    public boolean getIntakePosValue() {
+    	return leftIntakePos.get();
     }
 }

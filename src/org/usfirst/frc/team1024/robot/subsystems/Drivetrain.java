@@ -124,6 +124,10 @@ public class Drivetrain extends Subsystem {
 		shifter.set(true);
 	}
 	
+	public boolean getShiftValue() {
+		return shifter.get();
+	}
+	
 	public boolean isRotating() {
 		return navx.isRotating();
 	}
