@@ -48,7 +48,7 @@ public class RobotMap {
 	
 	public static final int INTAKE_SLIDE_PORT = 1;
 	
-	public static final int INTAKE_POS_PORT = 0;
+	public static final int INTAKE_POS_PORT = 4;
 	
 	//I2C
 	public static final Port NAVX_PORT = Port.kMXP;
@@ -78,8 +78,8 @@ public class RobotMap {
 	public static final int DRIVE_ENCODER_CHANNEL_A = 0;
 	public static final int DRIVE_ENCODER_CHANNEL_B = 1;
 	
-	public static final int LIFT_ENCODER_CHANNEL_A = 2;
-	public static final int LIFT_ENCODER_CHANNEL_B = 3;
+	public static final int INTAKE_BREAKBEAM_EMITTER_PORT = 3;
+	public static final int INTAKE_BREAKBEAM_RECIEVER_PORT = 2;
 	
 	//PID Constants
 	public static final double TURN_KP = 0.05; //was 0.055
@@ -141,9 +141,13 @@ public class RobotMap {
 	
 	public static final int INTAKE_SLIDE_IN_BUTTON = 8;
 	public static final int INTAKE_SLIDE_OUT_BUTTON = 6;
+
+	public static final int INTAKE_NARROW_ORIENTATION_BUTTON = 3;
+	public static final int INTAKE_FLAT_ORIENTATION_BUTTON = 4;
 	
 	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
 	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
 	
 	public static final int LIFT_OVERRIDE_BUTTON = 0;
+	
 }

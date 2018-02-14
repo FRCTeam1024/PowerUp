@@ -1,29 +1,28 @@
-package org.usfirst.frc.team1024.robot.commands.intake;
+package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.ConditionalCommand;
 
 /**
  *
  */
-public class IntakeRetract extends Command {
-	boolean isDone;
-    public IntakeRetract() {
+public class DetectCube extends ConditionalCommand {
+
+    public DetectCube() {
+    	super(new GrabCube());
     	requires(Robot.intake);
-    	isDone = false;
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-    	Robot.intake.slideIn();
-    	isDone = true;
     }
 
     protected boolean isFinished() {
-        return isDone;
+        return false;
     }
 
     protected void end() {
@@ -31,4 +30,9 @@ public class IntakeRetract extends Command {
 
     protected void interrupted() {
     }
+
+	@Override
+	protected boolean condition() {
+		return !Robot.intake.cubeDetecterState();
+	}
 }

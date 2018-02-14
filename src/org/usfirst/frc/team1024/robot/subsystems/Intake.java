@@ -5,8 +5,11 @@ import org.usfirst.frc.team1024.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -21,8 +24,11 @@ public class Intake extends Subsystem {
     
     private TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
     
+    private DigitalOutput breakBeamEmitter = new DigitalOutput(RobotMap.INTAKE_BREAKBEAM_EMITTER_PORT);
+    private DigitalInput breakBeamReciever = new DigitalInput(RobotMap.INTAKE_BREAKBEAM_RECIEVER_PORT);
+    
     public Intake () {
-    	
+    	breakBeamEmitter.set(true);
     }
     
     public void initDefaultCommand() {
@@ -47,6 +53,7 @@ public class Intake extends Subsystem {
     }
     
     public void slideIn() {
+    	posIn();
     	leftIntakeSlide.set(false);
     }
     
@@ -55,6 +62,14 @@ public class Intake extends Subsystem {
     }
     
     public void posIn() {
-    	leftIntakePos.set(true);
+    	leftIntakePos.set(false);
     }
+
+	public boolean cubeDetecterState() {
+		return breakBeamReciever.get();
+	}
+	
+	public void outputToSmartDashboard() {
+		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());
+	}
 }

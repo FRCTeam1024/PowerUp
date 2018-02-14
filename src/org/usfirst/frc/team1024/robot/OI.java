@@ -40,6 +40,8 @@ public class OI {
 	JoystickButton rightShiftLow = new JoystickButton(rJoy, RobotMap.RIGHT_SHIFT_LOW_BUTTON);
 	JoystickButton closeClamp = new JoystickButton(logi, RobotMap.LIFT_CLAMP_CLOSE_BUTTON);
 	JoystickButton openClamp = new JoystickButton(logi, RobotMap.LIFT_CLAMP_OPEN_BUTTON);
+	JoystickButton intakeNarrow = new JoystickButton(logi, RobotMap.INTAKE_NARROW_ORIENTATION_BUTTON);
+	JoystickButton intakeFlat = new JoystickButton(logi, RobotMap.INTAKE_FLAT_ORIENTATION_BUTTON);
 	
 	public OI () {
 		intakeExtendButton.whenPressed(new IntakeExtend());
@@ -54,6 +56,10 @@ public class OI {
 		
 		closeClamp.whenPressed(new CloseClamp());
 		openClamp.whenPressed(new OpenClamp());
+		
+		intakeNarrow.whenPressed(new IntakeNarrow());
+		intakeFlat.whenPressed(new IntakeFlat());
+
 		
 	}
 }

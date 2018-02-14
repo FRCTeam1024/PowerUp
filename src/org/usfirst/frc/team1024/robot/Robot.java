@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
+import org.usfirst.frc.team1024.robot.commands.DetectCube;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.GrabCube;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
@@ -89,6 +91,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		drivetrain.setCoast();
+		intake.posIn();
+		intake.slideIn();
+		lift.clamp(false);
 
 	}
 
@@ -166,9 +171,10 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().add(new DriveWithJoysticks());
 		Scheduler.getInstance().add(new IntakeWithJoystick());
 		Scheduler.getInstance().add(new MoveLiftWithJoysticks());
-		
+		//Scheduler.getInstance().add(new DetectCube());
 		drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 
 	/**

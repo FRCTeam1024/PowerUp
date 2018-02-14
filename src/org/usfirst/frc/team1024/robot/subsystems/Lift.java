@@ -24,7 +24,7 @@ public class Lift extends Subsystem {
 	
 	private TalonSRX liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PORT);
 	private TalonSRX liftMotor2 = new TalonSRX(RobotMap.LIFT_MOTOR_2_PORT);
-	public Encoder liftEncoder = new Encoder(RobotMap.LIFT_ENCODER_CHANNEL_A, RobotMap.LIFT_ENCODER_CHANNEL_B, false, EncodingType.k4X);
+	//public Encoder liftEncoder = new Encoder(RobotMap.LIFT_ENCODER_CHANNEL_A, RobotMap.LIFT_ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	private Solenoid clamp = new Solenoid(RobotMap.LIFT_CLAMP_PORT);
 	
 	private final double LIFT_KP = 0.1;
