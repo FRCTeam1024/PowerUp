@@ -16,13 +16,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
+import org.usfirst.frc.team1024.robot.commands.DetectCube;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.GrabCube;
+import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
+import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
-
+import org.usfirst.frc.team1024.robot.subsystems.Lift;
+import org.usfirst.frc.team1024.robot.subsystems.Intake;
+import org.usfirst.frc.team1024.robot.subsystems.IntakeWithJoystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,7 +42,9 @@ import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
  */
 public class Robot extends TimedRobot {
 	public static FieldConfig fieldConfig;
-	public static Drivetrain drivetrain;
+	public static Drivetrain drivetrain = new Drivetrain();
+	public static Lift lift = new Lift();
+	public static Intake intake = new Intake();
 	public static OI oi;
 	public boolean isDone = false;
 	
@@ -49,7 +60,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		drivetrain = new Drivetrain();
 		
 		drivetrain.resetOpticalEncoder();
 		
@@ -60,9 +70,10 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", new DriveToRightSwitch());
 		autoChooser.addObject("Left Position Auto", new LeftPositionAuto());
-
 		autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
+		autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
+		autoChooser.addObject("Turn 90", new TurnLeft(90));
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
 		SmartDashboard.putData(drivetrain.posPID);
@@ -79,12 +90,18 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		drivetrain.setCoast();
+		intake.posIn();
+		intake.slideIn();
+		lift.clamp(false);
 
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
 	}
 
 	/**
@@ -101,9 +118,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-//		m_autonomousCommand = autoChooser.getSelected();
-		//m_autonomousCommand = new AutoSwitchFront(324/2 - 48, 124 + 85.25);
-		m_autonomousCommand = new DriveToRightSwitch();
+		m_autonomousCommand = autoChooser.getSelected();
+		drivetrain.setBrake();
+		//m_autonomousCommand = new AutoSwitchFront(324/2 + 134-27.5, 124 + 85.25);
+
+		//m_autonomousCommand = new DriveAndTurn();
+
+		//m_autonomousCommand = new DriveToRightSwitch();
+		//m_autonomousCommand = new CrossToLeftScale();
+
 		// schedule the autonomous command (example)
 		
 		
@@ -122,10 +145,13 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
 	}
 
 	@Override
 	public void teleopInit() {
+		drivetrain.setBrake();
+		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -142,8 +168,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
+		Scheduler.getInstance().add(new DriveWithJoysticks());
+		Scheduler.getInstance().add(new IntakeWithJoystick());
+		Scheduler.getInstance().add(new MoveLiftWithJoysticks());
+		//Scheduler.getInstance().add(new DetectCube());
 		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 
 	/**

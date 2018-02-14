@@ -14,6 +14,7 @@ import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,13 +32,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft  = new TalonSRX(RobotMap.FRONT_LEFT_MOTOR_PORT);
-	//private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
+	private TalonSRX middleLeft = new TalonSRX(RobotMap.MIDDLE_LEFT_MOTOR_PORT);
 	private TalonSRX rearLeft = new TalonSRX(RobotMap.REAR_LEFT_MOTOR_PORT);
-	private TalonSRX frontRight = new TalonSRX(7); //RobotMap.FRONT_RIGHT_MOTOR_PORT);
-	//private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
-	private TalonSRX rearRight = new TalonSRX(6); //RobotMap.REAR_RIGHT_MOTOR_PORT);
+	private TalonSRX frontRight = new TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_PORT);
+	private TalonSRX middleRight = new TalonSRX(RobotMap.MIDDLE_RIGHT_MOTOR_PORT);
+	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
-	
+	private Solenoid shifter = new Solenoid(RobotMap.SHIFTER_PORT);
 	private AHRS navx;
 	
 	public double rotateToAngleRate;
@@ -49,7 +51,7 @@ public class Drivetrain extends Subsystem {
 	public double turnkD = RobotMap.TURN_KD;
 	public double turnkF = RobotMap.TURN_KF;
 	
-	public Encoder encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B, false, EncodingType.k4X);
+	public Encoder encoder = new Encoder(RobotMap.DRIVE_ENCODER_CHANNEL_A, RobotMap.DRIVE_ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	
 	public PIDController posPID;
 	public PIDController turnPID;
@@ -62,6 +64,9 @@ public class Drivetrain extends Subsystem {
 		
 		setFollower(rearLeft, frontLeft);
 		setFollower(rearRight, frontRight);
+		setFollower(middleLeft, frontLeft);
+		setFollower(middleRight, frontRight);
+		
 		navx = new AHRS(RobotMap.NAVX_PORT);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
@@ -91,6 +96,32 @@ public class Drivetrain extends Subsystem {
         //turnPID.setPercentTolerance(1.0);
         
         
+	}
+	
+	public void setCoast() {
+		frontLeft.setNeutralMode(NeutralMode.Coast);
+		middleLeft.setNeutralMode(NeutralMode.Coast);
+		rearLeft.setNeutralMode(NeutralMode.Coast);
+		frontRight.setNeutralMode(NeutralMode.Coast);
+		middleRight.setNeutralMode(NeutralMode.Coast);
+		rearRight.setNeutralMode(NeutralMode.Coast);
+	}
+	
+	public void setBrake() {
+		frontLeft.setNeutralMode(NeutralMode.Brake);
+		middleLeft.setNeutralMode(NeutralMode.Brake);
+		rearLeft.setNeutralMode(NeutralMode.Brake);
+		frontRight.setNeutralMode(NeutralMode.Brake);
+		middleRight.setNeutralMode(NeutralMode.Brake);
+		rearRight.setNeutralMode(NeutralMode.Brake);
+	}
+	
+	public void shiftLow() {
+		shifter.set(false);
+	}
+	
+	public void shiftHigh() {
+		shifter.set(true);
 	}
 	
 	public boolean isRotating() {

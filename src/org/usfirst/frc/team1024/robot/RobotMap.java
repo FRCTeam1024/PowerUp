@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1024.robot;
 
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -16,32 +17,38 @@ import edu.wpi.first.wpilibj.I2C.Port;
  * floating around.
  */
 public class RobotMap {
+	public static final int LEFT_INTAKE_MOTOR_PORT = 42;
+	public static final int RIGHT_INTAKE_MOTOR_PORT = 1;
 	
-	//Motors:
-	public static final int FRONT_LEFT_MOTOR_PORT = 42;
-	public static final int MIDDLE_LEFT_MOTOR_PORT = 1;
-	public static final int REAR_LEFT_MOTOR_PORT = 1; //will be 2
-	public static final int FRONT_RIGHT_MOTOR_PORT = 2; //will be 3
-	public static final int MIDDLE_RIGHT_MOTOR_PORT = 4;
-	public static final int REAR_RIGHT_MOTOR_PORT = 3; //will be 5
+	public static final int FRONT_LEFT_MOTOR_PORT = 2;
+	public static final int MIDDLE_LEFT_MOTOR_PORT = 3;
+	public static final int REAR_LEFT_MOTOR_PORT = 4;
+	
+	public static final int FRONT_RIGHT_MOTOR_PORT = 5;
 	
 	public static final int LIFT_MOTOR_1_PORT = 6; //motors will go the same direction
 	public static final int LIFT_MOTOR_2_PORT = 7;
 	
-	public static final int LEFT_INTAKE_MOTOR_PORT = 8;
-	public static final int RIGHT_INTAKE_MOTOR_PORT = 9;
+	public static final int MIDDLE_RIGHT_MOTOR_PORT = 8;
+	public static final int REAR_RIGHT_MOTOR_PORT = 9;
+	//Motors:
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//Pnuematics:
-	public static final int SHIFTER_PORT = 0;
+	public static final int SHIFTER_PORT = 2;
 	
-	public static final int LIFT_CLAMP_FOWARD_PORT = 1;
-	public static final int LIFT_CLAMP_REVERSE_PORT = 2;
+	public static final int LIFT_CLAMP_PORT = 5;
 	
-	public static final int INTAKE_SLIDE_PORT = 3;
-	public static final int INTAKE_OUT_PORT = 4;
+	public static final int INTAKE_SLIDE_PORT = 1;
 	
-	public static final int INTAKE_MANIPULATE_PORT = 5;
-	
+	public static final int INTAKE_POS_PORT = 4;
 	
 	//I2C
 	public static final Port NAVX_PORT = Port.kMXP;
@@ -49,11 +56,11 @@ public class RobotMap {
 	public static final double MIN_ROTATION_ANGLE = -180;
 	public static final double MAX_ROTATION_ANGLE = 180;
 
-	public static final double TRIM_PID_MIN_OUTPUT = -0.2;
-	public static final double TRIM_PID_MAX_OUTPUT = 0.2;
+	public static final double TRIM_PID_MIN_OUTPUT = -0.1;
+	public static final double TRIM_PID_MAX_OUTPUT = 0.1;
 
-	public static final double POS_PID_MIN_OUTPUT = -1.0;
-	public static final double POS_PID_MAX_OUTPUT = 1.0;
+	public static final double POS_PID_MIN_OUTPUT = -0.5;
+	public static final double POS_PID_MAX_OUTPUT = 0.5;
 	
 	public static final double TURN_PID_MIN_OUTPUT = -1.0;
 	public static final double TURN_PID_MAX_OUTPUT = 1.0;
@@ -68,8 +75,11 @@ public class RobotMap {
 	public static final int ULTRASONIC_PORT = 0;
 	
 	//Digital
-	public static final int ENCODER_CHANNEL_A = 0;
-	public static final int ENCODER_CHANNEL_B = 1;
+	public static final int DRIVE_ENCODER_CHANNEL_A = 0;
+	public static final int DRIVE_ENCODER_CHANNEL_B = 1;
+	
+	public static final int INTAKE_BREAKBEAM_EMITTER_PORT = 3;
+	public static final int INTAKE_BREAKBEAM_RECIEVER_PORT = 2;
 	
 	//PID Constants
 	public static final double TURN_KP = 0.05; //was 0.055
@@ -109,4 +119,35 @@ public class RobotMap {
 	public static final double FIELD_LENGTH = 648.0;
 	public static final double WALL_TO_SWITCH_DISTANCE = 140.0;
 	public static final double WALL_TO_SCALE_DISTANCE = 299.65;
+	
+	public static final double INTAKE_HEIGHT = 0.0;
+	public static final double SWITCH_HEIGHT = 0.0;
+	public static final double SCALE_OWNERSHIP_HEIGHT = 0.0;
+	public static final double SCALE_NEUTRAL_HEIGHT = 0.0;
+	public static final double SCALE_LOSS_HEIGHT = 0.0;
+	
+	//Controller Constants:
+	public static final int LEFT_JOYSTICK_PORT = 0;
+	public static final int RIGHT_JOYSTICK_PORT = 1;
+	public static final int LOGITECH_JOYSTICK_PORT = 2;
+	
+	//
+	public static final int LIFT_STICK_AXIS = 1;
+	
+	public static final int LEFT_SHIFT_HIGH_BUTTON = 13;
+	public static final int LEFT_SHIFT_LOW_BUTTON = 16;
+	public static final int RIGHT_SHIFT_HIGH_BUTTON = 13;
+	public static final int RIGHT_SHIFT_LOW_BUTTON = 16;
+	
+	public static final int INTAKE_SLIDE_IN_BUTTON = 8;
+	public static final int INTAKE_SLIDE_OUT_BUTTON = 6;
+
+	public static final int INTAKE_NARROW_ORIENTATION_BUTTON = 3;
+	public static final int INTAKE_FLAT_ORIENTATION_BUTTON = 4;
+	
+	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
+	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
+	
+	public static final int LIFT_OVERRIDE_BUTTON = 0;
+	
 }
