@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Turn 90", new TurnLeft(90));
 		autoChooser.addObject("GetCubeWide", new GetCubeWide());
 		autoChooser.addObject("Drop Lift", new MoveLiftPID(Level.INTAKE));
+		autoChooser.addObject("Front Switch Simple", new FrontSwitchSimple());
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
 		SmartDashboard.putData(drivetrain.posPID);

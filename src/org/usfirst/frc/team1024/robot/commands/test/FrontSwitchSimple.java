@@ -17,7 +17,7 @@ public class FrontSwitchSimple extends CommandGroup {
     public FrontSwitchSimple() {
     		addSequential(new GetCubeWide());
     		addSequential(new MoveLiftPID(Level.SWITCH));
-    		addSequential(new DriveStraight(106.0));
-    		addSequential(new OpenClamp());
+    		//addSequential(new DriveStraight(106.0));
+    		//addSequential(new OpenClamp());
     }
 }

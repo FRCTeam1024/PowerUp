@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveLiftPID extends Command {
 	Level level;
-	
+	int count = 0;
+	boolean isDone = false;
 	
 	
 	
@@ -21,15 +22,22 @@ public class MoveLiftPID extends Command {
     }
 
     protected void initialize() {
+    	count = 0;
     	System.out.println("Trying to move the lift to " + level.getHeight());
     	Robot.lift.setPIDSetpoint(level.getHeight());
     }
 
     protected void execute() {
+    	count++;
+    	Robot.lift.moveCarriage(0.5);
+    	System.out.print("I have lifted " + count + " times!");
+    	if(count > 100) {
+    		isDone = true;
+    	}
     }
 
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     protected void end() {
