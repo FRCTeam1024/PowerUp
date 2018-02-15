@@ -34,17 +34,16 @@ public class OI {
 
 	JoystickButton intakeExtend = new JoystickButton(logi, RobotMap.INTAKE_SLIDE_OUT_BUTTON);
 	JoystickButton intakeRetract = new JoystickButton(logi, RobotMap.INTAKE_SLIDE_IN_BUTTON);
-	JoystickButton leftShiftHigh = new JoystickButton(lJoy, RobotMap.LEFT_SHIFT_HIGH_BUTTON);
-	JoystickButton leftShiftLow = new JoystickButton(lJoy, RobotMap.LEFT_SHIFT_LOW_BUTTON);
-	JoystickButton rightShiftHigh = new JoystickButton(rJoy, RobotMap.RIGHT_SHIFT_HIGH_BUTTON);
-	JoystickButton rightShiftLow = new JoystickButton(rJoy, RobotMap.RIGHT_SHIFT_LOW_BUTTON);
+	JoystickButton leftShiftHigh = new JoystickButton(lJoy, RobotMap.SHIFT_HIGH_BUTTON);
+	JoystickButton leftShiftLow = new JoystickButton(lJoy, RobotMap.SHIFT_LOW_BUTTON);
+	JoystickButton rightShiftHigh = new JoystickButton(rJoy, RobotMap.SHIFT_HIGH_BUTTON);
+	JoystickButton rightShiftLow = new JoystickButton(rJoy, RobotMap.SHIFT_LOW_BUTTON);
 	JoystickButton closeClamp = new JoystickButton(logi, RobotMap.LIFT_CLAMP_CLOSE_BUTTON);
 	JoystickButton openClamp = new JoystickButton(logi, RobotMap.LIFT_CLAMP_OPEN_BUTTON);
 	JoystickButton intakeNarrow = new JoystickButton(logi, RobotMap.INTAKE_NARROW_ORIENTATION_BUTTON);
 	JoystickButton intakeFlat = new JoystickButton(logi, RobotMap.INTAKE_FLAT_ORIENTATION_BUTTON);
 	JoystickButton cubeDetecter = new JoystickButton(logi, RobotMap.CUBE_START_DETECT_BUTTON);
 
-	
 	public OI () {
 		intakeExtend.whenPressed(new IntakeExtend());
 		intakeRetract.whenPressed(new IntakeRetract());
@@ -60,7 +59,6 @@ public class OI {
 		intakeNarrow.whenPressed(new IntakeNarrow());
 		intakeFlat.whenPressed(new IntakeFlat());
 
-		cubeDetecter.whenPressed(new DetectCube());
-		
+		cubeDetecter.whenPressed(new DetectCube());	
 	}
 }

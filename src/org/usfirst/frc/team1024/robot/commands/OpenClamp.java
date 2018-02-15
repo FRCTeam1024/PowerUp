@@ -24,7 +24,7 @@ public class OpenClamp extends Command {
     }
 
     protected boolean isFinished() {
-        return true;
+        return isDone;
     }
 
     protected void end() {

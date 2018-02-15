@@ -120,11 +120,12 @@ public class RobotMap {
 	public static final double WALL_TO_SWITCH_DISTANCE = 140.0;
 	public static final double WALL_TO_SCALE_DISTANCE = 299.65;
 	
-	public static final double INTAKE_HEIGHT = 0.0;
-	public static final double SWITCH_HEIGHT = 0.0;
-	public static final double SCALE_OWNERSHIP_HEIGHT = 0.0;
-	public static final double SCALE_NEUTRAL_HEIGHT = 0.0;
-	public static final double SCALE_LOSS_HEIGHT = 0.0;
+	public static final double LOWEST_HEIGHT = 2200;
+	public static final double INTAKE_HEIGHT = LOWEST_HEIGHT + 3800;
+	public static final double SWITCH_HEIGHT = 600000.0;
+	public static final double SCALE_OWNERSHIP_HEIGHT = 1205000;
+	public static final double SCALE_NEUTRAL_HEIGHT = 1355000;
+	public static final double SCALE_LOSS_HEIGHT = 1550000;
 	
 	//Controller Constants:
 	public static final int LEFT_JOYSTICK_PORT = 0;
@@ -134,21 +135,22 @@ public class RobotMap {
 	//
 	public static final int LIFT_STICK_AXIS = 1;
 	
-	public static final int LEFT_SHIFT_HIGH_BUTTON = 13;
-	public static final int LEFT_SHIFT_LOW_BUTTON = 16;
-	public static final int RIGHT_SHIFT_HIGH_BUTTON = 13;
-	public static final int RIGHT_SHIFT_LOW_BUTTON = 16;
-	
-	public static final int INTAKE_SLIDE_IN_BUTTON = 8;
-	public static final int INTAKE_SLIDE_OUT_BUTTON = 6;
+	public static final int SHIFT_HIGH_BUTTON = 13;
+	public static final int SHIFT_LOW_BUTTON = 16;
 
+	
+
+	public static final int CUBE_START_DETECT_BUTTON = 2;
+	
 	public static final int INTAKE_NARROW_ORIENTATION_BUTTON = 3;
 	public static final int INTAKE_FLAT_ORIENTATION_BUTTON = 4;
 	
-	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
+	public static final int INTAKE_SLIDE_OUT_BUTTON = 6;
+	public static final int INTAKE_SLIDE_IN_BUTTON = 8;
+
 	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
+	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
 	
-	public static final int CUBE_START_DETECT_BUTTON = 2;
 	public static final int LIFT_OVERRIDE_BUTTON = 0;
 	
 }

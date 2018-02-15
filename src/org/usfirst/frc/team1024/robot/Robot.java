@@ -23,6 +23,7 @@ import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team1024.robot.commands.GrabCube;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		
 		drivetrain.resetOpticalEncoder();
-		
+		lift.resetEncoder();
 		
 		
 		
@@ -74,9 +75,22 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
 		autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
 		autoChooser.addObject("Turn 90", new TurnLeft(90));
+		autoChooser.addObject("Straight Forward Switch", new StraightForwardSwitch());
+		
+		
+		autoChooser.addObject("Go To Intake Level", new MoveLiftPID(Level.INTAKE));
+		autoChooser.addObject("Go To Switch Level", new MoveLiftPID(Level.SWITCH));
+		autoChooser.addObject("Go To Scale Ownership Level", new MoveLiftPID(Level.SCALE_OWNERSHIP));
+		autoChooser.addObject("Go To Scale Neutral Level", new MoveLiftPID(Level.SCALE_NEUTRAL));
+		autoChooser.addObject("Go To Scale Loss Level", new MoveLiftPID(Level.SCALE_LOSS));
+		
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
 		SmartDashboard.putData(drivetrain.posPID);
+		
+		
+		
+		
 		
 		
 		//Testing Space
@@ -145,7 +159,8 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -174,7 +189,6 @@ public class Robot extends TimedRobot {
 		//Scheduler.getInstance().add(new DetectCube());
 		
 		drivetrain.outputToSmartDashboard();
-		
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
 	}
