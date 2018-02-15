@@ -148,6 +148,7 @@ public class RobotMap {
 	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
 	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
 	
+	public static final int CUBE_START_DETECT_BUTTON = 2;
 	public static final int LIFT_OVERRIDE_BUTTON = 0;
 	
 }

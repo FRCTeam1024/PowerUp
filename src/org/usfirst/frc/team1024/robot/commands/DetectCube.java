@@ -8,21 +8,27 @@ import edu.wpi.first.wpilibj.command.ConditionalCommand;
 /**
  *
  */
-public class DetectCube extends ConditionalCommand {
-
+public class DetectCube extends Command {
+	boolean isDone;
     public DetectCube() {
-    	super(new GrabCube());
+    	requires(Robot.lift);
     	requires(Robot.intake);
+    	isDone = false;
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
+    	if(!Robot.intake.cubeDetecterState()) {
+    		Robot.lift.clamp(false);
+    		Robot.intake.slideIn();
+    		isDone = true;
+    	}
     }
 
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     protected void end() {
@@ -30,9 +36,4 @@ public class DetectCube extends ConditionalCommand {
 
     protected void interrupted() {
     }
-
-	@Override
-	protected boolean condition() {
-		return !Robot.intake.cubeDetecterState();
-	}
 }
