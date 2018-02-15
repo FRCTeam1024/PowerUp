@@ -168,11 +168,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		Scheduler.getInstance().add(new DriveWithJoysticks());
+		/*Scheduler.getInstance().add(new DriveWithJoysticks());
 		Scheduler.getInstance().add(new IntakeWithJoystick());
-		Scheduler.getInstance().add(new MoveLiftWithJoysticks());
+		Scheduler.getInstance().add(new MoveLiftWithJoysticks());*/
 		//Scheduler.getInstance().add(new DetectCube());
+		
 		drivetrain.outputToSmartDashboard();
+		
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
 	}

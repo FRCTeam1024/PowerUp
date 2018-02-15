@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1024.robot;
 
 import org.usfirst.frc.team1024.robot.commands.CloseClamp;
+import org.usfirst.frc.team1024.robot.commands.DetectCube;
 import org.usfirst.frc.team1024.robot.commands.OpenClamp;
 import org.usfirst.frc.team1024.robot.commands.ShiftHigh;
 import org.usfirst.frc.team1024.robot.commands.ShiftLow;
@@ -16,6 +17,7 @@ import org.usfirst.frc.team1024.robot.commands.intake.IntakeFlat;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
 
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -42,6 +44,8 @@ public class OI {
 	JoystickButton openClamp = new JoystickButton(logi, RobotMap.LIFT_CLAMP_OPEN_BUTTON);
 	JoystickButton intakeNarrow = new JoystickButton(logi, RobotMap.INTAKE_NARROW_ORIENTATION_BUTTON);
 	JoystickButton intakeFlat = new JoystickButton(logi, RobotMap.INTAKE_FLAT_ORIENTATION_BUTTON);
+	JoystickButton cubeDetecter = new JoystickButton(logi, RobotMap.CUBE_START_DETECT_BUTTON);
+
 	
 	public OI () {
 		intakeExtendButton.whenPressed(new IntakeExtend());
@@ -60,6 +64,7 @@ public class OI {
 		intakeNarrow.whenPressed(new IntakeNarrow());
 		intakeFlat.whenPressed(new IntakeFlat());
 
+		cubeDetecter.whenPressed(new DetectCube());
 		
 	}
 }
