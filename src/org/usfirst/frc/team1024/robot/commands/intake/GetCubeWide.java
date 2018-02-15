@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GetCubeNarrow extends CommandGroup {
+public class GetCubeWide extends CommandGroup {
 
-    public GetCubeNarrow() {
+    public GetCubeWide() {
     	addSequential(new IntakeExtend());
     	addSequential(new OpenClamp());
     	addSequential(new Delay(1));

@@ -28,6 +28,7 @@ public class CloseClampOnBeamBreak extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	System.out.println("Closing the clamp");
         return isDone;
     }
 

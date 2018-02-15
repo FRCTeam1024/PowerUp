@@ -28,6 +28,7 @@ import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
+import org.usfirst.frc.team1024.robot.commands.intake.GetCubeWide;
 import org.usfirst.frc.team1024.robot.commands.test.FrontSwitchSimple;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
@@ -75,7 +76,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("drive backward 20", new DriveStraight(-100));
 		autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
 		autoChooser.addObject("Turn 90", new TurnLeft(90));
-		autoChooser.addObject("SimpleAuto", new FrontSwitchSimple());
+		autoChooser.addObject("GetCubeWide", new GetCubeWide());
 		autoChooser.addObject("Drop Lift", new MoveLiftPID(Level.INTAKE));
 //autoChooser.addObject("AutoSwitchFront", new AutoSwitchFront(324/2 + 5, 12 + 85.25));
 		SmartDashboard.putData("Auto mode", autoChooser);
