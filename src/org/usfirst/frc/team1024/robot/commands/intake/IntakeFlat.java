@@ -8,22 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeFlat extends Command {
-	boolean isDone;
+	
     public IntakeFlat() {
     	requires(Robot.intake);
-    	isDone = false;
     }
 
     protected void initialize() {
+    	Robot.intake.posOut();
     }
 
     protected void execute() {
-    	Robot.intake.posOut();
-    	isDone = true;
     }
 
     protected boolean isFinished() {
-        return isDone;
+    	return true;
     }
 
     protected void end() {

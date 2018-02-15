@@ -8,22 +8,19 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class CloseClamp extends Command {
-	boolean isDone;
     public CloseClamp() {
     	requires(Robot.lift);
-    	isDone = false;
     }
 
     protected void initialize() {
+    	Robot.lift.clamp(false);
     }
 
     protected void execute() {
-    	Robot.lift.clamp(false);
-    	isDone = true;
     }
 
     protected boolean isFinished() {
-        return isDone;
+        return true;
     }
 
     protected void end() {

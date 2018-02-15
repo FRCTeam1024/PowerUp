@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import org.usfirst.frc.team1024.robot.Level;
-import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
 
@@ -9,10 +8,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,21 +19,13 @@ public class Lift extends Subsystem {
 	
 	private TalonSRX liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PORT);
 	private TalonSRX liftMotor2 = new TalonSRX(RobotMap.LIFT_MOTOR_2_PORT);
-	//public Encoder liftEncoder = new Encoder(RobotMap.LIFT_ENCODER_CHANNEL_A, RobotMap.LIFT_ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	private Solenoid clamp = new Solenoid(RobotMap.LIFT_CLAMP_PORT);
-	
-	private final double LIFT_KP = 0.1;
-	private final double LIFT_KI = 0.0;
-	private final double LIFT_KD = 0.0;
-	
-	//public PIDController liftPID = new PIDController(LIFT_KP, LIFT_KI, LIFT_KD, liftEncoder, output->{});
-	
 	
 	public Lift () {
 		liftMotor2.set(ControlMode.Follower, liftMotor1.getDeviceID());
-		liftMotor1.config_kP(0, LIFT_KP, 10);
-		liftMotor1.config_kI(0, LIFT_KI, 10);
-		liftMotor1.config_kD(0, LIFT_KD, 10);
+		liftMotor1.config_kP(0, Constants.LIFT_KP, 10);
+		liftMotor1.config_kI(0, Constants.LIFT_KI, 10);
+		liftMotor1.config_kD(0, Constants.LIFT_KD, 10);
 		liftMotor1.configPeakOutputForward(1.0, 10);
 		liftMotor1.configPeakOutputReverse(-1.0, 10);
 		liftMotor2.configPeakOutputForward(1.0, 10); //can maybe remove?

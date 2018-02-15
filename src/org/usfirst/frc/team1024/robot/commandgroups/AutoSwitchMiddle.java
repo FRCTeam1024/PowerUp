@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1024.robot.commandgroups;
 
-import org.usfirst.frc.team1024.robot.RobotMap;
+import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.TurnRelative;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoSwitchMiddle extends CommandGroup {
-	private double WALL_TO_SWITCH_DROPOFF_DISTANCE = 168.0 - RobotMap.ROBOT_LENGTH_IN;
+	private double WALL_TO_SWITCH_DROPOFF_DISTANCE = 168.0 - Constants.ROBOT_LENGTH_IN;
 	private int INITIAL_DRIVE_DISTANCE = 12;
 	
 	/*
