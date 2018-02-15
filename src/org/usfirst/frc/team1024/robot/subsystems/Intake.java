@@ -65,11 +65,11 @@ public class Intake extends Subsystem {
     	leftIntakePos.set(false);
     }
 
-	public boolean cubeDetecterState() {
+	public boolean cubeIsInClampRange() {
 		return breakBeamReciever.get();
 	}
 	
 	public void outputToSmartDashboard() {
-		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());
+		SmartDashboard.putBoolean("BreakBeam", cubeIsInClampRange());
 	}
 }

@@ -15,6 +15,7 @@ public class IntakeExtend extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("Trying to extend Intake");
     }
     
     protected void execute() {

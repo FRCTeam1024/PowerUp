@@ -33,6 +33,6 @@ public class DetectCube extends ConditionalCommand {
 
 	@Override
 	protected boolean condition() {
-		return !Robot.intake.cubeDetecterState();
+		return !Robot.intake.cubeIsInClampRange();
 	}
 }

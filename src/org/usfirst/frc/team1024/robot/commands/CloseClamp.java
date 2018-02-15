@@ -9,12 +9,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class CloseClamp extends Command {
 	boolean isDone;
+	
     public CloseClamp() {
     	requires(Robot.lift);
     	isDone = false;
     }
 
     protected void initialize() {
+    	System.out.println("Trying to close the clamp");
     }
 
     protected void execute() {

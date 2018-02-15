@@ -15,6 +15,7 @@ public class IntakeNarrow extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("Trying to make the Intake narrow");
     }
 
     protected void execute() {

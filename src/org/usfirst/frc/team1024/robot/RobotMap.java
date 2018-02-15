@@ -121,7 +121,7 @@ public class RobotMap {
 	public static final double WALL_TO_SCALE_DISTANCE = 299.65;
 	
 	public static final double INTAKE_HEIGHT = 0.0;
-	public static final double SWITCH_HEIGHT = 0.0;
+	public static final double SWITCH_HEIGHT = 19.0;
 	public static final double SCALE_OWNERSHIP_HEIGHT = 0.0;
 	public static final double SCALE_NEUTRAL_HEIGHT = 0.0;
 	public static final double SCALE_LOSS_HEIGHT = 0.0;

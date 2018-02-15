@@ -17,6 +17,7 @@ public class DriveStraight extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("Trying to drive");
     	Robot.drivetrain.resetOpticalEncoder();
     	Robot.drivetrain.resetMagneticEncoder();
     	double currentAngle = Robot.drivetrain.getHeading();

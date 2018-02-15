@@ -15,6 +15,7 @@ public class IntakeRetract extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("Trying to retract the intake");
     }
 
     protected void execute() {

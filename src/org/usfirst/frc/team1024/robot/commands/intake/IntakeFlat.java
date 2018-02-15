@@ -15,6 +15,7 @@ public class IntakeFlat extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("Trying to make the Intake flat");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,7 +25,7 @@ public class IntakeFlat extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

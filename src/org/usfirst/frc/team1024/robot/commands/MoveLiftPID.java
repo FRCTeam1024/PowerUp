@@ -21,6 +21,7 @@ public class MoveLiftPID extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("Trying to move the lift to " + level.getHeight());
     	Robot.lift.setPIDSetpoint(level.getHeight());
     }
 

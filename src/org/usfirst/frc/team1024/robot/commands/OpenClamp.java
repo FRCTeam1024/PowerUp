@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OpenClamp extends Command {
 	boolean isDone;
+	
     public OpenClamp() {
     	requires(Robot.lift);
     	isDone = false;
@@ -16,6 +17,7 @@ public class OpenClamp extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("Trying to open the clamp");
     }
 
     protected void execute() {
