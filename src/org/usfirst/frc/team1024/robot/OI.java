@@ -32,10 +32,8 @@ public class OI {
 	public final Joystick rJoy = new Joystick(1);
 	public final Joystick logi = new Joystick(RobotMap.LOGITECH_JOYSTICK_PORT);
 
-	JoystickButton intakeExtendButton = new JoystickButton(logi, RobotMap.INTAKE_SLIDE_OUT_BUTTON);
-	JoystickButton intakeRetractButton = new JoystickButton(logi, RobotMap.INTAKE_SLIDE_IN_BUTTON);
-	JoystickButton intakeFlatButton = new JoystickButton(logi, 1);
-	JoystickButton intakeNarrowButton = new JoystickButton(logi,4);
+	JoystickButton intakeExtend = new JoystickButton(logi, RobotMap.INTAKE_SLIDE_OUT_BUTTON);
+	JoystickButton intakeRetract = new JoystickButton(logi, RobotMap.INTAKE_SLIDE_IN_BUTTON);
 	JoystickButton leftShiftHigh = new JoystickButton(lJoy, RobotMap.LEFT_SHIFT_HIGH_BUTTON);
 	JoystickButton leftShiftLow = new JoystickButton(lJoy, RobotMap.LEFT_SHIFT_LOW_BUTTON);
 	JoystickButton rightShiftHigh = new JoystickButton(rJoy, RobotMap.RIGHT_SHIFT_HIGH_BUTTON);
@@ -48,10 +46,8 @@ public class OI {
 
 	
 	public OI () {
-		intakeExtendButton.whenPressed(new IntakeExtend());
-		intakeRetractButton.whenPressed(new IntakeRetract());
-		intakeFlatButton.whenPressed(new IntakeFlat());
-		intakeNarrowButton.whenPressed(new IntakeNarrow());
+		intakeExtend.whenPressed(new IntakeExtend());
+		intakeRetract.whenPressed(new IntakeRetract());
 		
 		leftShiftHigh.whenPressed(new ShiftHigh());
 		leftShiftLow.whenPressed(new ShiftLow());

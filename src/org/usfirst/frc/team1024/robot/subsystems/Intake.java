@@ -27,6 +27,11 @@ public class Intake extends Subsystem {
     private DigitalOutput breakBeamEmitter = new DigitalOutput(RobotMap.INTAKE_BREAKBEAM_EMITTER_PORT);
     private DigitalInput breakBeamReciever = new DigitalInput(RobotMap.INTAKE_BREAKBEAM_RECIEVER_PORT);
     
+    
+    
+    private boolean intakeInState = true;
+    private boolean intakeWideState = true;
+    
     public Intake () {
     	breakBeamEmitter.set(true);
     }
@@ -50,19 +55,25 @@ public class Intake extends Subsystem {
     
     public void slideOut() {
     	leftIntakeSlide.set(true);
+    	intakeInState = false;
     }
     
     public void slideIn() {
     	posIn();
     	leftIntakeSlide.set(false);
+    	intakeInState = true;
     }
     
     public void posOut() {
-    	leftIntakePos.set(true);
+    	if (!intakeInState) {
+    		leftIntakePos.set(true);
+    		intakeWideState = false;
+    	}
     }
     
     public void posIn() {
     	leftIntakePos.set(false);
+    	intakeWideState = true;
     }
 
 	public boolean cubeDetecterState() {
