@@ -8,22 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeRetract extends Command {
-	boolean isDone;
-    public IntakeRetract() {
+    
+	public IntakeRetract() {
     	requires(Robot.intake);
-    	isDone = false;
     }
 
     protected void initialize() {
+    	Robot.intake.slideIn();
     }
 
     protected void execute() {
-    	Robot.intake.slideIn();
-    	isDone = true;
     }
 
     protected boolean isFinished() {
-        return isDone;
+        return true;
     }
 
     protected void end() {

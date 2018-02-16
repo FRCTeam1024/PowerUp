@@ -8,22 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeNarrow extends Command {
-	boolean isDone;
-    public IntakeNarrow() {
+    
+	public IntakeNarrow() {
     	requires(Robot.intake);
-    	isDone = false;
     }
 
     protected void initialize() {
+    	Robot.intake.posIn();
     }
 
     protected void execute() {
-    	Robot.intake.posIn();
-    	isDone = true;
     }
 
     protected boolean isFinished() {
-        return isDone;
+    	return true;
     }
 
     protected void end() {

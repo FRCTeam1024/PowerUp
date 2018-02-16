@@ -7,11 +7,9 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
-import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -46,10 +44,10 @@ public class Drivetrain extends Subsystem {
 //	public double pidGet;
 	
 	//Remove these and any references when set properly
-	public double turnkP = RobotMap.TURN_KP;
-	public double turnkI = RobotMap.TURN_KI;
-	public double turnkD = RobotMap.TURN_KD;
-	public double turnkF = RobotMap.TURN_KF;
+	public double turnkP = Constants.TURN_KP;
+	public double turnkI = Constants.TURN_KI;
+	public double turnkD = Constants.TURN_KD;
+	public double turnkF = Constants.TURN_KF;
 	
 	public Encoder encoder = new Encoder(RobotMap.DRIVE_ENCODER_CHANNEL_A, RobotMap.DRIVE_ENCODER_CHANNEL_B, false, EncodingType.k4X);
 	
@@ -71,27 +69,27 @@ public class Drivetrain extends Subsystem {
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
 		
-		turnPID = new PIDController(RobotMap.TURN_KP, RobotMap.TURN_KI, RobotMap.TURN_KD, navx, output->{});
-        turnPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
+		turnPID = new PIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD, navx, output->{});
+        turnPID.setInputRange(Constants.MIN_ROTATION_ANGLE, Constants.MAX_ROTATION_ANGLE);
         turnPID.setContinuous(true);
-        turnPID.setOutputRange(RobotMap.TURN_PID_MIN_OUTPUT, RobotMap.TURN_PID_MAX_OUTPUT); //probably will be much less
-        turnPID.setAbsoluteTolerance(RobotMap.TURN_PID_ABSOLUTE_TOLERANCE);
+        turnPID.setOutputRange(Constants.TURN_PID_MIN_OUTPUT, Constants.TURN_PID_MAX_OUTPUT); //probably will be much less
+        turnPID.setAbsoluteTolerance(Constants.TURN_PID_ABSOLUTE_TOLERANCE);
         //turnPID.setPercentTolerance(2.0/360.0);
         
-        trimPID = new PIDController(RobotMap.TRIM_KP, RobotMap.TRIM_KI, RobotMap.TRIM_KD, navx, output->{});
-        trimPID.setInputRange(RobotMap.MIN_ROTATION_ANGLE, RobotMap.MAX_ROTATION_ANGLE);
+        trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
+        trimPID.setInputRange(Constants.MIN_ROTATION_ANGLE, Constants.MAX_ROTATION_ANGLE);
         trimPID.setContinuous(true);
-        trimPID.setOutputRange(RobotMap.TRIM_PID_MIN_OUTPUT, RobotMap.TRIM_PID_MAX_OUTPUT); //probably will be much less
+        trimPID.setOutputRange(Constants.TRIM_PID_MIN_OUTPUT, Constants.TRIM_PID_MAX_OUTPUT); //probably will be much less
         //trimPID.setAbsoluteTolerance(0.5);
         
         
         encoder.setPIDSourceType(PIDSourceType.kDisplacement);
-        encoder.setDistancePerPulse(RobotMap.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
+        encoder.setDistancePerPulse(Constants.DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE);
         encoder.setReverseDirection(true);
         
-        posPID = new PIDController(RobotMap.POS_KP, RobotMap.POS_KI, RobotMap.POS_KD, encoder, output->{});
+        posPID = new PIDController(Constants.POS_KP, Constants.POS_KI, Constants.POS_KD, encoder, output->{});
 	
-        posPID.setOutputRange(RobotMap.POS_PID_MIN_OUTPUT, RobotMap.POS_PID_MAX_OUTPUT);
+        posPID.setOutputRange(Constants.POS_PID_MIN_OUTPUT, Constants.POS_PID_MAX_OUTPUT);
         
         //turnPID.setPercentTolerance(1.0);
         

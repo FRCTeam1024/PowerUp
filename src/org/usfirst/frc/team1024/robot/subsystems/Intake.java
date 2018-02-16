@@ -15,20 +15,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Intake extends Subsystem {
-	//2 Motors, 4 Solenoids.
-	//2 Solenoids per arm (to slide & manipulate).
-	//1 Motor per arm (each arm having two wheels controlled by one).
     private TalonSRX leftIntake = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR_PORT);
+    private TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
+    
     private Solenoid leftIntakeSlide = new Solenoid(RobotMap.INTAKE_SLIDE_PORT);
     private Solenoid leftIntakePos = new Solenoid(RobotMap.INTAKE_POS_PORT);
     
-    private TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
-    
     private DigitalOutput breakBeamEmitter = new DigitalOutput(RobotMap.INTAKE_BREAKBEAM_EMITTER_PORT);
     private DigitalInput breakBeamReciever = new DigitalInput(RobotMap.INTAKE_BREAKBEAM_RECIEVER_PORT);
-    
-    
-    
     private boolean intakeInState = true;
     private boolean intakeWideState = true;
     
@@ -37,10 +31,7 @@ public class Intake extends Subsystem {
     }
     
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new IntakeWithJoystick());
-    
     }
   
     public void intakeSpeed(double Power) {

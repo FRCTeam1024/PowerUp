@@ -8,22 +8,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeExtend extends Command {
-	boolean isDone;
+	
     public IntakeExtend() {
     	requires(Robot.intake);
-    	isDone = false;
     }
 
     protected void initialize() {
+    	Robot.intake.slideOut();
     }
     
     protected void execute() {
-    	Robot.intake.slideOut();
-    	isDone = true;
     }
 
     protected boolean isFinished() {
-        return isDone;
+        return true;
     }
 
     protected void end() {
