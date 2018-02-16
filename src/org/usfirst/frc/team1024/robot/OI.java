@@ -9,6 +9,7 @@ package org.usfirst.frc.team1024.robot;
 
 import org.usfirst.frc.team1024.robot.commands.CloseClamp;
 import org.usfirst.frc.team1024.robot.commands.DetectCube;
+import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.OpenClamp;
 import org.usfirst.frc.team1024.robot.commands.ShiftHigh;
 import org.usfirst.frc.team1024.robot.commands.ShiftLow;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
 	public final Joystick lJoy = new Joystick(0);
 	public final Joystick rJoy = new Joystick(1);
 	public final Joystick logi = new Joystick(RobotMap.LOGITECH_JOYSTICK_PORT);
@@ -43,9 +45,14 @@ public class OI {
 	JoystickButton intakeNarrow = new JoystickButton(logi, RobotMap.INTAKE_NARROW_ORIENTATION_BUTTON);
 	JoystickButton intakeFlat = new JoystickButton(logi, RobotMap.INTAKE_FLAT_ORIENTATION_BUTTON);
 	JoystickButton cubeDetecter = new JoystickButton(logi, RobotMap.CUBE_START_DETECT_BUTTON);
-
+	
+	JoystickButton setTrigger = new JoystickButton(logi, RobotMap.SET_TRIGGER);
+	JoystickButton scaleHeight = new JoystickButton(logi, RobotMap.REACH_SCALE_HEIGHT);
+	JoystickButton switchHeight = new JoystickButton(logi, RobotMap.REACH_SWITCH_HEIGHT);
+	JoystickButton zeroHeight = new JoystickButton(logi, RobotMap.ZERO_HEIGHT);
 	
 	public OI () {
+		
 		intakeExtend.whenPressed(new IntakeExtend());
 		intakeRetract.whenPressed(new IntakeRetract());
 		
@@ -62,5 +69,8 @@ public class OI {
 
 		cubeDetecter.whenPressed(new DetectCube());
 		
+		scaleHeight.whenPressed(new MoveLiftPID(Level.SCALE_LOSS));
+		switchHeight.whenPressed(new MoveLiftPID(Level.SWITCH));
+		zeroHeight.whenPressed(new MoveLiftPID(Level.INTAKE));
 	}
 }

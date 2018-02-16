@@ -35,12 +35,6 @@ public class RobotMap {
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	//Pnuematics:
 	public static final int SHIFTER_PORT = 2;
 	
@@ -132,6 +126,7 @@ public class RobotMap {
 	public static final int LOGITECH_JOYSTICK_PORT = 2;
 	
 	//
+	
 	public static final int LIFT_STICK_AXIS = 1;
 	
 	public static final int LEFT_SHIFT_HIGH_BUTTON = 13;
@@ -150,5 +145,12 @@ public class RobotMap {
 	
 	public static final int CUBE_START_DETECT_BUTTON = 2;
 	public static final int LIFT_OVERRIDE_BUTTON = 0;
+	
+	
+	public static final int SET_TRIGGER = 3;
+	
+	public static final int REACH_SCALE_HEIGHT = 2;
+	public static final int REACH_SWITCH_HEIGHT = 1;
+	public static final int ZERO_HEIGHT = 4;
 	
 }

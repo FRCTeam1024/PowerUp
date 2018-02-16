@@ -234,5 +234,9 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
     	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
 	}
+	
+	public void reachScaleHeight() {
+		
+	}
 }
 	
