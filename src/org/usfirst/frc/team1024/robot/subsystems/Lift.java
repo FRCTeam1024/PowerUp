@@ -26,10 +26,7 @@ public class Lift extends Subsystem {
 		liftMotor1.config_kP(0, Constants.LIFT_KP, 10);
 		liftMotor1.config_kI(0, Constants.LIFT_KI, 10);
 		liftMotor1.config_kD(0, Constants.LIFT_KD, 10);
-		liftMotor1.configPeakOutputForward(1.0, 10);
-		liftMotor1.configPeakOutputReverse(-1.0, 10);
-		liftMotor2.configPeakOutputForward(1.0, 10); //can maybe remove?
-		liftMotor2.configPeakOutputReverse(-1.0, 10);
+		configMaxOutputs(1.0);
 		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 	}
 	
@@ -56,6 +53,17 @@ public class Lift extends Subsystem {
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Lift Encoder Raw", liftMotor1.getSelectedSensorPosition(0));
+	}
+	
+	public double getLiftEncoderValue() {
+		return liftMotor1.getSelectedSensorPosition(0);
+	}
+	
+	public void configMaxOutputs(double maxPower) {
+		liftMotor1.configPeakOutputForward(maxPower, 10);
+		liftMotor1.configPeakOutputReverse(-maxPower, 10);
+		liftMotor2.configPeakOutputForward(maxPower, 10); 
+		liftMotor2.configPeakOutputReverse(-maxPower, 10);
 	}
 	
     public void initDefaultCommand() {

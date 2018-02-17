@@ -21,6 +21,11 @@ public class MoveLiftPID extends Command {
     }
 
     protected void execute() {
+    	if (Robot.lift.getLiftEncoderValue() < 300000 && !Robot.oi.getOverrideButton()) {
+    		Robot.lift.configMaxOutputs(0.25);
+    	} else {
+    		Robot.lift.configMaxOutputs(1.0);
+    	}
     }
 
     protected boolean isFinished() {

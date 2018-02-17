@@ -55,4 +55,8 @@ public class OI {
 		intakeFlat.whenPressed(new IntakeFlat());
 		cubeDetecter.whenPressed(new DetectCube());	
 	}
+	
+	public boolean getOverrideButton() {
+		return logi.getRawButton(Constants.LIFT_OVERRIDE_BUTTON);
+	}
 }

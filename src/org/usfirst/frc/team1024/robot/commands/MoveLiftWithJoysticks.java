@@ -17,6 +17,11 @@ public class MoveLiftWithJoysticks extends Command {
     }
 
     protected void execute() {
+    	if (Robot.lift.getLiftEncoderValue() < 300000 && !Robot.oi.getOverrideButton()) {
+    		Robot.lift.configMaxOutputs(0.25);
+    	} else {
+    		Robot.lift.configMaxOutputs(1.0);
+    	}
     	Robot.lift.moveCarriage(Robot.oi.logi.getRawAxis(Constants.LIFT_STICK_AXIS));
     }
 
