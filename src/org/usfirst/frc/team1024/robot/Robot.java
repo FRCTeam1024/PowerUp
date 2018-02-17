@@ -16,15 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
-import org.usfirst.frc.team1024.robot.commands.DetectCube;
-import org.usfirst.frc.team1024.robot.commands.DoNothing;
-import org.usfirst.frc.team1024.robot.commands.DriveStraight;
-import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1024.robot.commands.GrabCube;
-import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
-import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
-import org.usfirst.frc.team1024.robot.commands.TurnLeft;
-import org.usfirst.frc.team1024.robot.commands.TurnRelative;
+import org.usfirst.frc.team1024.robot.commands.*;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
@@ -129,6 +121,8 @@ public class Robot extends TimedRobot {
 
 		// schedule the autonomous command (example)
 		
+		m_autonomousCommand = new DriveStraight(20);
+//		m_autonomousCommand = new DriveCurvedPath();
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();

@@ -37,9 +37,10 @@ public class DriveCurve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 2)
+    	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 2) {
+    		Robot.drivetrain.stop();
     		return true;
-    	else
+    	} else
     		return false;
     }
 
