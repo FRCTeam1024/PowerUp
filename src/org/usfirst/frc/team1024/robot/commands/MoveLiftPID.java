@@ -21,7 +21,7 @@ public class MoveLiftPID extends Command {
     }
 
     protected void execute() {
-    	if (Robot.lift.getLiftEncoderValue() < 300000 && !Robot.oi.getOverrideButton()) {
+    	if ((Robot.lift.getLiftEncoderValue() < 300000 || Robot.lift.getLiftEncoderValue()/4096 > 360) && !Robot.oi.getOverrideButton()) {
     		Robot.lift.configMaxOutputs(0.25);
     	} else {
     		Robot.lift.configMaxOutputs(1.0);

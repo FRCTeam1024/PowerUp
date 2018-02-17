@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
 
@@ -8,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,7 +30,7 @@ public class Lift extends Subsystem {
 		liftMotor1.config_kI(0, Constants.LIFT_KI, 10);
 		liftMotor1.config_kD(0, Constants.LIFT_KD, 10);
 		configMaxOutputs(1.0);
-		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 	}
 	
 	public void moveCarriage(double power) {
@@ -48,11 +51,14 @@ public class Lift extends Subsystem {
 	}
 	
 	public void resetEncoder() {
-		liftMotor1.getSelectedSensorPosition(0);
+		liftMotor1.setSelectedSensorPosition(0, 0, 10);
 	}
 	
 	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber("Lift Motor Rotations", liftMotor1.getSelectedSensorPosition(0) / 4096);
 		SmartDashboard.putNumber("Lift Encoder Raw", liftMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("LiftMotor1 Current", Robot.pdp.getCurrent(3));
+		SmartDashboard.putNumber("liftMotor2 Current", Robot.pdp.getCurrent(2));
 	}
 	
 	public double getLiftEncoderValue() {

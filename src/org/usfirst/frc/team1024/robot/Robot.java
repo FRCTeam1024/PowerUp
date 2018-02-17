@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1024.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static Lift lift = new Lift();
 	public static Intake intake = new Intake();
+	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 	public static OI oi;
 	public boolean isDone = false;
 	
