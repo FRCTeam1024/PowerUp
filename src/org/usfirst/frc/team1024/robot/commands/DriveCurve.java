@@ -10,13 +10,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveCurve extends Command {
 
-	private int targetHeading;
-	private double leftPower;
-	private double rightPower;
+	private int targetHeading = 0;
+	private double leftPower = 0.0;
+	private double rightPower = 0.0;
+	private boolean initialized = false;
+	private boolean slowedDown = false;
 	
-    public DriveCurve() {
+    public DriveCurve(int targetAngle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.drivetrain);
+    	this.targetHeading = targetAngle;
+    }
+    
+    public DriveCurve() {
     	requires(Robot.drivetrain);
     }
 
@@ -24,7 +31,9 @@ public class DriveCurve extends Command {
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
     	outputToSmartDashboard();
-    	this.targetHeading = (int) SmartDashboard.getNumber("Curve Target Angle", 90);
+    	if(targetHeading == 0) {
+    		this.targetHeading = (int) SmartDashboard.getNumber("Curve Target Angle", 60);
+    	}
     	this.leftPower = (double) SmartDashboard.getNumber("Curve left power", 0.9);
     	this.rightPower = (double) SmartDashboard.getNumber("Curve right power", 0.1);
     }
@@ -32,12 +41,20 @@ public class DriveCurve extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	// it's inverted, for some reason?
+    	// try to slow it down, it's overshooting
+    	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 10 && !slowedDown) { 
+    		leftPower = leftPower / 2;
+    		rightPower = rightPower / 2;
+    		// do it just once, not every cycle
+    		slowedDown = true;
+    	}
     	Robot.drivetrain.drive(-leftPower, -rightPower);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 2) {
+    	// stop early, allow for some coasting
+    	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 4) { 
     		Robot.drivetrain.stop();
     		return true;
     	} else

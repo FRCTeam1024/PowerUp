@@ -20,7 +20,7 @@ public class MoveLiftWithJoysticks extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.moveCarriage(Robot.oi.logi.getRawAxis(RobotMap.LIFT_STICK_AXIS));
+//    	Robot.lift.moveCarriage(Robot.oi.logi.getRawAxis(RobotMap.LIFT_STICK_AXIS));
     }
 
     // Make this return true when this Command no longer needs to run execute()

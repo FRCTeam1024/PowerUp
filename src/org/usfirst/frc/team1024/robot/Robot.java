@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
+import org.usfirst.frc.team1024.robot.commandgroups.DriveSCurve;
 import org.usfirst.frc.team1024.robot.commands.*;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
@@ -110,7 +111,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		m_autonomousCommand = autoChooser.getSelected();
+//		m_autonomousCommand = autoChooser.getSelected();
 		drivetrain.setBrake();
 		//m_autonomousCommand = new AutoSwitchFront(324/2 + 134-27.5, 124 + 85.25);
 
@@ -121,8 +122,9 @@ public class Robot extends TimedRobot {
 
 		// schedule the autonomous command (example)
 		
-		m_autonomousCommand = new DriveStraight(20);
+//		m_autonomousCommand = new DriveStraight(20);
 //		m_autonomousCommand = new DriveCurvedPath();
+		m_autonomousCommand = new DriveSCurve(24, 60, 24, -60, 24);
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();

@@ -10,7 +10,7 @@ package org.usfirst.frc.team1024.robot.subsystems;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
-import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
+//import org.usfirst.frc.team1024.robot.commands.ResetEncoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
