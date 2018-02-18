@@ -57,8 +57,7 @@ public class Lift extends Subsystem {
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Lift Motor Rotations", liftMotor1.getSelectedSensorPosition(0) / 4096);
 		SmartDashboard.putNumber("Lift Encoder Raw", liftMotor1.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("LiftMotor1 Current", Robot.pdp.getCurrent(3));
-		SmartDashboard.putNumber("liftMotor2 Current", Robot.pdp.getCurrent(2));
+		
 	}
 	
 	public double getLiftEncoderValue() {
@@ -71,6 +70,11 @@ public class Lift extends Subsystem {
 		liftMotor2.configPeakOutputForward(maxPower, 10); 
 		liftMotor2.configPeakOutputReverse(-maxPower, 10);
 	}
+	
+	public double getCommandedOutput() {
+		return liftMotor1.getMotorOutputPercent();
+	}
+	
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new MoveLiftWithJoysticks());

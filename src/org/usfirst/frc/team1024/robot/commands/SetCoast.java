@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShiftHigh extends Command {
+public class SetCoast extends Command {
 
-    public ShiftHigh() {
+    public SetCoast() {
     	requires(Robot.drivetrain);
     }
-    
+
     protected void initialize() {
-    	Robot.drivetrain.shiftHigh();
+    	Robot.drivetrain.setCoast();
     }
 
     protected void execute() {

@@ -8,6 +8,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -231,6 +232,24 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
     	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
+	}
+
+	public boolean pidDriveUntil(double initialSpeed) {
+		if (posPID.get() < 0.0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public void setRamp(double secondsUntilFull) {
+		frontLeft.configOpenloopRamp(secondsUntilFull, 10);
+		middleLeft.configOpenloopRamp(secondsUntilFull, 10);
+		rearLeft.configOpenloopRamp(secondsUntilFull, 10);
+		frontRight.configOpenloopRamp(secondsUntilFull, 10);
+		middleRight.configOpenloopRamp(secondsUntilFull, 10);
+		rearRight.configOpenloopRamp(secondsUntilFull, 10);
 	}
 }
 	

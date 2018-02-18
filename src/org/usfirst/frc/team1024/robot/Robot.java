@@ -19,10 +19,12 @@ import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
@@ -52,11 +54,14 @@ public class Robot extends TimedRobot {
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
 		autoChooser.addObject("Left Position Auto", "LeftPositionAuto");
+		autoChooser.addObject("Fast Cross To Left Scale", "FastCrossToScale");
+		autoChooser.addObject("DriveToRightScaleEnd", "DriveToRightScaleEnd");
 		//autoChooser.addObject("drive straight 20", new DriveStraight(100));
 		//autoChooser.addObject("drive backward 20", new DriveStraight(-100));
 		//autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
 		//autoChooser.addObject("Turn 90", new TurnLeft(90));
 		autoChooser.addObject("Straight Forward Switch", "StraightForwardSwitch");
+		autoChooser.addObject("DriveStraight", "DriveStraight100");
 		//autoChooser.addObject("Go To Intake Level", new MoveLiftPID(Level.INTAKE));
 		//autoChooser.addObject("Go To Switch Level", new MoveLiftPID(Level.SWITCH));
 		//autoChooser.addObject("Go To Scale Ownership Level", new MoveLiftPID(Level.SCALE_OWNERSHIP));
@@ -102,6 +107,12 @@ public class Robot extends TimedRobot {
 				break;
 			case "AutoSwitchFront":
 				m_autonomousCommand = new AutoSwitchFront(324/2 + 5, 12 + 85.25);
+				break;
+			case "FastCrossToScale":
+				m_autonomousCommand = new FastCrossToScale();
+				break;
+			case "DriveToRightScaleEnd":
+				m_autonomousCommand = new DriveToRightScaleEnd();
 				break;
 			default:
 				m_autonomousCommand = new DoNothing();

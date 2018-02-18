@@ -17,8 +17,19 @@ public class MoveLiftWithJoysticks extends Command {
     }
 
     protected void execute() {
-    	if ((Robot.lift.getLiftEncoderValue()/4096 < 40 || Robot.lift.getLiftEncoderValue()/4096 > 360) && !Robot.oi.getOverrideButton()) {
-    		Robot.lift.configMaxOutputs(0.25);
+    	if (Robot.lift.getLiftEncoderValue()/4096 < 40 && !Robot.oi.getOverrideButton()) {
+    		if(Robot.lift.getCommandedOutput() > 0.0) {
+        		Robot.lift.configMaxOutputs(1.0);
+    		} else {
+    			Robot.lift.configMaxOutputs(0.25);
+    		}
+    	} else if (Robot.lift.getLiftEncoderValue()/4096 > 360 && !Robot.oi.getOverrideButton()) {
+    		if(Robot.lift.getCommandedOutput() < 0.0) {
+    			Robot.lift.configMaxOutputs(1.0);
+    		} else {
+    			Robot.lift.configMaxOutputs(0.25);
+    		}
+    		
     	} else {
     		Robot.lift.configMaxOutputs(1.0);
     	}

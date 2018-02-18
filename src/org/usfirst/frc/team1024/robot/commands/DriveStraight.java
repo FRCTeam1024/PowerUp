@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraight extends Command {
 	double targetDistance;
+	int onTargetCount = 0;
 	
     public DriveStraight(double targetDistance) {
     	requires(Robot.drivetrain);
@@ -37,7 +38,13 @@ public class DriveStraight extends Command {
     }
 
     protected boolean isFinished() {
-    	if(Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < 1.0) { //If the robot is within 1 inch of the target, stop.
+    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < 5.0) {
+    		onTargetCount++;
+    	} else {
+    		onTargetCount = 0;
+    	}
+    	
+    	if(onTargetCount == 30) {
     		return true;
     	} else {
     		return false;
