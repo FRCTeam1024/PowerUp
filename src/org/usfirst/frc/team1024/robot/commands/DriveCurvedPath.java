@@ -32,8 +32,14 @@ public class DriveCurvedPath extends Command {
 
 		pathPlanner = new FalconPathPlanner(scaleToSwitchCubePath);
 		pathPlanner.calculate(totalTime, timeStep, robotTrackWidth);
+		
+		log("DriveCurvedPath ctor, path length: " + pathPlanner.smoothLeftVelocity.length);
     }
 
+    private void log(String msg) {
+    	System.out.println(msg);
+    }
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     }
@@ -42,12 +48,21 @@ public class DriveCurvedPath extends Command {
     protected void execute() {
     	// the array outputs in velocity in feet/second; we need to convert that to a power percentage
     	// assuming our max velocity is 15 ft/s
-    	double maxVelocity = 15.0;
+    	// this is making it an inverse relationship, so as velocity increases, power decreases
+    	
+    	// so just try to divide by 10 so that the ratios of velocity outputs stays the same
+    	// i.e. velocity of 3.1 becomes power of .31, velocity of 3.3 becomes power .33
+    	double maxVelocity = 10.0;
     	double leftVelocity = pathPlanner.smoothLeftVelocity[indexCount][1];
-    	double leftPower = maxVelocity / leftVelocity;
+    	log("iteration " + indexCount + ", leftVelocity " + leftVelocity);
+    	double leftPower = leftVelocity / maxVelocity;
+    	log("          leftPower " + leftPower);
     	double rightVelocity = pathPlanner.smoothRightVelocity[indexCount][1];
-    	double rightPower = maxVelocity / rightVelocity;
-    	Robot.drivetrain.drive(leftPower, rightPower);
+    	log("          rightVelocity " + rightVelocity);
+    	double rightPower = rightVelocity / maxVelocity;
+    	log("          rightPower " + rightPower);
+    	// motors are still inverted for some reason, have to pass power * -1 to go forward
+    	Robot.drivetrain.drive((-1 * leftPower), (-1 * rightPower));
     	indexCount++;
     }
 
@@ -56,12 +71,4 @@ public class DriveCurvedPath extends Command {
         return indexCount >= pathPlanner.smoothLeftVelocity.length;
     }
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
 }

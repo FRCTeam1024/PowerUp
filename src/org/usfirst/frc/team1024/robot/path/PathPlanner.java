@@ -30,7 +30,8 @@ public class PathPlanner {
 		log("Num velocities : " + arraySize);
 		
 		for(int i = 0; i < arraySize; i++) {
-			log("left time : " + leftVelocity[i][0] + ", left velocity : " + leftVelocity[i][1]);
+			log("time : " + leftVelocity[i][0] + ", left velocity : " + leftVelocity[i][1]);
+			log("            right velocity : " + rightVelocity[i][1]);
 		}
 	}
 
