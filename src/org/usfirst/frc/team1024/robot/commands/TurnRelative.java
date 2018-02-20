@@ -13,6 +13,7 @@ public class TurnRelative extends Command {
     public TurnRelative(double targetAngle) {
     	requires(Robot.drivetrain);
     	this.targetAngle = targetAngle;
+    	degreeTolerance = 1.0;
     }
     
     public TurnRelative(double targetAngle, double degreeTolerance) {

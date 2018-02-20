@@ -117,10 +117,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void shiftLow() {
 		shifter.set(false);
+		System.out.println("Shifting Low");
 	}
 	
 	public void shiftHigh() {
 		shifter.set(true);
+		System.out.println("Shifting High");
 	}
 	
 	public boolean isRotating() {
@@ -250,6 +252,14 @@ public class Drivetrain extends Subsystem {
 		frontRight.configOpenloopRamp(secondsUntilFull, 10);
 		middleRight.configOpenloopRamp(secondsUntilFull, 10);
 		rearRight.configOpenloopRamp(secondsUntilFull, 10);
+	}
+	
+	public void changePosPID(double posP, double posI, double posD) {
+		posPID.setPID(posP, posI, posD);
+	}
+	
+	public boolean getShiftState() {
+		return shifter.get();
 	}
 }
 	

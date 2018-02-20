@@ -6,6 +6,7 @@ import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
 import org.usfirst.frc.team1024.robot.commands.ChangeDriveSpeed;
 import org.usfirst.frc.team1024.robot.commands.ChangeLiftSpeed;
+import org.usfirst.frc.team1024.robot.commands.ChangePosPID;
 import org.usfirst.frc.team1024.robot.commands.ChangeRamp;
 import org.usfirst.frc.team1024.robot.commands.ChangeTurnSpeed;
 import org.usfirst.frc.team1024.robot.commands.DriveAndMoveLift;
@@ -20,6 +21,7 @@ import org.usfirst.frc.team1024.robot.commands.SetCoast;
 import org.usfirst.frc.team1024.robot.commands.TurnLeft;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * All routines in this package should be starting from the right-most fixed starting position
@@ -30,11 +32,14 @@ public class DriveToRightScaleEnd extends CommandGroup {
 
     public DriveToRightScaleEnd() {
     	requires(Robot.drivetrain);
-    	addSequential(new ChangeRamp(0.35));
+    	addSequential(new ChangePosPID(SmartDashboard.getNumber("Pos P", Constants.POS_KP),
+				  					   SmartDashboard.getNumber("Pos I", Constants.POS_KI),
+				  					   SmartDashboard.getNumber("Pos D", Constants.POS_KD)));
+    	//addSequential(new ChangeRamp(0.35 / 2));
     	//addSequential(new ChangeRamp(1));
     	//addSequential(new SetCoast());
     	addSequential(new ChangeDriveSpeed(1.0));
-    	addSequential(new DriveStraight(100));
+    	addSequential(new DriveAndShift(200, 1.0));
     	//addSequential(new DriveUntilPID(140 - Constants.ROBOT_LENGTH_IN, 0.5));
     	//addSequential(new DriveUntilAndMoveLift(12, 0.5, Level.SWITCH));
     	/*addSequential(new DriveAndMoveLift(134, Level.SWITCH));

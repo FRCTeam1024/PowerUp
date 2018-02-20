@@ -10,11 +10,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraight extends Command {
 	double targetDistance;
+	double tolerance;
 	int onTargetCount = 0;
 	
     public DriveStraight(double targetDistance) {
     	requires(Robot.drivetrain);
     	this.targetDistance = targetDistance;
+    	tolerance = 5;
+    }
+    
+    public DriveStraight(double targetDistance, double tolerance) {
+    	requires(Robot.drivetrain);
+    	this.targetDistance = targetDistance;
+    	this.tolerance = tolerance;
     }
 
     protected void initialize() {
@@ -38,7 +46,7 @@ public class DriveStraight extends Command {
     }
 
     protected boolean isFinished() {
-    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < 5.0) {
+    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
     		onTargetCount++;
     	} else {
     		onTargetCount = 0;

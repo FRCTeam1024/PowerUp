@@ -70,6 +70,10 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("AutoSwitchFront", "AutoSwitchFront");
 		SmartDashboard.putData("Auto mode", autoChooser);
 		
+		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
+		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
+		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
+		
 		
 		
 	}
