@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShiftHigh extends Command {
-
-    public ShiftHigh() {
-    	requires(Robot.drivetrain);
+public class ChangeRamp extends Command {
+	double ramp;
+    public ChangeRamp(double ramp) {
+    	this.ramp = ramp;
     }
-    
+
     protected void initialize() {
-    	Robot.drivetrain.shiftHigh();
+    	Robot.drivetrain.setRamp(ramp);
     }
 
     protected void execute() {

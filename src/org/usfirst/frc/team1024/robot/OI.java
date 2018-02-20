@@ -71,4 +71,8 @@ public class OI {
 		cubeDetecter.whenPressed(new DetectCube());	
 
 	}
+	
+	public boolean getOverrideButton() {
+		return logi.getRawButton(Constants.LIFT_OVERRIDE_BUTTON);
+	}
 }

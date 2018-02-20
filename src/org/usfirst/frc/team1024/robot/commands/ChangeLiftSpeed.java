@@ -7,14 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShiftHigh extends Command {
-
-    public ShiftHigh() {
-    	requires(Robot.drivetrain);
+public class ChangeLiftSpeed extends Command {
+	double speed;
+    public ChangeLiftSpeed(double speed) {
+    	requires(Robot.lift);
+    	this.speed = speed;
     }
-    
+
     protected void initialize() {
-    	Robot.drivetrain.shiftHigh();
+    	Robot.lift.configMaxOutputs(speed);
     }
 
     protected void execute() {

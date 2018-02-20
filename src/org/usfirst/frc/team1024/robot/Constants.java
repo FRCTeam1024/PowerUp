@@ -10,8 +10,8 @@ public class Constants {
 
 	public static final double TRIM_PID_MIN_OUTPUT = -0.1;
 	public static final double TRIM_PID_MAX_OUTPUT = 0.1;
-	public static final double POS_PID_MIN_OUTPUT = -0.5;
-	public static final double POS_PID_MAX_OUTPUT = 0.5;
+	public static final double POS_PID_MIN_OUTPUT = -1.0;
+	public static final double POS_PID_MAX_OUTPUT = 1.0;
 	public static final double TURN_PID_MIN_OUTPUT = -1.0;
 	public static final double TURN_PID_MAX_OUTPUT = 1.0;
 	public static final double TURN_PID_ABSOLUTE_TOLERANCE = 0.5;
@@ -24,9 +24,12 @@ public class Constants {
 	public static final double TURN_KD = 0.05; //was 0.1
 	public static final double TURN_KF = 0.0;
 	
-	public static final double POS_KP = 0.1;
+	
+	public static final double POS_KU = 0.08;
+	public static final double POS_TU = 3.0;
+	public static final double POS_KP = 0.8 * POS_KU;
 	public static final double POS_KI = 0.0;
-	public static final double POS_KD = 0.0;
+	public static final double POS_KD = POS_TU / 8;
 	public static final double POS_KF = 0.0;
 
 	public static final double TRIM_KP = 0.055;
@@ -51,7 +54,7 @@ public class Constants {
 	
 	
 	//Robot Constants:
-	public static final double ROBOT_LENGTH_IN = 32.0; //front-to-back For 2018 Bot 39
+	public static final double ROBOT_LENGTH_IN = 33.0 + 7; //front-to-back For 2018 Bot 39
 	public static final double ROBOT_WIDTH_IN = 41.0; //side-to-side For 2018 Bot 35.5
 	
 	//Field Constants:
@@ -91,6 +94,6 @@ public class Constants {
 	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
 	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
 	
-	public static final int LIFT_OVERRIDE_BUTTON = 0;
+	public static final int LIFT_OVERRIDE_BUTTON = 10;
 	
 }

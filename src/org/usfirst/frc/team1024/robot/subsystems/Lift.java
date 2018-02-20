@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
 
@@ -8,6 +9,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,11 +29,8 @@ public class Lift extends Subsystem {
 		liftMotor1.config_kP(0, Constants.LIFT_KP, 10);
 		liftMotor1.config_kI(0, Constants.LIFT_KI, 10);
 		liftMotor1.config_kD(0, Constants.LIFT_KD, 10);
-		liftMotor1.configPeakOutputForward(1.0, 10);
-		liftMotor1.configPeakOutputReverse(-1.0, 10);
-		liftMotor2.configPeakOutputForward(1.0, 10); //can maybe remove?
-		liftMotor2.configPeakOutputReverse(-1.0, 10);
-		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
+		configMaxOutputs(1.0);
+		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 	}
 	
 	public void moveCarriage(double power) {
@@ -51,12 +51,30 @@ public class Lift extends Subsystem {
 	}
 	
 	public void resetEncoder() {
-		liftMotor1.getSelectedSensorPosition(0);
+		liftMotor1.setSelectedSensorPosition(0, 0, 10);
 	}
 	
 	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber("Lift Motor Rotations", liftMotor1.getSelectedSensorPosition(0) / 4096);
 		SmartDashboard.putNumber("Lift Encoder Raw", liftMotor1.getSelectedSensorPosition(0));
+		
 	}
+	
+	public double getLiftEncoderValue() {
+		return liftMotor1.getSelectedSensorPosition(0);
+	}
+	
+	public void configMaxOutputs(double maxPower) {
+		liftMotor1.configPeakOutputForward(maxPower, 10);
+		liftMotor1.configPeakOutputReverse(-maxPower, 10);
+		liftMotor2.configPeakOutputForward(maxPower, 10); 
+		liftMotor2.configPeakOutputReverse(-maxPower, 10);
+	}
+	
+	public double getCommandedOutput() {
+		return liftMotor1.getMotorOutputPercent();
+	}
+	
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new MoveLiftWithJoysticks());
