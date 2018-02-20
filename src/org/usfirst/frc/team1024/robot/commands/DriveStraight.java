@@ -9,11 +9,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveStraight extends Command {
+	
 	double targetDistance;
+	boolean stopAtEnd = true;
 	
     public DriveStraight(double targetDistance) {
     	requires(Robot.drivetrain);
     	this.targetDistance = targetDistance;
+    }
+    
+    public DriveStraight(double targetDistance, boolean stopAtEnd) {
+    	this(targetDistance);
+    	this.stopAtEnd = stopAtEnd;
     }
 
     protected void initialize() {
@@ -46,7 +53,9 @@ public class DriveStraight extends Command {
     
     protected void end() {
     	System.out.println("In end()");
-    	Robot.drivetrain.stop();
+    	if(stopAtEnd) {
+    		Robot.drivetrain.stop();
+    	}
     	Robot.drivetrain.resetOpticalEncoder();
     	Robot.drivetrain.posPID.disable();
     	Robot.drivetrain.trimPID.disable();

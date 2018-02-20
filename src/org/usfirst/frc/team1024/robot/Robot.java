@@ -124,7 +124,7 @@ public class Robot extends TimedRobot {
 		
 //		m_autonomousCommand = new DriveStraight(20);
 //		m_autonomousCommand = new DriveCurvedPath();
-		m_autonomousCommand = new DriveSCurve(24, 60, 24, -60, 24);
+		m_autonomousCommand = new DriveSCurve(24, 45, 24, -45, 24);
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();

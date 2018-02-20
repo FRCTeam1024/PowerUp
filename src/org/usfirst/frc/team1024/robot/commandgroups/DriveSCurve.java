@@ -28,9 +28,9 @@ public class DriveSCurve extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveStraight(firstDistance));
+    	addSequential(new DriveStraight(firstDistance, false));
     	addSequential(new DriveCurve(firstAngle));
-    	addSequential(new DriveStraight(middleDistance));
+    	addSequential(new DriveStraight(middleDistance, false));
     	addSequential(new DriveCurve(secondAngle));
     	addSequential(new DriveStraight(lastDistance));
     }

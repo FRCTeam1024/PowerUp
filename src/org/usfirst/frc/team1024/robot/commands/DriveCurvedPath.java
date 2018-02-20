@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1024.robot.commands;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.path.FalconPathPlanner;
 
@@ -42,6 +45,7 @@ public class DriveCurvedPath extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drivetrain.shiftLow();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -54,13 +58,24 @@ public class DriveCurvedPath extends Command {
     	// i.e. velocity of 3.1 becomes power of .31, velocity of 3.3 becomes power .33
     	double maxVelocity = 10.0;
     	double leftVelocity = pathPlanner.smoothLeftVelocity[indexCount][1];
-    	log("iteration " + indexCount + ", leftVelocity " + leftVelocity);
-    	double leftPower = leftVelocity / maxVelocity;
-    	log("          leftPower " + leftPower);
+    	DecimalFormat df = new DecimalFormat("#.####");
+		df.setRoundingMode(RoundingMode.CEILING);
+		
+		log("ITERATION " + indexCount);
+		
+		// we need a minimum of 0.5 percent power to really move
+		// when dividing by 10.0, our % maxes around 58%
+		// tried basePower - 0.50; went way too fast
+		maxVelocity = 11.0;
+		double basePower = 0.30;
+    	
+		//log("iteration " + indexCount + ", leftVelocity " + leftVelocity);
+    	double leftPower = basePower + (leftVelocity / maxVelocity);
+    	log("          leftPower " + df.format(leftPower));
     	double rightVelocity = pathPlanner.smoothRightVelocity[indexCount][1];
-    	log("          rightVelocity " + rightVelocity);
-    	double rightPower = rightVelocity / maxVelocity;
-    	log("          rightPower " + rightPower);
+    	// log("          rightVelocity " + rightVelocity);
+    	double rightPower = basePower + ( rightVelocity / maxVelocity );
+    	log("          rightPower " + df.format(rightPower));
     	// motors are still inverted for some reason, have to pass power * -1 to go forward
     	Robot.drivetrain.drive((-1 * leftPower), (-1 * rightPower));
     	indexCount++;
@@ -68,6 +83,7 @@ public class DriveCurvedPath extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	Robot.drivetrain.shiftHigh();
         return indexCount >= pathPlanner.smoothLeftVelocity.length;
     }
 

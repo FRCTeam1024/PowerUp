@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
@@ -175,6 +178,9 @@ public class Drivetrain extends Subsystem {
 	 * @param rightPower value from -1.0 to 1.0
 	 */
 	public void drive(double leftPower, double rightPower) {
+		DecimalFormat df = new DecimalFormat("#.####");
+		df.setRoundingMode(RoundingMode.CEILING);
+		System.out.println("drive(), leftPower : " + df.format(leftPower) + ", rightPower : " + df.format(rightPower));
 		frontLeft.set(ControlMode.PercentOutput, -leftPower);
 		frontRight.set(ControlMode.PercentOutput, rightPower);
 	}

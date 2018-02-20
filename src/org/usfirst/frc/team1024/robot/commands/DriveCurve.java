@@ -31,11 +31,17 @@ public class DriveCurve extends Command {
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
     	outputToSmartDashboard();
+    	
     	if(targetHeading == 0) {
     		this.targetHeading = (int) SmartDashboard.getNumber("Curve Target Angle", 60);
     	}
-    	this.leftPower = (double) SmartDashboard.getNumber("Curve left power", 0.9);
-    	this.rightPower = (double) SmartDashboard.getNumber("Curve right power", 0.1);
+    	this.leftPower = (double) SmartDashboard.getNumber("Curve left power", 1.0);
+    	this.rightPower = (double) SmartDashboard.getNumber("Curve right power", 0.5);
+    	if(targetHeading < 0) { // turning left
+    		double tempPower = leftPower;
+    		this.leftPower = this.rightPower;
+    		this.rightPower = tempPower;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -46,6 +52,7 @@ public class DriveCurve extends Command {
     		leftPower = leftPower / 2;
     		rightPower = rightPower / 2;
     		// do it just once, not every cycle
+    		System.out.println("  SLOWING DOWN");
     		slowedDown = true;
     	}
     	Robot.drivetrain.drive(-leftPower, -rightPower);
@@ -55,7 +62,7 @@ public class DriveCurve extends Command {
     protected boolean isFinished() {
     	// stop early, allow for some coasting
     	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 4) { 
-    		Robot.drivetrain.stop();
+//    		Robot.drivetrain.
     		return true;
     	} else
     		return false;
@@ -71,7 +78,7 @@ public class DriveCurve extends Command {
     }
     
     public void outputToSmartDashboard() {
-		SmartDashboard.putNumber("Curve Target Angle", 90);
+		SmartDashboard.putNumber("Curve Target Angle", 60);
     	SmartDashboard.putNumber("Curve left power", 0.9);
     	SmartDashboard.putNumber("Curve right power", 0.1);
     	
