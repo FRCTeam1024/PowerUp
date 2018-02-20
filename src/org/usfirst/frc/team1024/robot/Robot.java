@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
 		//autoChooser.addObject("Go To Scale Neutral Level", new MoveLiftPID(Level.SCALE_NEUTRAL));
 		//autoChooser.addObject("Go To Scale Loss Level", new MoveLiftPID(Level.SCALE_LOSS));
 		autoChooser.addObject("AutoSwitchFront", "AutoSwitchFront");
+		autoChooser.addObject("Turn Left", "Turn Left");
 		SmartDashboard.putData("Auto mode", autoChooser);
 		
 		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
@@ -117,6 +118,9 @@ public class Robot extends TimedRobot {
 				break;
 			case "DriveToRightScaleEnd":
 				m_autonomousCommand = new DriveToRightScaleEnd();
+				break;
+			case "Turn Left":
+				m_autonomousCommand = new TurnLeft(90, 5);
 				break;
 			default:
 				m_autonomousCommand = new DoNothing();
