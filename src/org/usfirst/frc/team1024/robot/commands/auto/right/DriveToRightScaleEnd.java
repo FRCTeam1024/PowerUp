@@ -5,6 +5,9 @@ import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangePosPID;
+import org.usfirst.frc.team1024.robot.commands.Drive.ChangeTurnSpeed;
+import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,6 +28,8 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	//addSequential(new SetCoast());
     	addSequential(new ChangeDriveSpeed(1.0));
     	addSequential(new DriveAndShift(200, 5.0));
+
+
     	//addSequential(new DriveUntilPID(140 - Constants.ROBOT_LENGTH_IN, 0.5));
     	//addSequential(new DriveUntilAndMoveLift(12, 0.5, Level.SWITCH));
     	/*addSequential(new DriveAndMoveLift(134, Level.SWITCH));
@@ -34,10 +39,11 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	addSequential(new ChangeLiftSpeed(0.5));
     	addSequential(new DriveAndMoveLift(100,
     									   Level.SCALE_NEUTRAL));
+    									   */
     	addSequential(new ChangeTurnSpeed(0.5));
     	addSequential(new TurnLeft(90, 5));
-    	addSequential(new DriveStraight(12));
-    	addSequential(new OpenClamp());*/
+//    	addSequential(new DriveStraight(12));
+//    	addSequential(new OpenClamp());
     	// TODO put cube on scale
     }
 }

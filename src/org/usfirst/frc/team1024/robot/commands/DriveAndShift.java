@@ -40,10 +40,10 @@ public class DriveAndShift extends Command {
     protected void execute() {
     	SmartDashboard.putNumber("targetDistance", targetDistance);
     	// Robot.drivetrain.pidDriveForwardStraight();
-    	if (Robot.drivetrain.getOpticalDistanceInches() > 12.0 && !hasShifted) {
+    	if (Robot.drivetrain.getOpticalDistanceInches() > 6.0 && !hasShifted) {
     		Robot.drivetrain.shiftHigh();
     		hasShifted = true;
-    		SmartDashboard.putNumber("Shifter", Robot.drivetrain.getShiftState() ?0:1);
+    		SmartDashboard.putNumber("Shifter", Robot.drivetrain.getShiftState() ? 0 : 1);
     	}
     	if(targetDistance < 0) {
     		Robot.drivetrain.pidDriveBackwardStraight();
