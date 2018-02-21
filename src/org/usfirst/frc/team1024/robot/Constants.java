@@ -49,6 +49,7 @@ public class Constants {
 
 	// Ultrasonic Constants:
 	public static final double MILLIMETER_SCALE_FACTOR = 124;
+<<<<<<< Updated upstream
 	public static final double INCH_SCALE_FACTOR = 48.8188; // MILLIMETER_SCALE_FACTOR * 0.3937;
 
 	// Robot Constants:
@@ -56,11 +57,44 @@ public class Constants {
 	public static final double ROBOT_WIDTH_IN = 41.0; // side-to-side For 2018 Bot 35.5
 
 	// Field Constants:
+=======
+<<<<<<< Updated upstream
+	public static final double INCH_SCALE_FACTOR = 48.8188; //MILLIMETER_SCALE_FACTOR * 0.3937;
+	
+	
+	//Robot Constants:
+	public static final double ROBOT_LENGTH_IN = 32.0; //front-to-back For 2018 Bot 39
+	public static final double ROBOT_WIDTH_IN = 41.0; //side-to-side For 2018 Bot 35.5
+	
+	//Field Constants:
+>>>>>>> Stashed changes
 	public static final double FIELD_WIDTH = 324.0;
 	public static final double FIELD_LENGTH = 648.0;
 	public static final double WALL_TO_SWITCH_DISTANCE = 140.0;
 	public static final double WALL_TO_SCALE_DISTANCE = 299.65;
+<<<<<<< Updated upstream
 
+=======
+	
+=======
+	public static final double INCH_SCALE_FACTOR = 48.8188; // MILLIMETER_SCALE_FACTOR * 0.3937;
+
+	// Robot Constants:
+	public static final double ROBOT_LENGTH_IN = 39.0; // front-to-back For 2018 Bot 39
+	public static final double ROBOT_WIDTH_IN = 34.0; // side-to-side For 2018 Bot 35.5
+
+	// Field Constants:
+	public static final double FIELD_WIDTH = 324.0; //324 on real field
+	public static final double FIELD_LENGTH = 648.0; //648 on real field
+	public static final double BACKWALL_TO_SWITCH_DISTANCE = 140.0;
+	public static final double BACKWALL_TO_SCALE_DISTANCE = 299.65;
+	public static final double SIDEWALL_TO_SWITCH_DISTANCE = 59.0; // 85.25 on real field
+	public static final double SIDEWALL_TO_SCALE_DISTANCE = 71.57;
+	public static final double SIDEWALL_TO_PORTAL_EDGE = 30.0;
+	
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 	public static final double LOWEST_HEIGHT = 2200;
 	public static final double INTAKE_HEIGHT = LOWEST_HEIGHT + 3800;
 	public static final double SWITCH_HEIGHT = 600000.0;
