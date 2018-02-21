@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.Drive;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,14 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OpenClamp extends Command {
-	
-    public OpenClamp() {
-    	requires(Robot.lift);
+public class ChangeTurnSpeed extends Command {
+	double speed;
+    public ChangeTurnSpeed(double speed) {
+    	requires(Robot.drivetrain);
+    	this.speed = speed;
     }
 
     protected void initialize() {
-    	Robot.lift.clamp(true);
+    	Robot.drivetrain.turnPID.setOutputRange(-speed, speed);
     }
 
     protected void execute() {

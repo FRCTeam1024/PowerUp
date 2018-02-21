@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.lift;
 
 import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
@@ -17,13 +17,13 @@ public class MoveLiftWithJoysticks extends Command {
     }
 
     protected void execute() {
-    	if (Robot.lift.getLiftEncoderValue()/4096 < 40 && !Robot.oi.getOverrideButton()) {
+    	if (Robot.lift.getLiftEncoderValue() < 25000 /*&& !Robot.oi.getOverrideButton()*/) {
     		if(Robot.lift.getCommandedOutput() > 0.0) {
         		Robot.lift.configMaxOutputs(1.0);
     		} else {
     			Robot.lift.configMaxOutputs(0.25);
     		}
-    	} else if (Robot.lift.getLiftEncoderValue()/4096 > 360 && !Robot.oi.getOverrideButton()) {
+    	} else if (Robot.lift.getLiftEncoderValue() > 3000 /*&& !Robot.oi.getOverrideButton()*/) {
     		if(Robot.lift.getCommandedOutput() < 0.0) {
     			Robot.lift.configMaxOutputs(1.0);
     		} else {

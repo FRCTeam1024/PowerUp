@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.Drive;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,22 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ChangeLiftSpeed extends Command {
-	double speed;
-    public ChangeLiftSpeed(double speed) {
-    	requires(Robot.lift);
-    	this.speed = speed;
-    }
+public class DriveWithJoysticks extends Command {
 
+    public DriveWithJoysticks() {
+    	requires(Robot.drivetrain);
+    }
     protected void initialize() {
-    	Robot.lift.configMaxOutputs(speed);
     }
 
     protected void execute() {
+    	Robot.drivetrain.drive(Robot.oi.lJoy.getY(), Robot.oi.rJoy.getY());
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {

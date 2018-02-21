@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.lift;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ChangeTurnSpeed extends Command {
+public class ChangeLiftSpeed extends Command {
 	double speed;
-    public ChangeTurnSpeed(double speed) {
-    	requires(Robot.drivetrain);
+    public ChangeLiftSpeed(double speed) {
+    	requires(Robot.lift);
     	this.speed = speed;
     }
 
     protected void initialize() {
-    	Robot.drivetrain.turnPID.setOutputRange(-speed, speed);
+    	Robot.lift.configMaxOutputs(speed);
     }
 
     protected void execute() {

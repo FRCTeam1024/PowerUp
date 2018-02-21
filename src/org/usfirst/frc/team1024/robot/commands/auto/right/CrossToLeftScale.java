@@ -3,11 +3,11 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
-import org.usfirst.frc.team1024.robot.commands.DriveStraight;
-import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
-import org.usfirst.frc.team1024.robot.commands.OpenClamp;
-import org.usfirst.frc.team1024.robot.commands.TurnLeft;
-import org.usfirst.frc.team1024.robot.commands.TurnRight;
+import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
+import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
+import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
+import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

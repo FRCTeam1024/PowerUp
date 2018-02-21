@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,7 +18,7 @@ public class IntakeWithJoystick extends Command {
     }
 
     protected void execute() {
-    	Robot.intake.intakeSpeed(Robot.oi.logi.getRawAxis(3));
+    	Robot.intake.intakeSpeed(Robot.oi.logi.getRawAxis(Constants.INTAKE_STICK_AXIS));
     }
 
     protected boolean isFinished() {

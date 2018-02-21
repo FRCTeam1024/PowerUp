@@ -67,6 +67,7 @@ public class Constants {
 	public static final double SCALE_OWNERSHIP_HEIGHT = 1205000;
 	public static final double SCALE_NEUTRAL_HEIGHT = 1355000;
 	public static final double SCALE_LOSS_HEIGHT = 1550000;
+	public static final double MAX_HEIGHT = 26113;
 
 	// Controller Constants:
 	
@@ -74,8 +75,8 @@ public class Constants {
 	public static final int RIGHT_JOYSTICK_PORT = 1;
 	public static final int LOGITECH_JOYSTICK_PORT = 2;
 	
-	public static final int LIFT_STICK_AXIS = 1;
-	
+	public static final int LIFT_STICK_AXIS = 3;
+	public static final int INTAKE_STICK_AXIS = 1;
 	public static final int SHIFT_HIGH_BUTTON = 13;
 	public static final int SHIFT_LOW_BUTTON = 16;
 	
@@ -91,7 +92,7 @@ public class Constants {
 	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
 
 	public static final int CUBE_START_DETECT_BUTTON = 2;
-	public static final int LIFT_OVERRIDE_BUTTON = 0;
+	//public static final int LIFT_OVERRIDE_BUTTON = 1;
 
 	public static final int SET_TRIGGER = 3;
 

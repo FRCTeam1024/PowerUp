@@ -7,18 +7,18 @@
 
 package org.usfirst.frc.team1024.robot;
 
-import org.usfirst.frc.team1024.robot.commands.CloseClamp;
 import org.usfirst.frc.team1024.robot.commands.DetectCube;
-import org.usfirst.frc.team1024.robot.commands.IntakeExtendFlat;
-import org.usfirst.frc.team1024.robot.commands.IntakeExtendNarrow;
-import org.usfirst.frc.team1024.robot.commands.MoveLiftPID;
-import org.usfirst.frc.team1024.robot.commands.OpenClamp;
-import org.usfirst.frc.team1024.robot.commands.ShiftHigh;
-import org.usfirst.frc.team1024.robot.commands.ShiftLow;
+import org.usfirst.frc.team1024.robot.commands.Drive.ShiftHigh;
+import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtendFlat;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtendNarrow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeFlat;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
+import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
+import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
+import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -76,13 +76,13 @@ public class OI {
 		
 		logi.dPad.down.whenPressed(new IntakeRetract());
 		logi.dPad.up.whenPressed(new IntakeExtend());
-		logi.dPad.left.whenPressed(new IntakeFlat());
-		logi.dPad.right.whenPressed(new IntakeNarrow());
-		logi.dPad.upLeft.whenPressed(new IntakeExtendFlat());
-		logi.dPad.upRight.whenPressed(new IntakeExtendNarrow());
+		logi.dPad.left.whenPressed(new IntakeNarrow());
+		logi.dPad.right.whenPressed(new IntakeFlat());
+		logi.dPad.upLeft.whenPressed(new IntakeExtendNarrow());
+		logi.dPad.upRight.whenPressed(new IntakeExtendFlat());
 	}
-	
+	/*
 	public boolean getOverrideButton() {
 		return logi.getRawButton(Constants.LIFT_OVERRIDE_BUTTON);
-	}
+	}*/
 }

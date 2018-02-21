@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1024.robot.commands.auto.left;
 
 import org.usfirst.frc.team1024.robot.Robot;
-import org.usfirst.frc.team1024.robot.commands.DriveStraight;
-import org.usfirst.frc.team1024.robot.commands.TurnRelative;
+import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.Drive.TurnRelative;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

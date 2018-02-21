@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.lift;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CloseClamp extends Command {
-    public CloseClamp() {
+public class OpenClamp extends Command {
+	
+    public OpenClamp() {
     	requires(Robot.lift);
     }
 
     protected void initialize() {
-    	Robot.lift.clamp(false);
+    	Robot.lift.clamp(true);
     }
 
     protected void execute() {

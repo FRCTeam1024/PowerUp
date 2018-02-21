@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.Drive;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,14 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ChangeRamp extends Command {
-	double ramp;
-    public ChangeRamp(double ramp) {
-    	this.ramp = ramp;
+public class ChangeDriveSpeed extends Command {
+	double speed;
+    public ChangeDriveSpeed(double speed) {
+    	requires(Robot.drivetrain);
+    	this.speed = speed;
     }
 
     protected void initialize() {
-    	Robot.drivetrain.setRamp(ramp);
+    	Robot.drivetrain.posPID.setOutputRange(-speed, speed);
     }
 
     protected void execute() {

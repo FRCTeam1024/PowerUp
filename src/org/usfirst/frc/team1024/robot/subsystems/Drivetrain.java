@@ -10,7 +10,8 @@ package org.usfirst.frc.team1024.robot.subsystems;
 import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
-import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.Drive.DriveWithJoysticks;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;

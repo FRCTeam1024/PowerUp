@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.lift;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,14 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShiftHigh extends Command {
-
-    public ShiftHigh() {
-    	requires(Robot.drivetrain);
+public class CloseClamp extends Command {
+    public CloseClamp() {
+    	requires(Robot.lift);
     }
-    
+
     protected void initialize() {
-    	Robot.drivetrain.shiftHigh();
+    	Robot.lift.clamp(false);
     }
 
     protected void execute() {

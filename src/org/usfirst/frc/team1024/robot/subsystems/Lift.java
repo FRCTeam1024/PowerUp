@@ -3,7 +3,7 @@ package org.usfirst.frc.team1024.robot.subsystems;
 import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
-import org.usfirst.frc.team1024.robot.commands.MoveLiftWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;

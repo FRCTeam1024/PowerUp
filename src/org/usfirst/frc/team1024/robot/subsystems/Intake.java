@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -52,6 +53,7 @@ public class Intake extends Subsystem {
     public void slideIn() {
     	posIn();
     	leftIntakeSlide.set(false);
+    	Robot.lift.clamp(false);
     	intakeInState = true;
     }
     
@@ -73,5 +75,13 @@ public class Intake extends Subsystem {
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());
+	}
+	
+	public boolean intakeWideState() {
+		return intakeWideState;
+	}
+	
+	public boolean intakeInState() {
+		return intakeInState;
 	}
 }
