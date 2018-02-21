@@ -1,25 +1,10 @@
 package org.usfirst.frc.team1024.robot.commands.auto.right;
 
 import org.usfirst.frc.team1024.robot.Constants;
-import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
-import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
-import org.usfirst.frc.team1024.robot.commands.DriveAndMoveLift;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
-import org.usfirst.frc.team1024.robot.commands.DriveAndShiftAndLift;
-import org.usfirst.frc.team1024.robot.commands.DriveUntilAndMoveLift;
-import org.usfirst.frc.team1024.robot.commands.DriveUntilAndShiftAndLift;
-import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveRamp;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangePosPID;
-import org.usfirst.frc.team1024.robot.commands.Drive.ChangeTurnSpeed;
-import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
-import org.usfirst.frc.team1024.robot.commands.Drive.DriveUntilPID;
-import org.usfirst.frc.team1024.robot.commands.Drive.SetCoast;
-import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
-import org.usfirst.frc.team1024.robot.commands.lift.ChangeLiftSpeed;
-import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,7 +24,7 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	//addSequential(new ChangeRamp(1));
     	//addSequential(new SetCoast());
     	addSequential(new ChangeDriveSpeed(1.0));
-    	addSequential(new DriveAndShift(200, 1.0));
+    	addSequential(new DriveAndShift(200, 5.0));
     	//addSequential(new DriveUntilPID(140 - Constants.ROBOT_LENGTH_IN, 0.5));
     	//addSequential(new DriveUntilAndMoveLift(12, 0.5, Level.SWITCH));
     	/*addSequential(new DriveAndMoveLift(134, Level.SWITCH));
