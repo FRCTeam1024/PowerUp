@@ -45,7 +45,7 @@ public class TurnRelative extends Command {
     		onTargetCount = 0;
     	}
     	
-    	if(onTargetCount == 30) {
+    	if(onTargetCount >= 30) {
     		return true;
     	} else {
     		return false;

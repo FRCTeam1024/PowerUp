@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new DriveToRightScaleEnd();
 				break;
 			case "Turn Left":
-				m_autonomousCommand = new TurnLeft(90, 5);
+				m_autonomousCommand = new TurnLeft(90, 5.0);
 				break;
 			default:
 				m_autonomousCommand = new DoNothing();

@@ -58,8 +58,10 @@ public class Constants {
 	// Field Constants:
 	public static final double FIELD_WIDTH = 324.0; //324 on real field
 	public static final double FIELD_LENGTH = 648.0; //648 on real field
-	public static final double BACKWALL_TO_SWITCH_DISTANCE = 140.0;
-	public static final double BACKWALL_TO_SCALE_DISTANCE = 299.65;
+	public static final double BACKWALL_TO_EDGE_SWITCH_DISTANCE = 140.0;
+	public static final double BACKWALL_TO_EDGE_SCALE_DISTANCE = 299.65;
+	public static final double BACKWALL_TO_MIDDLE_SWITCH_DISTANCE = 168.0;
+	public static final double BACKWALL_TO_MIDDLE_SCALE_DISTANCE = 324.0;
 	public static final double SIDEWALL_TO_SWITCH_DISTANCE = 59.0; // 85.25 on real field
 	public static final double SIDEWALL_TO_SCALE_DISTANCE = 71.57;
 	public static final double SIDEWALL_TO_PORTAL_EDGE = 30.0;

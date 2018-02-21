@@ -34,13 +34,12 @@ public class DriveAndShift extends Command {
     	Robot.drivetrain.trimPID.setSetpoint(currentAngle);
     	Robot.drivetrain.posPID.enable();
     	Robot.drivetrain.trimPID.enable();
-    	Robot.drivetrain.shiftLow();
     }
     
     protected void execute() {
     	SmartDashboard.putNumber("targetDistance", targetDistance);
     	// Robot.drivetrain.pidDriveForwardStraight();
-    	if (Robot.drivetrain.getOpticalDistanceInches() > 6.0 && !hasShifted) {
+    	if (Robot.drivetrain.getOpticalDistanceInches() > 1.0 && !hasShifted) {
     		Robot.drivetrain.shiftHigh();
     		hasShifted = true;
     		SmartDashboard.putNumber("Shifter", Robot.drivetrain.getShiftState() ? 0 : 1);

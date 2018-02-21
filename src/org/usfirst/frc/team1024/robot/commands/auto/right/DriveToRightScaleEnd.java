@@ -3,11 +3,16 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
+import org.usfirst.frc.team1024.robot.commands.PrintToConsole;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangePosPID;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeTurnSpeed;
+import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
+import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,7 +32,7 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	//addSequential(new ChangeRamp(1));
     	//addSequential(new SetCoast());
     	addSequential(new ChangeDriveSpeed(1.0));
-    	addSequential(new DriveAndShift(200, 5.0));
+    	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - Constants.ROBOT_LENGTH_IN, 5.0));
 
 
     	//addSequential(new DriveUntilPID(140 - Constants.ROBOT_LENGTH_IN, 0.5));
@@ -40,10 +45,12 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	addSequential(new DriveAndMoveLift(100,
     									   Level.SCALE_NEUTRAL));
     									   */
-    	addSequential(new ChangeTurnSpeed(0.5));
-    	addSequential(new TurnLeft(90, 5));
-//    	addSequential(new DriveStraight(12));
-//    	addSequential(new OpenClamp());
+    	addSequential(new ChangeTurnSpeed(1.0));
+    	addSequential(new ShiftLow());
+    	addSequential(new TurnLeft(90, 5.0));
+    	addSequential(new DriveStraight(12));
+    	addSequential(new OpenClamp());
+    	addSequential(new PrintToConsole("Done @ " + DriverStation.getInstance().getMatchTime()));
     	// TODO put cube on scale
     }
 }
