@@ -22,7 +22,9 @@ import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
+import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
@@ -68,7 +70,9 @@ public class Robot extends TimedRobot {
 		//autoChooser.addObject("Go To Scale Neutral Level", new MoveLiftPID(Level.SCALE_NEUTRAL));
 		//autoChooser.addObject("Go To Scale Loss Level", new MoveLiftPID(Level.SCALE_LOSS));
 		autoChooser.addObject("AutoSwitchFront", "AutoSwitchFront");
+		autoChooser.addObject("Cross To Left Scale", "Cross To Left Scale");
 		autoChooser.addObject("Turn Left", "Turn Left");
+		autoChooser.addObject("Turn Right", "Turn Right");
 		SmartDashboard.putData("Auto mode", autoChooser);
 		
 		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
@@ -121,6 +125,12 @@ public class Robot extends TimedRobot {
 				break;
 			case "Turn Left":
 				m_autonomousCommand = new TurnLeft(90, 5.0);
+				break;
+			case "Turn Right":
+				m_autonomousCommand = new TurnRight(90, 5.0);
+				break;
+			case "Cross To Left Scale":
+				m_autonomousCommand = new CrossToLeftScale();
 				break;
 			default:
 				m_autonomousCommand = new DoNothing();

@@ -52,7 +52,7 @@ public class DriveStraight extends Command {
     		onTargetCount = 0;
     	}
     	
-    	if(onTargetCount == 30) {
+    	if(onTargetCount >= 10) {
     		return true;
     	} else {
     		return false;

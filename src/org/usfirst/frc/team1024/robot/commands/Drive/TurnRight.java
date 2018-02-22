@@ -7,6 +7,6 @@ public class TurnRight extends TurnRelative {
 	}
 	
 	public TurnRight(double targetHeading, double degreeTolerance) {
-		super(-1 * targetHeading, degreeTolerance);
+		super(targetHeading, degreeTolerance);
 	}
 }

@@ -26,6 +26,7 @@ public class TurnRelative extends Command {
     	Robot.drivetrain.resetGyro();
     	Robot.drivetrain.turnPID.setSetpoint(targetAngle);
     	Robot.drivetrain.turnPID.enable();
+    	Robot.drivetrain.shiftLow();
     }
 
     protected void execute() {
@@ -39,13 +40,14 @@ public class TurnRelative extends Command {
     }
         
     protected boolean isFinished() {
+    	SmartDashboard.putNumber("OnTargetCount", onTargetCount);
     	if (isOnTarget()) {
     		onTargetCount++;
     	} else {
     		onTargetCount = 0;
     	}
     	
-    	if(onTargetCount >= 30) {
+    	if(onTargetCount >= 10) {
     		return true;
     	} else {
     		return false;

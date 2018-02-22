@@ -2,6 +2,7 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 
 import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.commands.DriveAndIntake;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.PrintToConsole;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
@@ -10,6 +11,8 @@ import org.usfirst.frc.team1024.robot.commands.Drive.ChangeTurnSpeed;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
+import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
 import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,12 +28,6 @@ public class DriveToRightScaleEnd extends CommandGroup {
 
     public DriveToRightScaleEnd() {
     	requires(Robot.drivetrain);
-    	addSequential(new ChangePosPID(SmartDashboard.getNumber("Pos P", Constants.POS_KP),
-				  					   SmartDashboard.getNumber("Pos I", Constants.POS_KI),
-				  					   SmartDashboard.getNumber("Pos D", Constants.POS_KD)));
-    	//addSequential(new ChangeRamp(0.35 / 2));
-    	//addSequential(new ChangeRamp(1));
-    	//addSequential(new SetCoast());
     	addSequential(new ChangeDriveSpeed(1.0));
     	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - Constants.ROBOT_LENGTH_IN, 5.0));
 
@@ -49,7 +46,12 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	addSequential(new ShiftLow());
     	addSequential(new TurnLeft(90, 5.0));
     	addSequential(new DriveStraight(12));
-    	addSequential(new OpenClamp());
+    	addSequential(new OpenClamp()); //THIS WILL BREAK THE INTAKE!
+    	addSequential(new TurnLeft(80, 5.0));
+    	addSequential(new IntakeExtend());
+    	
+    	addSequential(new DriveAndIntake(100.0, 3.0));
+    	addSequential(new CloseClamp());
     	addSequential(new PrintToConsole("Done @ " + DriverStation.getInstance().getMatchTime()));
     	// TODO put cube on scale
     }
