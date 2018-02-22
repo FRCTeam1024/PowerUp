@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveAndShiftAndLift extends CommandGroup {
 
-    public DriveAndShiftAndLift(double distance, Level level) {
+    public DriveAndShiftAndLift(double distance, double tolerance, Level level) {
     	addParallel(new MoveLiftPID(level));
-    	addSequential(new DriveAndShift(distance));
+    	addSequential(new DriveAndShift(distance, tolerance));
     }
 }

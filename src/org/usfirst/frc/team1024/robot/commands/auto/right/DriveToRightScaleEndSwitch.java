@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * 
  * Drives to the end (aka the middle) of the scale
  */
-public class DriveToRightScaleEnd extends CommandGroup {
+public class DriveToRightScaleEndSwitch extends CommandGroup {
 
-    public DriveToRightScaleEnd() {
+    public DriveToRightScaleEndSwitch() {
     	requires(Robot.drivetrain);
     	addSequential(new ChangeDriveSpeed(1.0));
     	addSequential(new DriveAndShiftAndLift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - Constants.ROBOT_LENGTH_IN, 5.0, Level.SWITCH));
