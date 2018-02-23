@@ -66,12 +66,12 @@ public class Constants {
 	public static final double SIDEWALL_TO_SCALE_DISTANCE = 71.57;
 	public static final double SIDEWALL_TO_PORTAL_EDGE = 30.0;
 	
-	public static final double LOWEST_HEIGHT = 2200;
-	public static final double INTAKE_HEIGHT = LOWEST_HEIGHT + 3800;
-	public static final double SWITCH_HEIGHT = 600000.0;
-	public static final double SCALE_OWNERSHIP_HEIGHT = 1205000;
-	public static final double SCALE_NEUTRAL_HEIGHT = 1355000;
-	public static final double SCALE_LOSS_HEIGHT = 1550000;
+	public static final double LOWEST_HEIGHT = 0;
+	public static final double INTAKE_HEIGHT = 0;
+	public static final double SWITCH_HEIGHT = 10024.0;
+	public static final double SCALE_OWNERSHIP_HEIGHT = 21069.0;
+	public static final double SCALE_NEUTRAL_HEIGHT = 23064.0;
+	public static final double SCALE_LOSS_HEIGHT = 25000.0;
 	public static final double MAX_HEIGHT = 26113;
 
 	// Controller Constants:

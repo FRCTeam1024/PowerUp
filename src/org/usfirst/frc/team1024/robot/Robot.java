@@ -19,6 +19,7 @@ import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
+import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Cross To Left Scale", "Cross To Left Scale");
 		autoChooser.addObject("Turn Left", "Turn Left");
 		autoChooser.addObject("Turn Right", "Turn Right");
+		autoChooser.addObject("STurn", "STurn");
 		SmartDashboard.putData("Auto mode", autoChooser);
 		
 		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
@@ -131,6 +133,9 @@ public class Robot extends TimedRobot {
 				break;
 			case "Cross To Left Scale":
 				m_autonomousCommand = new CrossToLeftScale();
+				break;
+			case "STurn":
+				m_autonomousCommand = new STurn(250.0, 140.0 - Constants.ROBOT_LENGTH_IN, -45.0, 36.0);
 				break;
 			default:
 				m_autonomousCommand = new DoNothing();
