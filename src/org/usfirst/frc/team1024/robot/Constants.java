@@ -99,7 +99,7 @@ public class Constants {
 	public static final int CUBE_START_DETECT_BUTTON = 2;
 	//public static final int LIFT_OVERRIDE_BUTTON = 1;
 
-	public static final int SET_TRIGGER = 3;
+	public static final int INTAKE_START_ACQUIRE = 3;
 
 	public static final int REACH_SCALE_HEIGHT = 2;
 	public static final int REACH_SWITCH_HEIGHT = 1;

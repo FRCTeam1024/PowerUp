@@ -21,19 +21,18 @@ public class MoveLiftPID extends Command {
     }
 
     protected void execute() {
-    	if (Robot.lift.getLiftEncoderValue() < 25000 /*&& !Robot.oi.getOverrideButton()*/) {
-    		if(Robot.lift.getCommandedOutput() > 0.0) {
+    	if(Robot.lift.getCommandedOutput() > 0.0) {
+    		if (Robot.lift.getLiftEncoderValue() < 25000 /*&& !Robot.oi.getOverrideButton()*/) {
         		Robot.lift.configMaxOutputs(1.0);
     		} else {
     			Robot.lift.configMaxOutputs(0.25);
     		}
-    	} else if (Robot.lift.getLiftEncoderValue() > 3000 /*&& !Robot.oi.getOverrideButton()*/) {
-    		if(Robot.lift.getCommandedOutput() < 0.0) {
+    	} else if(Robot.lift.getCommandedOutput() < 0.0) {
+    		if (Robot.lift.getLiftEncoderValue() > 3000 /*&& !Robot.oi.getOverrideButton()*/) {
     			Robot.lift.configMaxOutputs(1.0);
     		} else {
     			Robot.lift.configMaxOutputs(0.25);
     		}
-    		
     	} else {
     		Robot.lift.configMaxOutputs(1.0);
     	}
