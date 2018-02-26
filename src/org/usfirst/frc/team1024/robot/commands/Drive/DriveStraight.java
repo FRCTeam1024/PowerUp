@@ -46,7 +46,7 @@ public class DriveStraight extends Command {
     }
 
     protected boolean isFinished() {
-    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
+    	/* (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
     		onTargetCount++;
     	} else {
     		onTargetCount = 0;
@@ -56,7 +56,8 @@ public class DriveStraight extends Command {
     		return true;
     	} else {
     		return false;
-    	}
+    	} */
+    	return Robot.drivetrain.posPid.onTarget();
     }
     
     protected void end() {

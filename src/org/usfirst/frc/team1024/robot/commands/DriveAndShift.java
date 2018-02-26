@@ -38,11 +38,15 @@ public class DriveAndShift extends Command {
     
     protected void execute() {
     	SmartDashboard.putNumber("targetDistance", targetDistance);
+    	SmartDashboard.putNumber("currentmotor speed",  Robot.drivetrain.posPID.get());
+    	SmartDashboard.putNumber("currentDistance", Robot.drivetrain.getOpticalDistanceInches());
+		SmartDashboard.putString("Shiftstatus", hasShifted ? "high" : "low");
+		SmartDashboard.putString("shifter value", Robot.drivetrain.getShiftState() ? "1": "0");
+		
     	// Robot.drivetrain.pidDriveForwardStraight();
-    	if (Robot.drivetrain.getOpticalDistanceInches() > 1.0 && !hasShifted) {
+    	if (Robot.drivetrain.getOpticalDistanceInches() > 10.0 && !hasShifted) {
     		Robot.drivetrain.shiftHigh();
     		hasShifted = true;
-    		SmartDashboard.putNumber("Shifter", Robot.drivetrain.getShiftState() ? 0 : 1);
     	}
     	if(targetDistance < 0) {
     		Robot.drivetrain.pidDriveBackwardStraight();
@@ -52,17 +56,10 @@ public class DriveAndShift extends Command {
     }
 
     protected boolean isFinished() {
-    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
-    		onTargetCount++;
-    	} else {
-    		onTargetCount = 0;
-    	}
-    	
-    	if(onTargetCount == 30) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	//if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
+    	//	onTargetCount++;
+    	//}
+    	return Robot.drivetrain.posPID.onTarget();
     }
     
     protected void end() {
