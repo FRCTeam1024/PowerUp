@@ -24,6 +24,10 @@ public class Intake extends Subsystem {
     
     private DigitalOutput breakBeamEmitter = new DigitalOutput(RobotMap.INTAKE_BREAKBEAM_EMITTER_PORT);
     private DigitalInput breakBeamReciever = new DigitalInput(RobotMap.INTAKE_BREAKBEAM_RECIEVER_PORT);
+    
+    private DigitalInput leftBumpDetector = new DigitalInput(RobotMap.LEFT_BUMP_CUBE_DETECTOR_PORT);
+    private DigitalInput rightBumpDetector = new DigitalInput(RobotMap.RIGHT_BUMP_CUBE_DETECTOR_PORT);
+    
     private boolean intakeInState = true;
     private boolean intakeWideState = true;
     
@@ -70,8 +74,13 @@ public class Intake extends Subsystem {
     }
 
 	public boolean cubeDetecterState() {
-		return breakBeamReciever.get();
+		if (leftBumpDetector.get() == true && rightBumpDetector.get() == true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
+	
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());

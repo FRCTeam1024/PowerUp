@@ -44,6 +44,10 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<String> autoChooser = new SendableChooser<String>();
+	SendableChooser<String> robotPosition = new SendableChooser<String>();
+	SendableChooser<String> objective1 = new SendableChooser<String>();
+	SendableChooser<String> objective2 = new SendableChooser<String>();
+	SendableChooser<String> objective3 = new SendableChooser<String>();
 	
 	SendableChooser<String> compAutoChooser;
 	
@@ -53,6 +57,7 @@ public class Robot extends TimedRobot {
 		
 		drivetrain.resetOpticalEncoder();
 		lift.resetEncoder();
+		
 		
 		
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
@@ -144,6 +149,8 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new DoNothing();
 				break;
 		}
+		
+		//m_autonomousCommand = new CompetitionAuto(robotPosition, objective1, objective2, objective3, fieldConfig);
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
