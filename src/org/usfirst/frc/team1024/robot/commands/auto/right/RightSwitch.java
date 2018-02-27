@@ -1,23 +1,22 @@
 package org.usfirst.frc.team1024.robot.commands.auto.right;
 
 import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.FieldConfig.POSITION;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
+import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverFirstCubeToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class DriveToRightSwitch extends CommandGroup {
+public class RightSwitch extends CommandGroup {
 
-    public DriveToRightSwitch() {
-    	requires(Robot.drivetrain);
-    	addSequential(new DriveStraight(AutoDriveConstants.BACK_WALL_TO_END_OF_SWITCH_INCHES));
-    	addSequential(new TurnLeft(90));
-    	addSequential(new DriveStraight(20));
-
+    public RightSwitch() {
+    	addSequential(new DeliverFirstCubeToSwitch(POSITION.RIGHT));
+    	
     	// TODO put cube on switch
     	/* To scale:
     	 * addSequential(new DriveStraight(-10));

@@ -24,10 +24,10 @@ import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
-import org.usfirst.frc.team1024.robot.commands.auto.left.LeftPositionAuto;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
-import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightSwitch;
+import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
@@ -88,8 +88,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
 		
-		compAutoChooser = CompetitionAuto.getInstance().populateChooser();
-		
+		// TODO un-comment when you want to test this
+//		CompetitionAutoChooser.getInstance().initSmartDashboard();
 	}
 	
 	@Override
@@ -113,13 +113,13 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
-		
+		/*
 		switch (autoSelected) {
 			case "DriveToRightSwitch":
-				m_autonomousCommand = new DriveToRightSwitch();
+				m_autonomousCommand = new RightSwitch();
 				break;
 			case "LeftPositionAuto":
-				m_autonomousCommand = new LeftPositionAuto();
+				m_autonomousCommand = new LeftSwitch();
 				break;
 			case "StraightForwardSwitch":
 				m_autonomousCommand = new StraightForwardSwitch();
@@ -148,9 +148,10 @@ public class Robot extends TimedRobot {
 			default:
 				m_autonomousCommand = new DoNothing();
 				break;
-		}
+		}*/
 		
-		//m_autonomousCommand = new CompetitionAuto(robotPosition, objective1, objective2, objective3, fieldConfig);
+		// TODO when you want to try auto-chooser
+//		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
