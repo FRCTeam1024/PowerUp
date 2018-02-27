@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
+import org.usfirst.frc.team1024.robot.commandgroups.TestingPhysicalSystems;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.STurn;
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
 		//autoChooser.addObject("Go To Scale Ownership Level", new MoveLiftPID(Level.SCALE_OWNERSHIP));
 		//autoChooser.addObject("Go To Scale Neutral Level", new MoveLiftPID(Level.SCALE_NEUTRAL));
 		//autoChooser.addObject("Go To Scale Loss Level", new MoveLiftPID(Level.SCALE_LOSS));
+		//autoChooser.addObject("Testing Physical Systems", new TestingPhysicalSystems());
 		autoChooser.addObject("AutoSwitchFront", "AutoSwitchFront");
 		autoChooser.addObject("Cross To Left Scale", "Cross To Left Scale");
 		autoChooser.addObject("Turn Left", "Turn Left");
@@ -175,6 +177,13 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void testPeriodic() {
-		
+		Scheduler.getInstance().run();
 	}
+	@Override
+	public void testInit() {
+		System.out.println("testPeriodic getting called!");
+		Command testCommand = new TestingPhysicalSystems();
+		testCommand.start();
+	}
+		
 }

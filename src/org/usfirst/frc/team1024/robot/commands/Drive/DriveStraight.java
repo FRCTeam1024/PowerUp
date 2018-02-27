@@ -57,7 +57,7 @@ public class DriveStraight extends Command {
     	} else {
     		return false;
     	} */
-    	return Robot.drivetrain.posPid.onTarget();
+    	return Robot.drivetrain.posPID.onTarget();
     }
     
     protected void end() {

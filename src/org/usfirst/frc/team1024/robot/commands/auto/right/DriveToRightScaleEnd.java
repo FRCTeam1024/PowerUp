@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveToRightScaleEnd extends CommandGroup {
 
-    public DriveToRightScaleEnd() {
+    public DriveToRightScaleEnd() {/*
     	requires(Robot.drivetrain);
     	addSequential(new ChangeDriveSpeed(1.0));
 <<<<<<< Updated upstream
@@ -57,5 +57,5 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	addSequential(new DriveAndLiftAndIntake(100.0, Level.INTAKE, 3.0));
     	addSequential(new CloseClamp());
     	addSequential(new PrintToConsole("Done @ " + DriverStation.getInstance().getMatchTime()));
-    }
+    */}
 }

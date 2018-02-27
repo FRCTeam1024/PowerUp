@@ -14,10 +14,13 @@ public class IntakeExtend extends Command {
     }
 
     protected void initialize() {
+    	System.out.println("before Slide out");
     	Robot.intake.slideOut();
+    	System.out.println("after Slide out");
     }
     
     protected void execute() {
+    	System.out.println("Execute Extend");
     }
 
     protected boolean isFinished() {
