@@ -45,6 +45,8 @@ public class Robot extends TimedRobot {
 	Command m_autonomousCommand;
 	SendableChooser<String> autoChooser = new SendableChooser<String>();
 	
+	SendableChooser<String> compAutoChooser;
+	
 	@Override
 	public void robotInit() {
 		oi = new OI();
@@ -81,7 +83,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
 		
-		
+		compAutoChooser = CompetitionAuto.getInstance().populateChooser();
 		
 	}
 	
@@ -106,6 +108,7 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
+		
 		switch (autoSelected) {
 			case "DriveToRightSwitch":
 				m_autonomousCommand = new DriveToRightSwitch();
