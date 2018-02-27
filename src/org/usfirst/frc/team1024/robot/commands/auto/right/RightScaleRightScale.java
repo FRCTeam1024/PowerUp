@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *	deliver both cubes to scale on right side
+ *	THIS HAS NOT BEEN TESTED YET - remove this when it has
  */
 public class RightScaleRightScale extends CommandGroup {
 

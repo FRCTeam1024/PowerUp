@@ -12,7 +12,7 @@ import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * THIS HAS NOT BEEN TESTED YET - remove this when it has
  */
 public class DeliverFirstCubeToSwitch extends CommandGroup {
 

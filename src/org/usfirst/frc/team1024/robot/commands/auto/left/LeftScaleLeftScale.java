@@ -7,7 +7,7 @@ import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverSecondCubeTo
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * THIS HAS NOT BEEN TESTED YET - remove this when it has
  */
 public class LeftScaleLeftScale extends CommandGroup {
 
