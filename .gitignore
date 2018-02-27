@@ -2,3 +2,4 @@ build/*
 dist/*
 *.class
 /bin/
+.settings/org.eclipse.jdt.core.prefs

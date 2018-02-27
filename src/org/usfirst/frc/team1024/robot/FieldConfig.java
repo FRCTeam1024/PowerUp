@@ -54,4 +54,21 @@ public class FieldConfig {
 	public POSITION getScalePosition() {
 		return scalePos;
 	}
+	
+	// convenience methods
+	public boolean isSwitchLeft() {
+		return POSITION.LEFT.equals(switchPos);
+	}
+	
+	public boolean isScaleLeft() {
+		return POSITION.LEFT.equals(scalePos);
+	}
+	
+	public boolean isSwitchRight() {
+		return POSITION.RIGHT.equals(switchPos);
+	}
+	
+	public boolean isScaleRight() {
+		return POSITION.RIGHT.equals(scalePos);
+	}
 }
