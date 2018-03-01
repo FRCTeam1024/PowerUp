@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 		lift.resetEncoder();
 		
 		
-		
+		/*
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
@@ -77,10 +77,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Turn Right", "Turn Right");
 		autoChooser.addObject("STurn", "STurn");
 		SmartDashboard.putData("Auto mode", autoChooser);
-		
-		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
-		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
-		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
+		*/
 		
 		
 		// TODO un-comment when you want to test this
@@ -98,9 +95,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-//		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+		//drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 	
 	@Override
@@ -159,8 +156,8 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 //		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -174,9 +171,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-//		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+		//drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 	
 	@Override
