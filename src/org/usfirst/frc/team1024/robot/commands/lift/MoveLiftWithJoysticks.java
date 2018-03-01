@@ -18,14 +18,19 @@ public class MoveLiftWithJoysticks extends Command {
 
     protected void execute() {
     	if(Robot.lift.getCommandedOutput() > 0.0) {
-    		Robot.lift.clamp(false);
+    		if (Robot.intake.intakeWideState() == false) {
+    			Robot.lift.clamp(false);
+    		}
+    				
     		if (Robot.lift.getLiftEncoderValue() < 25000 /*&& !Robot.oi.getOverrideButton()*/) {
         		Robot.lift.configMaxOutputs(1.0);
     		} else {
     			Robot.lift.configMaxOutputs(0.25);
     		}
     	} else if(Robot.lift.getCommandedOutput() < 0.0) {
-    		Robot.lift.clamp(false);
+    		if (Robot.intake.intakeWideState() == false) {
+    			Robot.lift.clamp(false);
+    		}
     		if (Robot.lift.getLiftEncoderValue() > 3000 /*&& !Robot.oi.getOverrideButton()*/) {
     			Robot.lift.configMaxOutputs(1.0);
     		} else {

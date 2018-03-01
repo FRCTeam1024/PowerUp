@@ -44,12 +44,6 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<String> autoChooser = new SendableChooser<String>();
-	SendableChooser<String> robotPosition = new SendableChooser<String>();
-	SendableChooser<String> objective1 = new SendableChooser<String>();
-	SendableChooser<String> objective2 = new SendableChooser<String>();
-	SendableChooser<String> objective3 = new SendableChooser<String>();
-	
-	SendableChooser<String> compAutoChooser;
 	
 	@Override
 	public void robotInit() {
@@ -88,8 +82,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
 		
+		
 		// TODO un-comment when you want to test this
-//		CompetitionAutoChooser.getInstance().initSmartDashboard();
+		CompetitionAutoChooser.getInstance().initSmartDashboard();
 	}
 	
 	@Override
@@ -103,7 +98,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
+//		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
 	}
@@ -151,7 +146,7 @@ public class Robot extends TimedRobot {
 		}*/
 		
 		// TODO when you want to try auto-chooser
-//		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
+		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
@@ -163,7 +158,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
+//		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
 	}
@@ -179,7 +174,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
+//		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
 	}

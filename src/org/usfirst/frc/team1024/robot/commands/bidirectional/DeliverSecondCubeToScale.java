@@ -3,6 +3,7 @@ package org.usfirst.frc.team1024.robot.commands.bidirectional;
 import org.usfirst.frc.team1024.robot.FieldConfig;
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.commands.DriveUntilAndMoveLift;
 import org.usfirst.frc.team1024.robot.commands.TurnLeftAndLift;
 import org.usfirst.frc.team1024.robot.commands.TurnRightAndLift;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
@@ -32,7 +33,7 @@ public class DeliverSecondCubeToScale extends CommandGroup {
     	
     	// drive forward some distance
     	// not sure what the right/current drive straight command is now
-    	addSequential(new DriveStraight(70));
+    	addSequential(new DriveUntilAndMoveLift(70, 1.0, Level.SCALE_NEUTRAL));
     	
     	// drop cube
     	addSequential(new OpenClamp()); 

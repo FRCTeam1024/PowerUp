@@ -2,6 +2,8 @@ package org.usfirst.frc.team1024.robot;
 
 public class FieldConfig {
 	
+	private String gameMessage;
+	
 	public enum POSITION {
 		RIGHT(-1), LEFT(1), UNKNOWN(0);
 		
@@ -21,6 +23,7 @@ public class FieldConfig {
 	private boolean valid = true;
 	
 	public FieldConfig(String combinationString) {
+		gameMessage = combinationString;
 		if(combinationString != null && combinationString.trim().length() > 0) { 
 			
 			combinationString = combinationString.toUpperCase(); // just to make comparisons easier
@@ -70,5 +73,18 @@ public class FieldConfig {
 	
 	public boolean isScaleRight() {
 		return POSITION.RIGHT.equals(scalePos);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer("Game message : ");
+		sb.append(gameMessage);
+		sb.append("\n");
+		sb.append("Switch right : ");
+		sb.append(isSwitchRight());
+		sb.append("\n");
+		sb.append("Scale right : ");
+		sb.append(isScaleRight());
+		return sb.toString();
 	}
 }
