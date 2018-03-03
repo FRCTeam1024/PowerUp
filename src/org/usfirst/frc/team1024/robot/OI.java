@@ -44,22 +44,22 @@ public class OI {
 	JoystickButton rightShiftLow      = new JoystickButton(rJoy, Constants.SHIFT_LOW_BUTTON);
 	JoystickButton closeClamp 		  = new JoystickButton(logi, Constants.LIFT_CLAMP_CLOSE_BUTTON);
 	JoystickButton openClamp          = new JoystickButton(logi, Constants.LIFT_CLAMP_OPEN_BUTTON);
-	JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
+	public JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
 	JoystickButton scaleHeight 		  = new JoystickButton(logi, Constants.REACH_SCALE_HEIGHT);
-	JoystickButton switchHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
+	JoystickButton portalHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
 	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.ZERO_HEIGHT);
 	
 	public OI () {
 		leftShiftHigh.whenPressed(new ShiftHigh());
 		leftShiftLow.whenPressed(new ShiftLow());
 		rightShiftHigh.whenPressed(new ShiftHigh());
-		rightShiftHigh.whenPressed(new ShiftLow());
+		rightShiftLow.whenPressed(new ShiftLow());
 		closeClamp.whenPressed(new CloseClamp());
 		openClamp.whenPressed(new OpenClamp());
-		intakeStartAcquire.whileHeld(new IntakeCube());
+		intakeStartAcquire.whenPressed(new IntakeCube());
 		scaleHeight.whenPressed(new MoveLiftPID(Level.SCALE_LOSS));
-		switchHeight.whenPressed(new MoveLiftPID(Level.SWITCH));
-		zeroHeight.whenPressed(new MoveLiftPID(Level.INTAKE));	
+		portalHeight.whenPressed(new MoveLiftToPortalHeight());
+		zeroHeight.whenPressed(new MoveLiftPID(Level.INTAKE));
 		logi.dPad.down.whenPressed(new IntakeRetract());
 		logi.dPad.up.whenPressed(new IntakeExtend());
 		logi.dPad.left.whenPressed(new IntakeNarrow());

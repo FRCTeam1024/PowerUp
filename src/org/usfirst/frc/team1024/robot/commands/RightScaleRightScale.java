@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands.auto.right;
+package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.FieldConfig.POSITION;
 import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverCubeToScaleAndGetNextCube;

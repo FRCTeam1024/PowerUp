@@ -1,8 +1,7 @@
-package org.usfirst.frc.team1024.robot.commands.auto.right;
+package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.FieldConfig.POSITION;
-import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverFirstCubeToSwitch;

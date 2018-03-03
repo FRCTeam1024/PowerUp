@@ -1,12 +1,15 @@
 package org.usfirst.frc.team1024.robot;
 
 import org.usfirst.frc.team1024.robot.commands.RightScale;
+import org.usfirst.frc.team1024.robot.commands.RightScaleLeftSwitch;
+import org.usfirst.frc.team1024.robot.commands.RightScaleRightScale;
+import org.usfirst.frc.team1024.robot.commands.RightScaleRightSwitch;
+import org.usfirst.frc.team1024.robot.commands.RightSwitch;
+import org.usfirst.frc.team1024.robot.commands.RightSwitchRightScale;
+import org.usfirst.frc.team1024.robot.commands.RightSwitchRightSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
-import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
-import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightSwitch;
-import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -118,24 +121,26 @@ public class CompetitionAutoChooser {
 	}
 	
 	private void getSmartDashboardChoices() {
-		RobotPosition robotPositionSelected = robotPositionChooser.getSelected();
+		robotPosition = robotPositionChooser.getSelected();
+		goal1 = goal1Chooser.getSelected();
+		goal2 = goal2Chooser.getSelected();
 //		RobotPosition robotPositionSelected = RobotPosition.;
-		System.out.println(robotPositionSelected);
+		//System.out.println(robotPositionSelected);
 		
-		if(RobotPosition.RIGHT.equals(robotPositionSelected)) {
+		/*if(RobotPosition.RIGHT.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.RIGHT;
 		} else if(RobotPosition.LEFT.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.LEFT;
 		} else if(RobotPosition.MIDDLE.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.MIDDLE;
 		}
+		*/
 		
-		goal1 = getGoalFromChooser(goal1Chooser);
-		goal2 = getGoalFromChooser(goal2Chooser);
+		/*goal1 = getGoalFromChooser(goal1Chooser);
+		goal2 = getGoalFromChooser(goal2Chooser);*/
 	}
 	
 	public Command chooseCommand() {
-		
 		FieldConfig fieldConfig = Robot.fieldConfig;
 		getSmartDashboardChoices();
 		// TODO log the choices, robotPosition, goal1, goal2, etc.
@@ -150,27 +155,29 @@ public class CompetitionAutoChooser {
 				if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							chosenCommand = new RightScaleRightScale();
+							chosenCommand = new RightScaleRightScale(); //Can be selected
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
-							chosenCommand = new RightScaleRightSwitch();
+							chosenCommand = new RightScaleRightSwitch(); //Can be selected
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							chosenCommand = new RightScale();
+							chosenCommand = new RightScale(); //can be selected
 						}
 					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
-						if(AutoObjective.SCALE_MY_SIDE.equals(goal2)|| AutoObjective.SCALE_EITHER.equals(goal2)) {
-							
+						if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
+							chosenCommand = new RightSwitchRightSwitch(); //can be selected
+						} else if(AutoObjective.SCALE_MY_SIDE.equals(goal2)|| AutoObjective.SCALE_EITHER.equals(goal2)) {
+							chosenCommand = new RightSwitchRightScale(); //can be selected
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							chosenCommand = new RightSwitch();
+							chosenCommand = new RightSwitch(); //can be selected
 						}
 					}
 				} else if (fieldConfig.isSwitchLeft()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							//chosenCommand = new RightScaleRightScale();
+							chosenCommand = new RightScaleRightScale(); //can be selected
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
-							//chosenCommand = new RightScaleLeftSwitch();
+							chosenCommand = new RightScaleLeftSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							//chosenCommand = new RightScale();
+							chosenCommand = new RightScale();
 						}
 					} else if (AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						if (AutoObjective.SWITCH_EITHER.equals(goal2)) {

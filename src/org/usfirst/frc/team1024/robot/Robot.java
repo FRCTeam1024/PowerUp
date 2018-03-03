@@ -19,6 +19,7 @@ import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
+import org.usfirst.frc.team1024.robot.commands.RightSwitch;
 import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
@@ -27,7 +28,6 @@ import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
-import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
@@ -95,9 +95,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		//drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
-		//intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 	
 	@Override
@@ -155,9 +155,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-//		drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
-		//intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -171,9 +171,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		//drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
-		//intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 	
 	@Override

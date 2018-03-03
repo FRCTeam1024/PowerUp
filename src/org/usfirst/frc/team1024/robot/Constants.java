@@ -68,6 +68,7 @@ public class Constants {
 	
 	public static final double LOWEST_HEIGHT = 0;
 	public static final double INTAKE_HEIGHT = 0;
+	public static final double PORTAL_HEIGHT = 5023.0;
 	public static final double SWITCH_HEIGHT = 10024.0;
 	public static final double SCALE_OWNERSHIP_HEIGHT = 21069.0;
 	public static final double SCALE_NEUTRAL_HEIGHT = 23064.0;
@@ -82,8 +83,8 @@ public class Constants {
 	
 	public static final int LIFT_STICK_AXIS = 3;
 	public static final int INTAKE_STICK_AXIS = 1;
-	public static final int SHIFT_HIGH_BUTTON = 13;
-	public static final int SHIFT_LOW_BUTTON = 16;
+	public static final int SHIFT_HIGH_BUTTON = 7;
+	public static final int SHIFT_LOW_BUTTON = 10;
 	
 	
 
@@ -102,7 +103,7 @@ public class Constants {
 	public static final int INTAKE_START_ACQUIRE = 3;
 
 	public static final int REACH_SCALE_HEIGHT = 2;
-	public static final int REACH_SWITCH_HEIGHT = 1;
+	public static final int REACH_PORTAL_HEIGHT = 1;
 	public static final int ZERO_HEIGHT = 4;
 
 }
