@@ -36,7 +36,7 @@ public class Constants {
 	public static final double TRIM_KD = 0.1;
 	public static final double TRIM_KF = 0.0;
 
-	public static final double LIFT_KP = 0.1;
+	public static final double LIFT_KP = 0.5;
 	public static final double LIFT_KI = 0.0;
 	public static final double LIFT_KD = 0.0;
 
