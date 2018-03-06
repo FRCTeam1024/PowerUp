@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1024.robot;
 
+import org.usfirst.frc.team1024.robot.commands.RightScale;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
@@ -15,9 +16,9 @@ public class CompetitionAutoChooser {
 
 	private static CompetitionAutoChooser instance = new CompetitionAutoChooser();
 	
-	private SendableChooser<String> robotPositionChooser = new SendableChooser<String>();
-	private SendableChooser<String> goal1Chooser = new SendableChooser<String>();
-	private SendableChooser<String> goal2Chooser = new SendableChooser<String>();
+	private SendableChooser<RobotPosition> robotPositionChooser = new SendableChooser<RobotPosition>();
+	private SendableChooser<AutoObjective> goal1Chooser = new SendableChooser<AutoObjective>();
+	private SendableChooser<AutoObjective> goal2Chooser = new SendableChooser<AutoObjective>();
 	
 	private RobotPosition robotPosition;
 	private AutoObjective goal1, goal2;
@@ -73,9 +74,10 @@ public class CompetitionAutoChooser {
 		log("initSmartDashboard 2");
 		try {
 			log("robotPositionChooser is null : " + (robotPositionChooser == null ? true : false));
-			robotPositionChooser.addObject(RobotPosition.RIGHT.toString(), RobotPosition.RIGHT.toString());
-			robotPositionChooser.addObject(RobotPosition.LEFT.toString(), RobotPosition.LEFT.toString());
-			robotPositionChooser.addObject(RobotPosition.MIDDLE.toString(), RobotPosition.MIDDLE.toString());
+			robotPositionChooser.addDefault(RobotPosition.RIGHT.toString(), RobotPosition.RIGHT);
+			robotPositionChooser.addObject(RobotPosition.RIGHT.toString(), RobotPosition.RIGHT);
+			robotPositionChooser.addObject(RobotPosition.LEFT.toString(), RobotPosition.LEFT);
+			robotPositionChooser.addObject(RobotPosition.MIDDLE.toString(), RobotPosition.MIDDLE);
 			log("adding robot position chooser");
 			SmartDashboard.putData("Robot Position", robotPositionChooser);
 			log("after adding robot position chooser");
@@ -91,38 +93,40 @@ public class CompetitionAutoChooser {
 		}
 	}
 	
-	private SendableChooser<String> makeGoalChooser() {
-		SendableChooser<String> goalChooser = new SendableChooser<String>();
-		goalChooser.addObject(AutoObjective.SCALE_MY_SIDE.toString(), AutoObjective.SCALE_MY_SIDE.toString());
-		goalChooser.addObject(AutoObjective.SCALE_EITHER.toString(), AutoObjective.SCALE_EITHER.toString());
-		goalChooser.addObject(AutoObjective.SWITCH_MY_SIDE.toString(), AutoObjective.SWITCH_MY_SIDE.toString());
-		goalChooser.addObject(AutoObjective.SWITCH_EITHER.toString(), AutoObjective.SWITCH_EITHER.toString());
+	private SendableChooser<AutoObjective> makeGoalChooser() {
+		SendableChooser<AutoObjective> goalChooser = new SendableChooser<AutoObjective>();
+		goalChooser.addDefault(AutoObjective.NO_GOAL.toString(), AutoObjective.NO_GOAL);
+		goalChooser.addObject(AutoObjective.SCALE_MY_SIDE.toString(), AutoObjective.SCALE_MY_SIDE);
+		goalChooser.addObject(AutoObjective.SCALE_EITHER.toString(), AutoObjective.SCALE_EITHER);
+		goalChooser.addObject(AutoObjective.SWITCH_MY_SIDE.toString(), AutoObjective.SWITCH_MY_SIDE);
+		goalChooser.addObject(AutoObjective.SWITCH_EITHER.toString(), AutoObjective.SWITCH_EITHER);
 		return goalChooser;
 	}	
 	
-	private AutoObjective getGoalFromChooser(SendableChooser<String> goalChooser) {
-		String goalSelected = goalChooser.getSelected();
-		if(AutoObjective.SCALE_MY_SIDE.toString().equals(goalSelected)) {
+	private AutoObjective getGoalFromChooser(SendableChooser<AutoObjective> goalChooser) {
+		AutoObjective goalSelected = goalChooser.getSelected();
+		if(AutoObjective.SCALE_MY_SIDE.equals(goalSelected)) {
 			return AutoObjective.SCALE_MY_SIDE;
-		} else if(AutoObjective.SCALE_EITHER.toString().equals(goalSelected)) {
+		} else if(AutoObjective.SCALE_EITHER.equals(goalSelected)) {
 			return AutoObjective.SCALE_EITHER;
-		} else if(AutoObjective.SWITCH_MY_SIDE.toString().equals(goalSelected)) {
+		} else if(AutoObjective.SWITCH_MY_SIDE.equals(goalSelected)) {
 			return AutoObjective.SWITCH_MY_SIDE;
-		} else if(AutoObjective.SWITCH_EITHER.toString().equals(goalSelected)) {
+		} else if(AutoObjective.SWITCH_EITHER.equals(goalSelected)) {
 			return AutoObjective.SWITCH_EITHER;
 		}
 		return null;
 	}
 	
 	private void getSmartDashboardChoices() {
-		String robotPositionString = robotPositionChooser.getSelected();
+		RobotPosition robotPositionSelected = robotPositionChooser.getSelected();
 //		RobotPosition robotPositionSelected = RobotPosition.;
+		System.out.println(robotPositionSelected);
 		
-		if(RobotPosition.RIGHT.toString().equals(robotPositionString)) {
+		if(RobotPosition.RIGHT.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.RIGHT;
-		} else if(RobotPosition.LEFT.toString().equals(robotPositionString)) {
+		} else if(RobotPosition.LEFT.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.LEFT;
-		} else if(RobotPosition.MIDDLE.toString().equals(robotPositionString)) {
+		} else if(RobotPosition.MIDDLE.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.MIDDLE;
 		}
 		
@@ -135,11 +139,6 @@ public class CompetitionAutoChooser {
 		FieldConfig fieldConfig = Robot.fieldConfig;
 		getSmartDashboardChoices();
 		// TODO log the choices, robotPosition, goal1, goal2, etc.
-		if(robotPosition == null || goal1 == null || goal2 == null) {
-			System.out.println("Choices NOT MADE, DEFAULTING AUTO COMMAND");
-//			return new DriveStraight(20);
-			return new RightScaleRightScale();
-		}
 		System.out.println("Choices: " + robotPosition.toString() + ", " + goal1.toString() + ", " + goal2.toString());
 		System.out.println("FieldConfig : " + fieldConfig);
 		
@@ -155,13 +154,13 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							chosenCommand = new RightScaleRightSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							//chosenCommand = new RightScale();
+							chosenCommand = new RightScale();
 						}
 					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						if(AutoObjective.SCALE_MY_SIDE.equals(goal2)|| AutoObjective.SCALE_EITHER.equals(goal2)) {
 							
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							//chosenCommand = new RightSwitch();
+							chosenCommand = new RightSwitch();
 						}
 					}
 				} else if (fieldConfig.isSwitchLeft()) {
@@ -241,7 +240,8 @@ public class CompetitionAutoChooser {
 		default:
 			break;
 		}
-		System.out.println("Running " + chosenCommand.toString() + " auto");
+		SmartDashboard.putString("", "Running " + chosenCommand.toString() + " auto");
+		System.out.println("Running "+ chosenCommand.toString() + " auto");
 		return chosenCommand;
 	}
 }

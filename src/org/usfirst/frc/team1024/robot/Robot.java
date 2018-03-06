@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 		lift.resetEncoder();
 		
 		
-		
+		/*
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
@@ -84,11 +84,14 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("right side right scale", "rightsiderightscaleScale");
 		autoChooser.addObject("left side left scale", "leftsideleftscaleScale");
 		SmartDashboard.putData("Auto mode", autoChooser);
+
 		autoChooser.addObject("DriveToRightSwitch", "DriveToRightSwitch");
 		autoChooser.addObject("DriveToLeftSwitch", "DriveToLeftSwitch");
 		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
+
+		*/
 		
 		
 		// TODO un-comment when you want to test this
@@ -106,9 +109,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+
+		//drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 	
 	@Override
@@ -116,7 +120,7 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
-System.out.println("before with selected " + autoSelected);
+		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
 			case "DriveToRightSwitch":
 				m_autonomousCommand = new RightSwitch();
@@ -176,9 +180,10 @@ System.out.println("before with selected " + autoSelected);
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+
+		//		drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -192,9 +197,9 @@ System.out.println("before with selected " + autoSelected);
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+		//drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 	
 	@Override

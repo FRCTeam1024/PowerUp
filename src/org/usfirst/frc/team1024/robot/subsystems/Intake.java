@@ -22,9 +22,6 @@ public class Intake extends Subsystem {
     private Solenoid leftIntakeSlide = new Solenoid(RobotMap.INTAKE_SLIDE_PORT);
     private Solenoid leftIntakePos = new Solenoid(RobotMap.INTAKE_POS_PORT);
     
-    private DigitalOutput breakBeamEmitter = new DigitalOutput(RobotMap.INTAKE_BREAKBEAM_EMITTER_PORT);
-    private DigitalInput breakBeamReciever = new DigitalInput(RobotMap.INTAKE_BREAKBEAM_RECIEVER_PORT);
-    
     private DigitalInput leftBumpDetector = new DigitalInput(RobotMap.LEFT_BUMP_CUBE_DETECTOR_PORT);
     private DigitalInput rightBumpDetector = new DigitalInput(RobotMap.RIGHT_BUMP_CUBE_DETECTOR_PORT);
     
@@ -32,7 +29,6 @@ public class Intake extends Subsystem {
     private boolean intakeWideState = true;
     
     public Intake () {
-    	breakBeamEmitter.set(true);
     }
     
     public void initDefaultCommand() {
@@ -74,7 +70,7 @@ public class Intake extends Subsystem {
     }
 
 	public boolean cubeDetecterState() {
-		if (leftBumpDetector.get() == true && rightBumpDetector.get() == true) {
+		if (leftBumpDetector.get() != true && rightBumpDetector.get() != true) {
 			return true;
 		} else {
 			return false;
