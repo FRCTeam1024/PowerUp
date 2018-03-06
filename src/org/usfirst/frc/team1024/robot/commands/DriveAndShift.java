@@ -8,12 +8,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveStraight extends Command {
+public class DriveAndShift extends Command {
 	double targetDistance;
+	double tolerance;
+	int onTargetCount = 0;
+	boolean hasShifted = false;
 	
-    public DriveStraight(double targetDistance) {
+    public DriveAndShift(double targetDistance) {
     	requires(Robot.drivetrain);
     	this.targetDistance = targetDistance;
+    	tolerance = 5;
+    }
+    
+    public DriveAndShift(double targetDistance, double tolerance) {
+    	requires(Robot.drivetrain);
+    	this.targetDistance = targetDistance;
+    	this.tolerance = tolerance;
     }
 
     protected void initialize() {
@@ -29,6 +39,11 @@ public class DriveStraight extends Command {
     protected void execute() {
     	SmartDashboard.putNumber("targetDistance", targetDistance);
     	// Robot.drivetrain.pidDriveForwardStraight();
+    	if (Robot.drivetrain.getOpticalDistanceInches() > 1.0 && !hasShifted) {
+    		Robot.drivetrain.shiftHigh();
+    		hasShifted = true;
+    		SmartDashboard.putNumber("Shifter", Robot.drivetrain.getShiftState() ? 0 : 1);
+    	}
     	if(targetDistance < 0) {
     		Robot.drivetrain.pidDriveBackwardStraight();
     	} else {
@@ -37,7 +52,13 @@ public class DriveStraight extends Command {
     }
 
     protected boolean isFinished() {
-    	if(Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < 1.0) { //If the robot is within 1 inch of the target, stop.
+    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
+    		onTargetCount++;
+    	} else {
+    		onTargetCount = 0;
+    	}
+    	
+    	if(onTargetCount == 30) {
     		return true;
     	} else {
     		return false;

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -21,13 +22,13 @@ public class Intake extends Subsystem {
     private Solenoid leftIntakeSlide = new Solenoid(RobotMap.INTAKE_SLIDE_PORT);
     private Solenoid leftIntakePos = new Solenoid(RobotMap.INTAKE_POS_PORT);
     
-    private DigitalOutput breakBeamEmitter = new DigitalOutput(RobotMap.INTAKE_BREAKBEAM_EMITTER_PORT);
-    private DigitalInput breakBeamReciever = new DigitalInput(RobotMap.INTAKE_BREAKBEAM_RECIEVER_PORT);
+    private DigitalInput leftBumpDetector = new DigitalInput(RobotMap.LEFT_BUMP_CUBE_DETECTOR_PORT);
+    private DigitalInput rightBumpDetector = new DigitalInput(RobotMap.RIGHT_BUMP_CUBE_DETECTOR_PORT);
+    
     private boolean intakeInState = true;
     private boolean intakeWideState = true;
     
     public Intake () {
-    	breakBeamEmitter.set(true);
     }
     
     public void initDefaultCommand() {
@@ -52,6 +53,7 @@ public class Intake extends Subsystem {
     public void slideIn() {
     	posIn();
     	leftIntakeSlide.set(false);
+    	Robot.lift.clamp(false);
     	intakeInState = true;
     }
     
@@ -68,10 +70,22 @@ public class Intake extends Subsystem {
     }
 
 	public boolean cubeDetecterState() {
-		return breakBeamReciever.get();
+		if (leftBumpDetector.get() != true && rightBumpDetector.get() != true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());
+	}
+	
+	public boolean intakeWideState() {
+		return intakeWideState;
+	}
+	
+	public boolean intakeInState() {
+		return intakeInState;
 	}
 }

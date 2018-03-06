@@ -1,6 +1,5 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.lift;
 
-import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,30 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveLiftPID extends Command {
-	Level level;
-	
-	public MoveLiftPID(Level level) {
+public class ChangeLiftSpeed extends Command {
+	double speed;
+    public ChangeLiftSpeed(double speed) {
     	requires(Robot.lift);
-    	this.level = level;
+    	this.speed = speed;
     }
 
     protected void initialize() {
-    	Robot.lift.setPIDSetpoint(level.getHeight());
+    	Robot.lift.configMaxOutputs(speed);
     }
 
     protected void execute() {
     }
 
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     protected void end() {
-    	Robot.lift.stopLift();
     }
 
     protected void interrupted() {
-    	end();
     }
 }

@@ -1,27 +1,27 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.lift;
 
-import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveLiftWithJoysticks extends Command {
-
-    public MoveLiftWithJoysticks() {
+public class OpenClamp extends Command {
+	
+    public OpenClamp() {
     	requires(Robot.lift);
     }
 
     protected void initialize() {
+    	Robot.lift.clamp(true);
     }
 
     protected void execute() {
-    	Robot.lift.moveCarriage(Robot.oi.logi.getRawAxis(Constants.LIFT_STICK_AXIS));
     }
 
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     protected void end() {

@@ -1,41 +1,58 @@
 
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.Drive;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnRelative extends Command {
 	double targetAngle;
+	double degreeTolerance;
 	int onTargetCount = 0;
     public TurnRelative(double targetAngle) {
     	requires(Robot.drivetrain);
     	this.targetAngle = targetAngle;
+    	degreeTolerance = 1.0;
+    }
+    
+    public TurnRelative(double targetAngle, double degreeTolerance) {
+    	requires(Robot.drivetrain);
+    	this.targetAngle = targetAngle;
+    	this.degreeTolerance = degreeTolerance;
     }
 
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
     	Robot.drivetrain.turnPID.setSetpoint(targetAngle);
     	Robot.drivetrain.turnPID.enable();
+    	Robot.drivetrain.shiftLow();
     }
 
     protected void execute() {
     	Robot.drivetrain.pidTurn();
+    	SmartDashboard.putNumber("onTargetCount", onTargetCount);
+    }
+    
+    private void log(Object msg) {
+    	System.out.println(msg);
     }
     
     private boolean isOnTarget() {
-    	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1;  //if the robot is within 1 degrees of the target, stop
-    	//return Robot.drivetrain.turnPID.onTarget();
+    	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < degreeTolerance;  //if the robot is within 1 degrees of the target, stop
+//    	return Robot.drivetrain.turnPID.onTarget();
     }
         
     protected boolean isFinished() {
+    	SmartDashboard.putNumber("OnTargetCount", onTargetCount);
     	if (isOnTarget()) {
     		onTargetCount++;
     	} else {
     		onTargetCount = 0;
     	}
     	
-    	if(onTargetCount == 30) {
+    	if(onTargetCount >= 10) {
+    		log("FINISHING TURN RELATIVE");
     		return true;
     	} else {
     		return false;

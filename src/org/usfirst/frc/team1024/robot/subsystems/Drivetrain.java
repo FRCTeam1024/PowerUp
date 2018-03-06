@@ -8,8 +8,10 @@
 package org.usfirst.frc.team1024.robot.subsystems;
 
 import org.usfirst.frc.team1024.robot.Constants;
+import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.RobotMap;
-import org.usfirst.frc.team1024.robot.commands.DriveWithJoysticks;
+import org.usfirst.frc.team1024.robot.commands.Drive.DriveWithJoysticks;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -23,6 +25,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -116,10 +119,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void shiftLow() {
 		shifter.set(false);
+		System.out.println("Shifting Low");
 	}
 	
 	public void shiftHigh() {
 		shifter.set(true);
+		System.out.println("Shifting High");
 	}
 	
 	public boolean isRotating() {
@@ -231,6 +236,32 @@ public class Drivetrain extends Subsystem {
     	SmartDashboard.putNumber("posPID.get()", posPID.get());
     	SmartDashboard.putNumber("turnPID.get()", turnPID.get());
     	SmartDashboard.putBoolean("onTarget", turnPID.onTarget());
+	}
+
+	public boolean pidDriveUntil(double initialSpeed) {
+		if (posPID.get() < 0.0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public void setRamp(double secondsUntilFull) {
+		frontLeft.configOpenloopRamp(secondsUntilFull, 10);
+		middleLeft.configOpenloopRamp(secondsUntilFull, 10);
+		rearLeft.configOpenloopRamp(secondsUntilFull, 10);
+		frontRight.configOpenloopRamp(secondsUntilFull, 10);
+		middleRight.configOpenloopRamp(secondsUntilFull, 10);
+		rearRight.configOpenloopRamp(secondsUntilFull, 10);
+	}
+	
+	public void changePosPID(double posP, double posI, double posD) {
+		posPID.setPID(posP, posI, posD);
+	}
+	
+	public boolean getShiftState() {
+		return shifter.get();
 	}
 }
 	

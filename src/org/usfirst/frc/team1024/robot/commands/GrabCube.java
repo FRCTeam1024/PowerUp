@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
+import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

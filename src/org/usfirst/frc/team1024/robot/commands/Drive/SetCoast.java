@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1024.robot.commands;
+package org.usfirst.frc.team1024.robot.commands.Drive;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CloseClamp extends Command {
-    public CloseClamp() {
-    	requires(Robot.lift);
+public class SetCoast extends Command {
+
+    public SetCoast() {
+    	requires(Robot.drivetrain);
     }
 
     protected void initialize() {
-    	Robot.lift.clamp(false);
+    	Robot.drivetrain.setCoast();
     }
 
     protected void execute() {

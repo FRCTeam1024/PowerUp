@@ -1,20 +1,18 @@
 package org.usfirst.frc.team1024.robot.commands;
 
-import org.usfirst.frc.team1024.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class OpenClamp extends Command {
-	
-    public OpenClamp() {
-    	requires(Robot.lift);
+public class PrintToConsole extends Command {
+	String print;
+    public PrintToConsole(String print) {
+    	this.print = print;
     }
 
     protected void initialize() {
-    	Robot.lift.clamp(true);
+    	System.out.println(print);
     }
 
     protected void execute() {
