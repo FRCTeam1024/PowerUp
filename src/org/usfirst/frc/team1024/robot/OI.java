@@ -19,6 +19,7 @@ import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
 import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
+import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftToPortalHeight;
 import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -46,7 +47,7 @@ public class OI {
 	JoystickButton openClamp          = new JoystickButton(logi, Constants.LIFT_CLAMP_OPEN_BUTTON);
 	public JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
 	JoystickButton scaleHeight 		  = new JoystickButton(logi, Constants.REACH_SCALE_HEIGHT);
-	JoystickButton portalHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
+	JoystickButton portalHeight   	  = new JoystickButton(logi, Constants.REACH_PORTAL_HEIGHT);
 	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.ZERO_HEIGHT);
 	
 	public OI () {
