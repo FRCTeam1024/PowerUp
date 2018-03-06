@@ -34,9 +34,13 @@ public class TurnRelative extends Command {
     	SmartDashboard.putNumber("onTargetCount", onTargetCount);
     }
     
+    private void log(Object msg) {
+    	System.out.println(msg);
+    }
+    
     private boolean isOnTarget() {
     	return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < degreeTolerance;  //if the robot is within 1 degrees of the target, stop
-    	//return Robot.drivetrain.turnPID.onTarget();
+//    	return Robot.drivetrain.turnPID.onTarget();
     }
         
     protected boolean isFinished() {
@@ -48,6 +52,7 @@ public class TurnRelative extends Command {
     	}
     	
     	if(onTargetCount >= 10) {
+    		log("FINISHING TURN RELATIVE");
     		return true;
     	} else {
     		return false;

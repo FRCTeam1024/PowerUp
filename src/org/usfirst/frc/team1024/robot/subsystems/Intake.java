@@ -77,7 +77,6 @@ public class Intake extends Subsystem {
 		}
 	}
 	
-	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());
 	}

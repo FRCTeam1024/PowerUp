@@ -25,9 +25,13 @@ import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
+import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team1024.robot.subsystems.Lift;
@@ -57,6 +61,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
+		
 		autoChooser.addObject("Left Position Auto", "LeftPositionAuto");
 		autoChooser.addObject("Fast Cross To Left Scale", "FastCrossToScale");
 		autoChooser.addObject("DriveToRightScaleEnd", "DriveToRightScaleEnd");
@@ -73,15 +78,25 @@ public class Robot extends TimedRobot {
 		//autoChooser.addObject("Go To Scale Loss Level", new MoveLiftPID(Level.SCALE_LOSS));
 		autoChooser.addObject("AutoSwitchFront", "AutoSwitchFront");
 		autoChooser.addObject("Cross To Left Scale", "Cross To Left Scale");
+		autoChooser.addObject("Cross To Right Scale", "Cross To Right Scale");
 		autoChooser.addObject("Turn Left", "Turn Left");
 		autoChooser.addObject("Turn Right", "Turn Right");
 		autoChooser.addObject("STurn", "STurn");
+		autoChooser.addObject("right side right scale", "rightsiderightscaleScale");
+		autoChooser.addObject("left side left scale", "leftsideleftscaleScale");
 		SmartDashboard.putData("Auto mode", autoChooser);
+
+		autoChooser.addObject("DriveToRightSwitch", "DriveToRightSwitch");
+		autoChooser.addObject("DriveToLeftSwitch", "DriveToLeftSwitch");
+		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
+		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
+		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
+
 		*/
 		
 		
 		// TODO un-comment when you want to test this
-		CompetitionAutoChooser.getInstance().initSmartDashboard();
+		//CompetitionAutoChooser.getInstance().initSmartDashboard();
 	}
 	
 	@Override
@@ -95,9 +110,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+
+		//drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 	
 	@Override
@@ -105,12 +121,12 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
-		/*
+		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
 			case "DriveToRightSwitch":
 				m_autonomousCommand = new RightSwitch();
 				break;
-			case "LeftPositionAuto":
+			case "DriveToLeftSwitch":
 				m_autonomousCommand = new LeftSwitch();
 				break;
 			case "StraightForwardSwitch":
@@ -134,19 +150,29 @@ public class Robot extends TimedRobot {
 			case "Cross To Left Scale":
 				m_autonomousCommand = new CrossToLeftScale();
 				break;
+			case "Cross To Right Scale":
+				m_autonomousCommand = new LeftCrossToRightScale();
+				break;
 			case "STurn":
 				m_autonomousCommand = new STurn(250.0, 140.0 - Constants.ROBOT_LENGTH_IN, -45.0, 36.0);
+				break;
+			case "rightsiderightscaleScale":
+				m_autonomousCommand = new RightScaleRightScale();
+				break;
+			case "leftsideleftscaleScale":
+				m_autonomousCommand = new LeftScaleLeftScale();
 				break;
 			default:
 				m_autonomousCommand = new DoNothing();
 				break;
-		}*/
+		}
 		
 		// TODO when you want to try auto-chooser
-		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
+		//m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
+		System.out.println("before start command");
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
@@ -155,9 +181,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+
+		//		drivetrain.outputToSmartDashboard();
+		//lift.outputToSmartDashboard();
+		//intake.outputToSmartDashboard();
 	}
 
 	@Override
