@@ -77,6 +77,7 @@ public class Drivetrain extends Subsystem {
         turnPID.setContinuous(true);
         turnPID.setOutputRange(Constants.TURN_PID_MIN_OUTPUT, Constants.TURN_PID_MAX_OUTPUT); //probably will be much less
         turnPID.setAbsoluteTolerance(Constants.TURN_PID_ABSOLUTE_TOLERANCE);
+        //turnPID.setOutputRange(30, maximumOutput);
         //turnPID.setPercentTolerance(2.0/360.0);
         
         trimPID = new PIDController(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, navx, output->{});
