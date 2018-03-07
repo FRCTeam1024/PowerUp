@@ -3,6 +3,7 @@ package org.usfirst.frc.team1024.robot;
 import org.usfirst.frc.team1024.robot.commands.RightScale;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
+import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightSwitch;
@@ -166,7 +167,7 @@ public class CompetitionAutoChooser {
 				} else if (fieldConfig.isSwitchLeft()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							//chosenCommand = new RightScaleRightScale();
+							chosenCommand = new RightScaleRightScale();
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new RightScaleLeftSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
@@ -236,6 +237,7 @@ public class CompetitionAutoChooser {
 			}
 			break;
 		case MIDDLE:
+			chosenCommand = new AutoSwitchFront();
 			break;
 		default:
 			break;

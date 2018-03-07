@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new StraightForwardSwitch();
 				break;
 			case "AutoSwitchFront":
-				m_autonomousCommand = new AutoSwitchFront(324/2 + 5, 12 + 85.25);
+				m_autonomousCommand = new AutoSwitchFront();
 				break;
 			case "FastCrossToScale":
 				m_autonomousCommand = new FastCrossToScale();
