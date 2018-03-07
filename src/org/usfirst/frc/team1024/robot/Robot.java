@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team1024.robot.commandgroups.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
@@ -27,6 +26,7 @@ import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
+import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 		lift.resetEncoder();
 		
 		
-		/*
+		
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
 
-		*/
+		
 		
 		
 		// TODO un-comment when you want to test this
@@ -110,9 +110,9 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 
-		//drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
-		//intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 	
 	@Override
@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new StraightForwardSwitch();
 				break;
 			case "AutoSwitchFront":
-				m_autonomousCommand = new AutoSwitchFront(324/2 + 5, 12 + 85.25);
+				m_autonomousCommand = new AutoSwitchFront();
 				break;
 			case "FastCrossToScale":
 				m_autonomousCommand = new FastCrossToScale();
@@ -181,9 +181,9 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
-		//		drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
-		//intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -197,9 +197,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		//drivetrain.outputToSmartDashboard();
-		//lift.outputToSmartDashboard();
-		//intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 	
 	@Override

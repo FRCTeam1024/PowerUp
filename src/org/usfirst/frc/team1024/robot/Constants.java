@@ -19,9 +19,9 @@ public class Constants {
 	public static final double DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE = (1.0 / 71.0) * 4.0;
 
 	//PID Constants
-	public static final double TURN_KP = 0.02; //was 0.055
-	public static final double TURN_KI = 0.0;
-	public static final double TURN_KD = 0.001; //was 0.1
+	public static final double TURN_KP = 0.018; //was 0.055
+	public static final double TURN_KI = 0;
+	public static final double TURN_KD = 0.027; //was 0.1, 0.3 was the goodest
 	public static final double TURN_KF = 0.0;
 
 	public static final double POS_KU = 0.08;
