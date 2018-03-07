@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 		lift.resetEncoder();
 		
 		
-		
+		/*
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
@@ -90,12 +90,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
-
+		*/
 		
 		
 		
 		// TODO un-comment when you want to test this
-		//CompetitionAutoChooser.getInstance().initSmartDashboard();
+		CompetitionAutoChooser.getInstance().initSmartDashboard();
 	}
 	
 	@Override
@@ -110,16 +110,17 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+//		drivetrain.outputToSmartDashboard();
+//		lift.outputToSmartDashboard();
+//		intake.outputToSmartDashboard();
 	}
 	
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		String autoSelected = (String) autoChooser.getSelected();
+//		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
+		/*
 		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
 			case "DriveToRightSwitch":
@@ -165,15 +166,18 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new DoNothing();
 				break;
 		}
+		*/
 		
 		// TODO when you want to try auto-chooser
-		//m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
+		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
 		
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
 		System.out.println("before start command");
+		
+		// TODO re-enable autonomous; was disabled to test chooser but didn't want to run it
 		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+//			m_autonomousCommand.start();
 		}
 	}
 	
@@ -181,9 +185,9 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+//		drivetrain.outputToSmartDashboard();
+//		lift.outputToSmartDashboard();
+//		intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -197,9 +201,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.outputToSmartDashboard();
-		lift.outputToSmartDashboard();
-		intake.outputToSmartDashboard();
+//		drivetrain.outputToSmartDashboard();
+//		lift.outputToSmartDashboard();
+//		intake.outputToSmartDashboard();
 	}
 	
 	@Override
