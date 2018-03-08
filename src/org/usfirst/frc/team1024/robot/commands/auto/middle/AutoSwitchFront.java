@@ -26,12 +26,12 @@ public class AutoSwitchFront extends CommandGroup {
        	if(Robot.fieldConfig.isSwitchRight()) {
        		addSequential(new TurnRight(45, 3.0));
        		addSequential(new DriveStraight(80));
-       		addSequential(new TurnLeftAndLift(45, 3.0, Level.SWITCH));   
+       		addSequential(new TurnLeftAndLift(45, 3.0, Level.SWITCH),2);   
        		addSequential(new DriveStraight(36), 2);
         } else {
        		addSequential(new TurnLeft(45, 3.0));
        		addSequential(new DriveStraight(85));
-       		addSequential(new TurnRightAndLift(45, 3.0, Level.SWITCH));
+       		addSequential(new TurnRightAndLift(45, 3.0, Level.SWITCH),2);
        		addSequential(new DriveStraight(30), 2);
         }
        	

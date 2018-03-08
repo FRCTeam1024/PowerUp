@@ -177,7 +177,7 @@ public class Robot extends TimedRobot {
 		
 		// TODO re-enable autonomous; was disabled to test chooser but didn't want to run it
 		if (m_autonomousCommand != null) {
-//			m_autonomousCommand.start();
+			m_autonomousCommand.start();
 		}
 	}
 	

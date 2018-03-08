@@ -28,8 +28,6 @@ public class DeliverSecondCubeToScale extends CommandGroup {
     		addSequential(new TurnRightAndLift(170.0, 5.0, Level.SCALE_NEUTRAL));
     	}
     	
-    	// raise lift to scale height
-    	// this should be done in parallel, probably with the turn, if possible
     	
     	// drive forward some distance
     	// not sure what the right/current drive straight command is now

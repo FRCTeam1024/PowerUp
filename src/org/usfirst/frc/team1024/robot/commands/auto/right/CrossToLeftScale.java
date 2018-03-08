@@ -28,7 +28,6 @@ public class CrossToLeftScale extends CommandGroup {
     	// turn right to face scale
     	addSequential(new TurnRightAndLift(90, 5.0, Level.SCALE_NEUTRAL));
     	// drive forward to scale
-    	//addSequential(new MoveLiftPID(Level.SCALE_LOSS), 2);
     	addSequential(new DriveStraight(57));
     	addSequential(new OpenClamp());
     }
