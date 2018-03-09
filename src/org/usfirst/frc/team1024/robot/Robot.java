@@ -110,9 +110,9 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 
-//		drivetrain.outputToSmartDashboard();
-//		lift.outputToSmartDashboard();
-//		intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 	
 	@Override
@@ -170,7 +170,7 @@ public class Robot extends TimedRobot {
 		
 		// TODO when you want to try auto-chooser
 		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
-		
+		//m_autonomousCommand = new MoveLiftPID(Level.SCALE_NEUTRAL);
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
 		System.out.println("before start command");
@@ -185,9 +185,9 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
-//		drivetrain.outputToSmartDashboard();
-//		lift.outputToSmartDashboard();
-//		intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 
 	@Override
@@ -201,9 +201,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-//		drivetrain.outputToSmartDashboard();
-//		lift.outputToSmartDashboard();
-//		intake.outputToSmartDashboard();
+		drivetrain.outputToSmartDashboard();
+		lift.outputToSmartDashboard();
+		intake.outputToSmartDashboard();
 	}
 	
 	@Override

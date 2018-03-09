@@ -31,9 +31,9 @@ public class DeliverSecondCubeToScale extends CommandGroup {
     	
     	// drive forward some distance
     	// not sure what the right/current drive straight command is now
-    	addSequential(new DriveUntilAndMoveLift(54.0, 1.0, Level.SCALE_NEUTRAL));
+    	addSequential(new DriveUntilAndMoveLift(45.0, 1.0, Level.SCALE_NEUTRAL));
     	
     	// drop cube
-    	addSequential(new OpenClamp()); 
+    	addSequential(new OpenClamp());
     }
 }

@@ -9,6 +9,7 @@ package org.usfirst.frc.team1024.robot;
 
 import org.usfirst.frc.team1024.robot.commands.DetectCube;
 import org.usfirst.frc.team1024.robot.commands.IntakeCube;
+import org.usfirst.frc.team1024.robot.commands.MoveLiftToLevel;
 import org.usfirst.frc.team1024.robot.commands.Drive.ShiftHigh;
 import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
@@ -45,9 +46,9 @@ public class OI {
 	JoystickButton closeClamp 		  = new JoystickButton(logi, Constants.LIFT_CLAMP_CLOSE_BUTTON);
 	JoystickButton openClamp          = new JoystickButton(logi, Constants.LIFT_CLAMP_OPEN_BUTTON);
 	JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
-	JoystickButton scaleHeight 		  = new JoystickButton(logi, Constants.REACH_SCALE_HEIGHT);
 	JoystickButton switchHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
 	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.ZERO_HEIGHT);
+	JoystickButton portalHeight       = new JoystickButton(logi, Constants.REACH_PORTAL_HEIGHT);
 	
 	public OI () {
 		leftShiftHigh.whenPressed(new ShiftHigh());
@@ -57,9 +58,9 @@ public class OI {
 		closeClamp.whenPressed(new CloseClamp());
 		openClamp.whenPressed(new OpenClamp());
 		intakeStartAcquire.whileHeld(new IntakeCube());
-		scaleHeight.whenPressed(new MoveLiftPID(Level.SCALE_LOSS));
-		switchHeight.whenPressed(new MoveLiftPID(Level.SWITCH));
-		zeroHeight.whenPressed(new MoveLiftPID(Level.INTAKE));	
+		portalHeight.whenPressed(new MoveLiftToLevel(Level.PORTAL));
+		switchHeight.whenPressed(new MoveLiftToLevel(Level.SWITCH));
+		zeroHeight.whenPressed(new MoveLiftToLevel(Level.INTAKE));	
 		logi.dPad.down.whenPressed(new IntakeRetract());
 		logi.dPad.up.whenPressed(new IntakeExtend());
 		logi.dPad.left.whenPressed(new IntakeNarrow());

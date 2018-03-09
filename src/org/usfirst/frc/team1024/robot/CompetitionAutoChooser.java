@@ -3,8 +3,10 @@ package org.usfirst.frc.team1024.robot;
 import org.usfirst.frc.team1024.robot.commands.RightScale;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.CrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftSwitch;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
@@ -249,11 +251,15 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							chosenCommand = new LeftScaleLeftSwitch();
 						}
+					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
+						//Add more options here later
+						chosenCommand = new LeftSwitch();
 					}
 				} else if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							
+							//This needs to be different
+							chosenCommand = new LeftCrossToRightScale();
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new LeftScaleRightSwitch();
 						}
