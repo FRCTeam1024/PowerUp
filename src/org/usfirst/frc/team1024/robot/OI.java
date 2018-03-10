@@ -19,6 +19,8 @@ import org.usfirst.frc.team1024.robot.commands.intake.IntakeFlat;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
 import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
+import org.usfirst.frc.team1024.robot.commands.lift.DisengageAirbag;
+import org.usfirst.frc.team1024.robot.commands.lift.EngageAirbag;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
@@ -49,6 +51,9 @@ public class OI {
 	JoystickButton switchHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
 	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.ZERO_HEIGHT);
 	JoystickButton portalHeight       = new JoystickButton(logi, Constants.REACH_PORTAL_HEIGHT);
+	JoystickButton engageAirbag       = new JoystickButton(logi, Constants.ENGAGE_AIRBAG_BUTTON);
+	JoystickButton disengageAirbag    = new JoystickButton(logi, Constants.DISENGAGE_AIRBAG_BUTTON);
+
 	
 	public OI () {
 		leftShiftHigh.whenPressed(new ShiftHigh());
@@ -67,6 +72,9 @@ public class OI {
 		logi.dPad.right.whenPressed(new IntakeFlat());
 		logi.dPad.upLeft.whenPressed(new IntakeExtendNarrow());
 		logi.dPad.upRight.whenPressed(new IntakeExtendFlat());
+		disengageAirbag.whenPressed(new DisengageAirbag());
+		engageAirbag.whenPressed(new EngageAirbag());
+		
 	}
 	/*
 	public boolean getOverrideButton() {

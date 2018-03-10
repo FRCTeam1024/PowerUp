@@ -25,8 +25,10 @@ public class RobotMap {
 	//Pnuematics:
 	public static final int INTAKE_SLIDE_PORT = 1;
 	public static final int SHIFTER_PORT = 2;
+	public static final int AIRBAG_PORT = 3;
 	public static final int INTAKE_POS_PORT = 4;
 	public static final int LIFT_CLAMP_PORT = 5;
+	
 	
 	//I2C
 	public static final Port NAVX_PORT = Port.kOnboard;

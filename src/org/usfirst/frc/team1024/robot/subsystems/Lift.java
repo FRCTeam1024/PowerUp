@@ -23,6 +23,7 @@ public class Lift extends Subsystem {
 	public TalonSRX liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PORT);
 	private TalonSRX liftMotor2 = new TalonSRX(RobotMap.LIFT_MOTOR_2_PORT);
 	private Solenoid clamp = new Solenoid(RobotMap.LIFT_CLAMP_PORT);
+	private Solenoid airbag = new Solenoid(RobotMap.AIRBAG_PORT);
 	
 	public Lift () {
 		liftMotor2.set(ControlMode.Follower, liftMotor1.getDeviceID());
@@ -79,6 +80,14 @@ public class Lift extends Subsystem {
 	
 	public double getCommandedOutput() {
 		return liftMotor2.getMotorOutputPercent();
+	}
+	
+	public void engageAirbag() {
+		airbag.set(true);
+	}
+	
+	public void disengageAirBag() {
+		airbag.set(false);
 	}
 	
 	
