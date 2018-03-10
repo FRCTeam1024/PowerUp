@@ -5,6 +5,7 @@ import org.usfirst.frc.team1024.robot.FieldConfig;
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveAndLiftAndIntake;
+import org.usfirst.frc.team1024.robot.commands.DriveAndMoveLift;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShiftAndLift;
 import org.usfirst.frc.team1024.robot.commands.PrintToConsole;
@@ -18,6 +19,7 @@ import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
 import org.usfirst.frc.team1024.robot.commands.lift.ChangeLiftSpeed;
 import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
+import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -40,13 +42,13 @@ public class DeliverCubeToScaleAndGetNextCube extends CommandGroup {
     	addSequential(new ShiftLow());
     	// turn towards scale
     	if(Robot.fieldConfig.isScaleRight()) {
-    		//addSequential(new TurnLeft(90, 5.0));
-    		addSequential( new TurnLeftAndLift(90, 5.0, Level.SCALE_LOSS));
+    		addSequential(new MoveLiftPID(Level.SCALE_LOSS));
+    		addSequential(new TurnLeft(90, 5.0),2);
     	} else if(Robot.fieldConfig.isScaleLeft()) {
-//    		addSequential(new TurnRight(90, 5.0));
-    		addSequential( new TurnRightAndLift(90, 5.0, Level.SCALE_LOSS));
+    		addSequential(new MoveLiftPID(Level.SCALE_LOSS));
+    		addSequential(new TurnRight(90, 5.0),2);
     	}
-    	addSequential(new DriveStraight(18));
+    	addSequential(new DriveStraight(12.0));
     	// drop the cube on to the scale
     	addSequential(new OpenClamp()); //THIS WILL BREAK THE INTAKE! Not sure anymore!
     	/*

@@ -19,6 +19,7 @@ import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.STurn;
+import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
@@ -172,6 +173,7 @@ public class Robot extends TimedRobot {
 		// TODO when you want to try auto-chooser
 		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
 		//m_autonomousCommand = new MoveLiftPID(Level.SCALE_NEUTRAL);
+		//m_autonomousCommand = new StJoeMatch3SpecialCondition();
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
 		System.out.println("before start command");

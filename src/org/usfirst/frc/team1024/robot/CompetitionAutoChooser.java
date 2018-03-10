@@ -86,10 +86,10 @@ public class CompetitionAutoChooser {
 			SmartDashboard.putData("Robot Position", robotPositionChooser);
 			log("after adding robot position chooser");
 			
-			goal1Chooser = makeGoalChooser();
+			goal1Chooser = makeGoalChooser("Goal 1");
 			SmartDashboard.putData("Goal 1", goal1Chooser);
 			
-			goal2Chooser = makeGoalChooser();
+			goal2Chooser = makeGoalChooser("Goal 2");
 			SmartDashboard.putData("Goal 2", goal2Chooser);
 		} catch (Exception e) {
 			System.out.println("error in initSmartDashboard");
@@ -97,9 +97,11 @@ public class CompetitionAutoChooser {
 		}
 	}
 	
-	private SendableChooser<AutoObjective> makeGoalChooser() {
+	private SendableChooser<AutoObjective> makeGoalChooser(String goalName) {
 		SendableChooser<AutoObjective> goalChooser = new SendableChooser<AutoObjective>();
+		
 		goalChooser.addDefault(AutoObjective.NO_GOAL.toString(), AutoObjective.NO_GOAL);
+		goalChooser.addObject(goalName, AutoObjective.NO_GOAL);
 		goalChooser.addObject(AutoObjective.SCALE_MY_SIDE.toString(), AutoObjective.SCALE_MY_SIDE);
 		goalChooser.addObject(AutoObjective.SCALE_EITHER.toString(), AutoObjective.SCALE_EITHER);
 		goalChooser.addObject(AutoObjective.SWITCH_MY_SIDE.toString(), AutoObjective.SWITCH_MY_SIDE);
