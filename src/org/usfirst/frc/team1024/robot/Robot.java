@@ -120,6 +120,7 @@ public class Robot extends TimedRobot {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
 //		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
+		lift.disengageAirBag();
 		/*
 		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
