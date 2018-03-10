@@ -83,11 +83,11 @@ public class Lift extends Subsystem {
 	}
 	
 	public void engageAirbag() {
-		airbag.set(true);
+		airbag.set(false);
 	}
 	
 	public void disengageAirBag() {
-		airbag.set(false);
+		airbag.set(true);
 	}
 	
 	
