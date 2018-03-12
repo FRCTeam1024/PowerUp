@@ -23,12 +23,17 @@ public class Lift extends Subsystem {
 	public TalonSRX liftMotor1 = new TalonSRX(RobotMap.LIFT_MOTOR_1_PORT);
 	private TalonSRX liftMotor2 = new TalonSRX(RobotMap.LIFT_MOTOR_2_PORT);
 	private Solenoid clamp = new Solenoid(RobotMap.LIFT_CLAMP_PORT);
+	private Solenoid airbag = new Solenoid(RobotMap.AIRBAG_PORT);
 	
 	public Lift () {
 		liftMotor2.set(ControlMode.Follower, liftMotor1.getDeviceID());
 		liftMotor1.config_kP(0, Constants.LIFT_KP, 10);
 		liftMotor1.config_kI(0, Constants.LIFT_KI, 10);
 		liftMotor1.config_kD(0, Constants.LIFT_KD, 10);
+		
+		liftMotor2.config_kP(0, Constants.LIFT_KP, 10);
+		liftMotor2.config_kI(0, Constants.LIFT_KI, 10);
+		liftMotor2.config_kD(0, Constants.LIFT_KD, 10);
 		configMaxOutputs(1.0);
 		liftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 	}
@@ -40,6 +45,7 @@ public class Lift extends Subsystem {
 	
 	public void setPIDSetpoint(double setpoint) {
 		liftMotor1.set(ControlMode.Position, setpoint);
+		liftMotor2.set(ControlMode.Position, setpoint);
 	}
 	
 	public void clamp(boolean value) {
@@ -57,6 +63,7 @@ public class Lift extends Subsystem {
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Lift Motor Rotations", liftMotor1.getSelectedSensorPosition(0) / 4096);
 		SmartDashboard.putNumber("Lift Encoder Raw", liftMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("LiftMotorOutPut", liftMotor1.getMotorOutputPercent());
 		
 	}
 	
@@ -72,7 +79,15 @@ public class Lift extends Subsystem {
 	}
 	
 	public double getCommandedOutput() {
-		return liftMotor1.getMotorOutputPercent();
+		return liftMotor2.getMotorOutputPercent();
+	}
+	
+	public void engageAirbag() {
+		airbag.set(false);
+	}
+	
+	public void disengageAirBag() {
+		airbag.set(true);
 	}
 	
 	

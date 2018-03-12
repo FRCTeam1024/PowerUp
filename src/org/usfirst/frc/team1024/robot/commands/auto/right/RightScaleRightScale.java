@@ -1,8 +1,9 @@
 package org.usfirst.frc.team1024.robot.commands.auto.right;
 
 import org.usfirst.frc.team1024.robot.FieldConfig.POSITION;
-import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverCubeToScaleAndGetNextCube;
+import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverCubeToScale;
 import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverSecondCubeToScale;
+import org.usfirst.frc.team1024.robot.commands.bidirectional.GoGetSecondCube;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -13,7 +14,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightScaleRightScale extends CommandGroup {
 
     public RightScaleRightScale() {
-    	addSequential(new DeliverCubeToScaleAndGetNextCube());	
-        addSequential(new DeliverSecondCubeToScale());
+    	addSequential(new DeliverCubeToScale());
+    	//addSequential(new GoGetSecondCube());
+        //addSequential(new DeliverSecondCubeToScale());
     }
 }

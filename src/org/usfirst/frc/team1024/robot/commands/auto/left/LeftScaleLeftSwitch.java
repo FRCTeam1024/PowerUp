@@ -1,7 +1,6 @@
-package org.usfirst.frc.team1024.robot.commands.auto.right;
+package org.usfirst.frc.team1024.robot.commands.auto.left;
 
 import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverCubeToScale;
-import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverSecondCubeToScale;
 import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverSecondCubeToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -9,9 +8,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RightScaleRightSwitch extends CommandGroup {
+public class LeftScaleLeftSwitch extends CommandGroup {
 
-    public RightScaleRightSwitch() {
+    public LeftScaleLeftSwitch() {
     	addSequential(new DeliverCubeToScale());	
         addSequential(new DeliverSecondCubeToSwitch());
     }

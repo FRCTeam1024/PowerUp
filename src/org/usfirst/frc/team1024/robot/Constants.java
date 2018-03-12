@@ -8,8 +8,8 @@ public class Constants {
 
 	// PID
 
-	public static final double TRIM_PID_MIN_OUTPUT = -0.1;
-	public static final double TRIM_PID_MAX_OUTPUT = 0.1;
+	public static final double TRIM_PID_MIN_OUTPUT = -0.3;
+	public static final double TRIM_PID_MAX_OUTPUT = 0.3;
 	public static final double POS_PID_MIN_OUTPUT = -1.0;
 	public static final double POS_PID_MAX_OUTPUT = 1.0;
 	public static final double TURN_PID_MIN_OUTPUT = -1.0;
@@ -21,7 +21,7 @@ public class Constants {
 	//PID Constants
 	public static final double TURN_KP = 0.018; //was 0.055
 	public static final double TURN_KI = 0;
-	public static final double TURN_KD = 0.027; //was 0.1, 0.3 was the goodest
+	public static final double TURN_KD = 0.026; //was 0.1, 0.3 was the best
 	public static final double TURN_KF = 0.0;
 
 	public static final double POS_KU = 0.08;
@@ -36,7 +36,7 @@ public class Constants {
 	public static final double TRIM_KD = 0.1;
 	public static final double TRIM_KF = 0.0;
 
-	public static final double LIFT_KP = 0.5;
+	public static final double LIFT_KP = 1.5;
 	public static final double LIFT_KI = 0.0;
 	public static final double LIFT_KD = 0.0;
 
@@ -67,7 +67,8 @@ public class Constants {
 	public static final double SIDEWALL_TO_PORTAL_EDGE = 30.0;
 	
 	public static final double LOWEST_HEIGHT = 0;
-	public static final double INTAKE_HEIGHT = 0;
+	public static final double INTAKE_HEIGHT = -200;
+	public static final double PORTAL_HEIGHT = 5023;
 	public static final double SWITCH_HEIGHT = 10024.0;
 	public static final double SCALE_OWNERSHIP_HEIGHT = 21069.0;
 	public static final double SCALE_NEUTRAL_HEIGHT = 23064.0;
@@ -82,8 +83,8 @@ public class Constants {
 	
 	public static final int LIFT_STICK_AXIS = 3;
 	public static final int INTAKE_STICK_AXIS = 1;
-	public static final int SHIFT_HIGH_BUTTON = 13;
-	public static final int SHIFT_LOW_BUTTON = 16;
+	public static final int SHIFT_HIGH_BUTTON = 7;
+	public static final int SHIFT_LOW_BUTTON = 10;
 	
 	
 
@@ -95,14 +96,15 @@ public class Constants {
 
 	public static final int LIFT_CLAMP_CLOSE_BUTTON = 7;
 	public static final int LIFT_CLAMP_OPEN_BUTTON = 5;
-
+	public static final int ENGAGE_AIRBAG_BUTTON = 8;
+	public static final int DISENGAGE_AIRBAG_BUTTON = 6;
 	public static final int CUBE_START_DETECT_BUTTON = 2;
 	//public static final int LIFT_OVERRIDE_BUTTON = 1;
 
 	public static final int INTAKE_START_ACQUIRE = 3;
 
-	public static final int REACH_SCALE_HEIGHT = 2;
-	public static final int REACH_SWITCH_HEIGHT = 1;
+	public static final int REACH_PORTAL_HEIGHT = 1;
+	public static final int REACH_SWITCH_HEIGHT = 2;
 	public static final int ZERO_HEIGHT = 4;
 
 }

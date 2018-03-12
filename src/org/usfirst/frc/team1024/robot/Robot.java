@@ -19,6 +19,8 @@ import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.STurn;
+import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
+import org.usfirst.frc.team1024.robot.commands.StJoeMatch53SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
@@ -56,7 +58,7 @@ public class Robot extends TimedRobot {
 		lift.resetEncoder();
 		
 		
-		
+		/*
 		autoChooser.addDefault("Default Do Nothing", "DoNothing");
 		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
 		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
@@ -90,12 +92,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
 		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
 		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
-
+		*/
 		
 		
 		
 		// TODO un-comment when you want to test this
-		//CompetitionAutoChooser.getInstance().initSmartDashboard();
+		CompetitionAutoChooser.getInstance().initSmartDashboard();
 	}
 	
 	@Override
@@ -118,8 +120,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
-		String autoSelected = (String) autoChooser.getSelected();
+//		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
+		lift.disengageAirBag();
+		/*
 		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
 			case "DriveToRightSwitch":
@@ -165,13 +169,17 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new DoNothing();
 				break;
 		}
+		*/
 		
 		// TODO when you want to try auto-chooser
-		//m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
-		
+		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
+		//m_autonomousCommand = new MoveLiftPID(Level.SCALE_NEUTRAL);
+		//m_autonomousCommand = new StJoeMatch53SpecialCondition();
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
 		System.out.println("before start command");
+		
+		// TODO re-enable autonomous; was disabled to test chooser but didn't want to run it
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
@@ -189,6 +197,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		drivetrain.setBrake();
+		lift.disengageAirBag();
 		// This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to continue until interrupted by another command, remove this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();

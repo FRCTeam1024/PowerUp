@@ -2,7 +2,12 @@ package org.usfirst.frc.team1024.robot;
 
 import org.usfirst.frc.team1024.robot.commands.RightScale;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
+import org.usfirst.frc.team1024.robot.commands.auto.left.CrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftSwitch;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
@@ -71,8 +76,7 @@ public class CompetitionAutoChooser {
 	// TODO call this from Robot.robotInit()
 	public void initSmartDashboard() {
 		// TODO should be able to do this here, that way it's all consistent and connected here
-		System.out.println("initSmartDashboard");
-		log("initSmartDashboard 2");
+		log("initSmartDashboard");
 		try {
 			log("robotPositionChooser is null : " + (robotPositionChooser == null ? true : false));
 			robotPositionChooser.addDefault(RobotPosition.RIGHT.toString(), RobotPosition.RIGHT);
@@ -83,10 +87,10 @@ public class CompetitionAutoChooser {
 			SmartDashboard.putData("Robot Position", robotPositionChooser);
 			log("after adding robot position chooser");
 			
-			goal1Chooser = makeGoalChooser();
+			goal1Chooser = makeGoalChooser("Goal 1");
 			SmartDashboard.putData("Goal 1", goal1Chooser);
 			
-			goal2Chooser = makeGoalChooser();
+			goal2Chooser = makeGoalChooser("Goal 2");
 			SmartDashboard.putData("Goal 2", goal2Chooser);
 		} catch (Exception e) {
 			System.out.println("error in initSmartDashboard");
@@ -94,9 +98,11 @@ public class CompetitionAutoChooser {
 		}
 	}
 	
-	private SendableChooser<AutoObjective> makeGoalChooser() {
+	private SendableChooser<AutoObjective> makeGoalChooser(String goalName) {
 		SendableChooser<AutoObjective> goalChooser = new SendableChooser<AutoObjective>();
+		
 		goalChooser.addDefault(AutoObjective.NO_GOAL.toString(), AutoObjective.NO_GOAL);
+		goalChooser.addObject(goalName, AutoObjective.NO_GOAL);
 		goalChooser.addObject(AutoObjective.SCALE_MY_SIDE.toString(), AutoObjective.SCALE_MY_SIDE);
 		goalChooser.addObject(AutoObjective.SCALE_EITHER.toString(), AutoObjective.SCALE_EITHER);
 		goalChooser.addObject(AutoObjective.SWITCH_MY_SIDE.toString(), AutoObjective.SWITCH_MY_SIDE);
@@ -120,7 +126,6 @@ public class CompetitionAutoChooser {
 	
 	private void getSmartDashboardChoices() {
 		RobotPosition robotPositionSelected = robotPositionChooser.getSelected();
-//		RobotPosition robotPositionSelected = RobotPosition.;
 		System.out.println(robotPositionSelected);
 		
 		if(RobotPosition.RIGHT.equals(robotPositionSelected)) {
@@ -130,9 +135,13 @@ public class CompetitionAutoChooser {
 		} else if(RobotPosition.MIDDLE.equals(robotPositionSelected)) {
 			robotPosition = RobotPosition.MIDDLE;
 		}
-		
+		System.out.println("Confirmed Robot Position");
+
 		goal1 = getGoalFromChooser(goal1Chooser);
 		goal2 = getGoalFromChooser(goal2Chooser);
+		
+		System.out.println("Confirmed Goals 1 and 2");
+
 	}
 	
 	public Command chooseCommand() {
@@ -140,14 +149,30 @@ public class CompetitionAutoChooser {
 		FieldConfig fieldConfig = Robot.fieldConfig;
 		getSmartDashboardChoices();
 		// TODO log the choices, robotPosition, goal1, goal2, etc.
-		System.out.println("Choices: " + robotPosition.toString() + ", " + goal1.toString() + ", " + goal2.toString());
+		if(robotPosition != null && goal1 != null && goal2 != null) {
+			if(robotPosition != null) {
+				log("Choices: robotPosition : " + robotPosition.toString());
+			}
+			if(goal1 != null ) {
+				log("goal1 = " + goal1.toString());
+			}
+			if(goal2 != null) {
+				log("goal2 = " + goal2.toString());
+			}
+		} else {
+			log("One or more of the input choosers was null");
+		}
 		System.out.println("FieldConfig : " + fieldConfig);
 		
 		Command chosenCommand = null;
 		
 		switch (robotPosition) {
 		case RIGHT:
+			System.out.println("Right Case Ran");
+
 			if (fieldConfig.isScaleRight()) {
+				// give it a default just in case
+				chosenCommand = new RightScaleRightScale();
 				if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
@@ -158,8 +183,12 @@ public class CompetitionAutoChooser {
 							chosenCommand = new RightScale();
 						}
 					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
+						// default
+						chosenCommand = new RightSwitch();
 						if(AutoObjective.SCALE_MY_SIDE.equals(goal2)|| AutoObjective.SCALE_EITHER.equals(goal2)) {
-							
+							// even though the switch is goal one, if we have both these goals, we have to
+							// do scale first, because it's easier to deliver 2nd cube to switch
+							chosenCommand = new RightScaleRightSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
 							chosenCommand = new RightSwitch();
 						}
@@ -171,7 +200,7 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new RightScaleLeftSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							//chosenCommand = new RightScale();
+							chosenCommand = new RightScale();
 						}
 					} else if (AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
@@ -183,9 +212,11 @@ public class CompetitionAutoChooser {
 				}
 			} else if (fieldConfig.isScaleLeft()) {
 				if (fieldConfig.isSwitchLeft()) {
+					//default
+					chosenCommand = new CrossToLeftScale();
 					if (AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_EITHER.equals(goal2)) {
-							//chosenCommand = LeftScaleCrossLeftScale();
+							chosenCommand = new CrossToLeftScale();
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = LeftScaleCrossLeftSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
@@ -206,43 +237,60 @@ public class CompetitionAutoChooser {
 					}
 				} else if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_EITHER.equals(goal1)) {
+						chosenCommand = new CrossToLeftScale();
 					}
 					
 				}
 			}
 			break;
 		case LEFT:
+			System.out.println("Left Case Ran");
+
 			if (fieldConfig.isScaleLeft()) {
 				if (fieldConfig.isSwitchLeft()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							//chosenCommand = new LeftScaleLeftScale();
+							chosenCommand = new LeftScaleLeftScale();
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
-							//chosenCommand = new LeftScaleLeftSwitch();
+							chosenCommand = new LeftScaleLeftSwitch();
+						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+							chosenCommand = new LeftScale();
 						}
+					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
+						//Add more options here later
+						chosenCommand = new LeftSwitch();
 					}
 				} else if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							
+							chosenCommand = new LeftScaleLeftScale();
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new LeftScaleRightSwitch();
+						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+							chosenCommand = new LeftScale();
 						}
 					}
 				}
 			} else if (fieldConfig.isScaleRight()) {
 				if (fieldConfig.isSwitchRight()) {
-					
+					chosenCommand = new CrossToRightScale();
+					if (AutoObjective.SCALE_EITHER.equals(goal1)) {
+						if (AutoObjective.SCALE_EITHER.equals(goal2)) {
+							chosenCommand = new CrossToRightScale();
+						}
+					}
 				}
+				
 			}
 			break;
 		case MIDDLE:
+			System.out.println("Middle Case Ran");
 			chosenCommand = new AutoSwitchFront();
 			break;
 		default:
 			break;
 		}
-		SmartDashboard.putString("", "Running " + chosenCommand.toString() + " auto");
+		SmartDashboard.putString("Runnig Auto CommandGroup", chosenCommand.toString());
 		System.out.println("Running "+ chosenCommand.toString() + " auto");
 		return chosenCommand;
 	}
