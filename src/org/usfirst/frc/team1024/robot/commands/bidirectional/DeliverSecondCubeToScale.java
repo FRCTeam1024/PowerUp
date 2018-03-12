@@ -23,9 +23,9 @@ public class DeliverSecondCubeToScale extends CommandGroup {
     	
         // Turn 170 degrees back so we're facing 0, or facing the scale
     	if(Robot.fieldConfig.isScaleLeft()) {
-    		addSequential(new TurnLeftAndLift(170.0, 5.0, Level.SCALE_NEUTRAL));
+    		addSequential(new TurnLeftAndLift(135.0, 5.0, Level.SCALE_LOSS));
     	} else { // scale on right side
-    		addSequential(new TurnRightAndLift(170.0, 5.0, Level.SCALE_NEUTRAL));
+    		addSequential(new TurnRightAndLift(135.0, 5.0, Level.SCALE_LOSS));
     	}
     	
     	

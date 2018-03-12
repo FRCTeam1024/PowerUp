@@ -4,6 +4,7 @@ import org.usfirst.frc.team1024.robot.commands.RightScale;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.CrossToRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
@@ -199,7 +200,7 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new RightScaleLeftSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							//chosenCommand = new RightScale();
+							chosenCommand = new RightScale();
 						}
 					} else if (AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
@@ -252,6 +253,8 @@ public class CompetitionAutoChooser {
 							chosenCommand = new LeftScaleLeftScale();
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							chosenCommand = new LeftScaleLeftSwitch();
+						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+							chosenCommand = new LeftScale();
 						}
 					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						//Add more options here later
@@ -260,10 +263,11 @@ public class CompetitionAutoChooser {
 				} else if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
-							//This needs to be different
-							chosenCommand = new LeftCrossToRightScale();
+							chosenCommand = new LeftScaleLeftScale();
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new LeftScaleRightSwitch();
+						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+							chosenCommand = new LeftScale();
 						}
 					}
 				}

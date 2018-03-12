@@ -67,7 +67,7 @@ public class Constants {
 	public static final double SIDEWALL_TO_PORTAL_EDGE = 30.0;
 	
 	public static final double LOWEST_HEIGHT = 0;
-	public static final double INTAKE_HEIGHT = 0;
+	public static final double INTAKE_HEIGHT = -200;
 	public static final double PORTAL_HEIGHT = 5023;
 	public static final double SWITCH_HEIGHT = 10024.0;
 	public static final double SCALE_OWNERSHIP_HEIGHT = 21069.0;

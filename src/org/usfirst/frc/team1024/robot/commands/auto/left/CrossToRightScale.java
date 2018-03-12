@@ -20,11 +20,11 @@ public class CrossToRightScale extends CommandGroup {
     public CrossToRightScale() {
     	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3));
     	addSequential(new TurnRight(90, 5.0));
-    	addSequential(new DriveAndShift(15.5 * 12 + 16)); 
+    	/*addSequential(new DriveAndShift(15.5 * 12 + 16)); 
     	// turn left to face scale
     	addSequential(new TurnLeftAndLift(90, 5.0, Level.SCALE_NEUTRAL));
     	// drive forward to scale
     	addSequential(new DriveStraight(57));
-    	addSequential(new OpenClamp());
+    	//addSequential(new OpenClamp());*/
     }
 }

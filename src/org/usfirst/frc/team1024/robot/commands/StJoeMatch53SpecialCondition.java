@@ -7,6 +7,7 @@ import org.usfirst.frc.team1024.robot.FieldConfig.POSITION;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
+import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverCubeToScale;
 import org.usfirst.frc.team1024.robot.commands.lift.ChangeLiftSpeed;
@@ -17,9 +18,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class StJoeMatch3SpecialCondition extends CommandGroup {
+public class StJoeMatch53SpecialCondition extends CommandGroup {
 
-    public StJoeMatch3SpecialCondition() {
+    public StJoeMatch53SpecialCondition() {
         if (Robot.fieldConfig.isSwitchRight()) {
         	//Run right switch auto
         	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_END_OF_SWITCH_INCHES), 5);
@@ -30,8 +31,9 @@ public class StJoeMatch3SpecialCondition extends CommandGroup {
         	if (Robot.fieldConfig.isScaleRight()) {
         		addSequential(new DeliverCubeToScale()); //but not really get the second cube
         	} else {
-        		addSequential(new CrossToLeftScale());
+        		addSequential(new CrossTest());
         	}
         }
+        	
     }
 }

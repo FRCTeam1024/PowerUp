@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -69,6 +71,7 @@ public class Drivetrain extends Subsystem {
 		setFollower(middleRight, frontRight);
 		
 		navx = new AHRS(RobotMap.NAVX_PORT);
+		//navx = new AHRS(SerialPort.Port.kUSB);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
 		
