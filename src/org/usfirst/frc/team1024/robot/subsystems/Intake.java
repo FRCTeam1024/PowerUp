@@ -70,7 +70,7 @@ public class Intake extends Subsystem {
     }
 
 	public boolean cubeDetecterState() {
-		if (leftBumpDetector.get() != true && rightBumpDetector.get() != true) {
+		if (leftBumpDetector.get() == true && rightBumpDetector.get() == true) {
 			return true;
 		} else {
 			return false;

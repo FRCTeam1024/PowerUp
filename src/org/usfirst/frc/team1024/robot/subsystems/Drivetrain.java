@@ -164,7 +164,7 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void pidDriveForwardStraight() {
 		//drive(posPID.get() + turnPID.get(), posPID.get() + -1*turnPID.get());
-		drive(-posPID.get() - trimPID.get(), -posPID.get() + trimPID.get());
+		drive(-posPID.get() - trimPID.get() + 0.2, -posPID.get() + trimPID.get() + 0.2);
 	}
 	
 	/**

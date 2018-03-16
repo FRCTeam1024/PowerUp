@@ -11,11 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveLiftToLevel extends Command {
 	Level level;
-	boolean isDone;
+
 	public MoveLiftToLevel(Level level) {
 		requires(Robot.lift);
 		this.level = level;
-		isDone = false;
 	}
 
 	protected void initialize() {
@@ -23,42 +22,37 @@ public class MoveLiftToLevel extends Command {
 	}
 
 	protected void execute() {
-		if (Robot.oi.logi.getRawButton(Constants.REACH_PORTAL_HEIGHT)) {
-			Robot.lift.setPIDSetpoint(level.getHeight());
-			if (Robot.lift.getCommandedOutput() > 0.0) {
-				if (Robot.lift.getLiftEncoderValue() < 25000 /* && !Robot.oi.getOverrideButton() */) {
-					Robot.lift.configMaxOutputs(1.0);
-					// System.out.println("1");
-				} else {
-					Robot.lift.configMaxOutputs(0.25);
-					// System.out.println("2");
-
-				}
-			} else if (Robot.lift.getCommandedOutput() < 0.0) {
-				if (Robot.lift.getLiftEncoderValue() > 3000 /* && !Robot.oi.getOverrideButton() */) {
-					Robot.lift.configMaxOutputs(1.0);
-					// System.out.println("3");
-				} else {
-					Robot.lift.configMaxOutputs(0.25);
-					// System.out.println("4");
-				}
-			} else {
+		Robot.lift.setPIDSetpoint(level.getHeight());
+		if (Robot.lift.getCommandedOutput() > 0.0) {
+			if (Robot.lift.getLiftEncoderValue() < 25000 /* && !Robot.oi.getOverrideButton() */) {
 				Robot.lift.configMaxOutputs(1.0);
-				// System.out.println("5");
+			} else {
+				Robot.lift.configMaxOutputs(0.25);
+
+			}
+		} else if (Robot.lift.getCommandedOutput() < 0.0) {
+			if (Robot.lift.getLiftEncoderValue() > 3000 /* && !Robot.oi.getOverrideButton() */) {
+				Robot.lift.configMaxOutputs(1.0);
+			} else {
+				Robot.lift.configMaxOutputs(0.25);
 			}
 		} else {
-			isDone = true;
+			Robot.lift.configMaxOutputs(1.0);
 		}
 	}
 
 	protected boolean isFinished() {
-		return isDone;
+		if (Robot.lift.getLiftEncoderValue() < level.getHeight() + 100 && Robot.lift.getLiftEncoderValue() > level.getHeight() - 100) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-
+	
 	protected void end() {
 	}
 
 	protected void interrupted() {
-		
+
 	}
 }
