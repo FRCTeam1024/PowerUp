@@ -9,6 +9,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
+import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightSwitch;
@@ -296,7 +297,13 @@ public class CompetitionAutoChooser {
 			break;
 		case MIDDLE:
 			System.out.println("Middle Case Ran");
-			chosenCommand = new AutoSwitchFront();
+			if (AutoObjective.SWITCH_EITHER.equals(goal1)) {
+				if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
+					chosenCommand = new MiddleSwitchMiddleSwitch();
+				} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+					chosenCommand = new AutoSwitchFront();
+				}
+			}
 			break;
 		default:
 			break;
