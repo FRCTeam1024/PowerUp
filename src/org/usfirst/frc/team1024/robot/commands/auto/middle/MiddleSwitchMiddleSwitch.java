@@ -29,17 +29,17 @@ public class MiddleSwitchMiddleSwitch extends CommandGroup {
     	
     	if (Robot.fieldConfig.isSwitchRight()) {
     		addSequential(new TurnRight(45.0, 3.0), 5);
-    		addSequential(new DriveAndMoveLift(-72.0, Level.INTAKE),2);
-    		addSequential(new TurnLeft(45.0, 3.0), 5);
     		addSequential(new IntakeExtend());
-    		addSequential(new DriveAndIntake(36, 3.0), 2);
+    		addSequential(new DriveAndMoveLift(-72.0, Level.INTAKE),2);
+    		addSequential(new TurnLeft(57.0, 3.0), 5);
+    		addSequential(new DriveAndIntake(24.0, 3.0), 2);
     		addSequential(new CloseClamp());
     		addSequential(new DriveStraight(-36, 5.0), 2);
     		addSequential(new IntakeRetract());
     		addSequential(new TurnRight(45.0, 3.0), 5);
     		addSequential(new DriveAndMoveLift(72.0, Level.SWITCH), 2);
-    		addSequential(new TurnLeft(45.0, 3.0), 5);
-    		addSequential(new OpenClamp());
+    		//addSequential(new TurnLeft(45.0, 3.0), 5);
+    		//addSequential(new OpenClamp());
     		
     		
     		/*

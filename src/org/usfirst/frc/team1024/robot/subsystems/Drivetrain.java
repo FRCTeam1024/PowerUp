@@ -161,7 +161,15 @@ public class Drivetrain extends Subsystem {
 	 * Assumes that there is a setpoint set and that the pid has been enabled
 	 */
 	public void pidTurn() {
-		drive(-(turnPID.get()), turnPID.get());
+		double minPowerToMove = 0.2; // just a guess
+		double netPower = turnPID.get();
+		if(netPower < minPowerToMove && netPower > 0.0) {
+			netPower = minPowerToMove;
+		} else if (netPower > -minPowerToMove && netPower < 0.0) {
+			netPower = -minPowerToMove;	
+		}
+		// drive(-(turnPID.get()), turnPID.get());
+		drive(-(netPower), netPower);
 	}
 	
 	public void pidTurnOneSideLeft() {

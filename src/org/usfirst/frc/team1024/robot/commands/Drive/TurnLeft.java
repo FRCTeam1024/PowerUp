@@ -9,7 +9,7 @@ public class TurnLeft extends TurnRelative {
 	}
 	
 	public TurnLeft(double targetHeading, double degreeTolerance) {
-		super(-1 * targetHeading + 3.0, degreeTolerance);
+		super(-1 * targetHeading, degreeTolerance);
 	}
 	
 	public TurnLeft(double targetHeading, double degreeTolerance, double speed) {

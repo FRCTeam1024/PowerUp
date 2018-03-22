@@ -25,6 +25,7 @@ public class TurnRelative extends Command {
     protected void initialize() {
     	Robot.drivetrain.resetGyro();
     	double currentAngle = Robot.drivetrain.getHeading();
+    	//Robot.drivetrain.turnPID.setPercentTolerance(3.0/360.0);
     	Robot.drivetrain.turnPID.setSetpoint(targetAngle);
     	Robot.drivetrain.turnPID.enable();
     	Robot.drivetrain.shiftLow();
@@ -41,12 +42,15 @@ public class TurnRelative extends Command {
     
     private boolean isOnTarget() {
     	//return Math.abs(Robot.drivetrain.getHeading() - targetAngle) < degreeTolerance;  //if the robot is within 1 degrees of the target, stop
-    	if (Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 5) {
-    		if ((Robot.drivetrain.turnPID.get() < 0.1 && Robot.drivetrain.turnPID.get() > 0.0 )|| 
-    			(Robot.drivetrain.turnPID.get() > -0.1 && Robot.drivetrain.turnPID.get() < 0.0)) {
-    			return true;
-    		}
+    	
+    	if (Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1.0) {
+    		//if (Robot.drivetrain.turnPID.get() < 0.1 && Robot.drivetrain.turnPID.get() > -0.1) {
+    			//return true;
+    		//}
+    		return true;
     	}
+    	
+    	
     	return false;
     }
         
@@ -58,7 +62,7 @@ public class TurnRelative extends Command {
     		onTargetCount = 0;
     	}
     	
-    	if(onTargetCount >= 3) {
+    	if(onTargetCount > 1) {
     		log("finished turn at " + Robot.drivetrain.getHeading() + "angle");
     		return true;
     	} else {

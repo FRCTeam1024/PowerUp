@@ -173,8 +173,8 @@ public class Robot extends TimedRobot {
 		*/
 		
 		// TODO when you want to try auto-chooser
-		//m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
-		m_autonomousCommand = new TurnLeft(45.0, 3.0);
+		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
+		//m_autonomousCommand = new TurnLeft(45.0, 3.0);
 		//m_autonomousCommand = new DriveAndShift(250, 1.0);
 		//m_autonomousCommand = new StJoeMatch53SpecialCondition();
 		Robot.drivetrain.resetOpticalEncoder();
