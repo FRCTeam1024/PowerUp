@@ -19,14 +19,14 @@ public class Constants {
 	public static final double DRIVETRAIN_ENCODER_DISTANCE_PER_PULSE = (1.0 / 71.0) * 4.0;
 
 	//PID Constants
-	public static final double TURN_KP = 0.018; //was 0.055
-	public static final double TURN_KI = 0;
-	public static final double TURN_KD = 0.026; //was 0.1, 0.3 was the best
+	public static final double TURN_KP = 0.018; //0.018;
+	public static final double TURN_KI = 0.0;//0.0001;//0.0005; //was no i
+	public static final double TURN_KD = 0.025;//0.025;//0.015; //was 0.025
 	public static final double TURN_KF = 0.0;
 
 	public static final double POS_KU = 0.08;
 	public static final double POS_TU = 3.0;
-	public static final double POS_KP = 0.8 * POS_KU;
+	public static final double POS_KP = 0.066;//0.8 * POS_KU;
 	public static final double POS_KI = 0.0;
 	public static final double POS_KD = POS_TU / 8;
 	public static final double POS_KF = 0.0;
@@ -68,7 +68,7 @@ public class Constants {
 	
 	public static final double LOWEST_HEIGHT = 0;
 	public static final double INTAKE_HEIGHT = -200;
-	public static final double PORTAL_HEIGHT = 5023;
+	public static final double PORTAL_HEIGHT = 5500; //was 5023
 	public static final double SWITCH_HEIGHT = 10024.0;
 	public static final double SCALE_OWNERSHIP_HEIGHT = 21069.0;
 	public static final double SCALE_NEUTRAL_HEIGHT = 23064.0;
@@ -101,10 +101,11 @@ public class Constants {
 	public static final int CUBE_START_DETECT_BUTTON = 2;
 	//public static final int LIFT_OVERRIDE_BUTTON = 1;
 
-	public static final int INTAKE_START_ACQUIRE = 3;
+	public static final int INTAKE_START_ACQUIRE = 11;
 
 	public static final int REACH_PORTAL_HEIGHT = 1;
-	public static final int REACH_SWITCH_HEIGHT = 2;
-	public static final int ZERO_HEIGHT = 4;
+	public static final int REACH_SWITCH_HEIGHT = 3;
+	public static final int REACH_ZERO_HEIGHT = 2;
+	public static final int REACH_SCALE_HEIGHT = 4;
 
 }

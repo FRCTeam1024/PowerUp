@@ -21,13 +21,13 @@ public class AutoSwitchFront extends CommandGroup {
 	private int INITIAL_DRIVE_DISTANCE = 24;
 	
 	public AutoSwitchFront() {
-       	addSequential(new DriveStraight(INITIAL_DRIVE_DISTANCE));
+       	addSequential(new DriveStraight(INITIAL_DRIVE_DISTANCE),1);
        	
        	if(Robot.fieldConfig.isSwitchRight()) {
-       		addSequential(new TurnRight(45, 3.0),2);
-       		addSequential(new DriveStraight(80));
-       		addSequential(new TurnLeftAndLift(45, 3.0, Level.SWITCH),2);   
-       		addSequential(new DriveStraight(36), 2);
+       		addSequential(new TurnRight(45, 3.0),5);
+       		addSequential(new DriveStraight(80.0));
+       		addSequential(new TurnLeftAndLift(45, 3.0, Level.SWITCH),5);   
+       		addSequential(new DriveStraight(44.0), 1);
         } else {
        		addSequential(new TurnLeft(45, 3.0),2);
        		addSequential(new DriveStraight(100));

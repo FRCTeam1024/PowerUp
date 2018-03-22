@@ -49,8 +49,9 @@ public class OI {
 	JoystickButton openClamp          = new JoystickButton(logi, Constants.LIFT_CLAMP_OPEN_BUTTON);
 	JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
 	JoystickButton switchHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
-	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.ZERO_HEIGHT);
+	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.REACH_ZERO_HEIGHT);
 	JoystickButton portalHeight       = new JoystickButton(logi, Constants.REACH_PORTAL_HEIGHT);
+	JoystickButton scaleHeight		  = new JoystickButton(logi, Constants.REACH_SCALE_HEIGHT);
 	JoystickButton engageAirbag       = new JoystickButton(logi, Constants.ENGAGE_AIRBAG_BUTTON);
 	JoystickButton disengageAirbag    = new JoystickButton(logi, Constants.DISENGAGE_AIRBAG_BUTTON);
 
@@ -65,7 +66,9 @@ public class OI {
 		intakeStartAcquire.whileHeld(new IntakeCube());
 		portalHeight.whenPressed(new MoveLiftToLevel(Level.PORTAL));
 		switchHeight.whenPressed(new MoveLiftToLevel(Level.SWITCH));
-		zeroHeight.whenPressed(new MoveLiftToLevel(Level.INTAKE));	
+		switchHeight.whenPressed(new IntakeRetract());
+		zeroHeight.whenPressed(new MoveLiftToLevel(Level.INTAKE));
+		scaleHeight.whenPressed(new MoveLiftToLevel(Level.SCALE_LOSS));
 		logi.dPad.down.whenPressed(new IntakeRetract());
 		logi.dPad.up.whenPressed(new IntakeExtend());
 		logi.dPad.left.whenPressed(new IntakeNarrow());

@@ -18,14 +18,17 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,7 +45,8 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX rearRight = new TalonSRX(RobotMap.REAR_RIGHT_MOTOR_PORT);
 	
 	private Solenoid shifter = new Solenoid(RobotMap.SHIFTER_PORT);
-	private AHRS navx;
+	//private AHRS navx;
+	private AnalogGyro navx;
 	
 	public double rotateToAngleRate;
 	
@@ -70,7 +74,8 @@ public class Drivetrain extends Subsystem {
 		setFollower(middleLeft, frontLeft);
 		setFollower(middleRight, frontRight);
 		
-		navx = new AHRS(RobotMap.NAVX_PORT);
+		//navx = new AHRS(RobotMap.NAVX_PORT);
+		navx = new AnalogGyro(0);
 		//navx = new AHRS(SerialPort.Port.kUSB);
 		navx.setPIDSourceType(PIDSourceType.kDisplacement);
 		navx.reset();
@@ -131,10 +136,6 @@ public class Drivetrain extends Subsystem {
 		System.out.println("Shifting High");
 	}
 	
-	public boolean isRotating() {
-		return navx.isRotating();
-	}
-	
 	/**
 	 * @returns true if the robot is moving.
 	 */
@@ -147,6 +148,11 @@ public class Drivetrain extends Subsystem {
 	 * @returns The heading from the navx (in degrees).
 	 */
 	public double getHeading() {
+		/*if (RobotState.isAutonomous()) {
+			if (!navx.isConnected()) {
+				Scheduler.getInstance().disable();
+			}
+		}*/
 		return navx.getAngle();
 	}
 	
@@ -155,7 +161,15 @@ public class Drivetrain extends Subsystem {
 	 * Assumes that there is a setpoint set and that the pid has been enabled
 	 */
 	public void pidTurn() {
-		drive(-turnPID.get(), turnPID.get());
+		drive(-(turnPID.get()), turnPID.get());
+	}
+	
+	public void pidTurnOneSideLeft() {
+		drive(-(turnPID.get()), 0.0);
+	}
+	
+	public void pidTurnOneSideRight() {
+		drive(0.0, turnPID.get());
 	}
 	
 	/**
@@ -164,7 +178,12 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void pidDriveForwardStraight() {
 		//drive(posPID.get() + turnPID.get(), posPID.get() + -1*turnPID.get());
-		drive(-posPID.get() - trimPID.get() + 0.2, -posPID.get() + trimPID.get() + 0.2);
+		drive(-posPID.get() - trimPID.get(), -posPID.get() + trimPID.get());
+	}
+	
+	public void pidDriveForwardStraightBias(double modifier) {
+		//drive(posPID.get() + turnPID.get(), posPID.get() + -1*turnPID.get());
+		drive(-posPID.get() - trimPID.get() + modifier, -posPID.get() + trimPID.get() + modifier);
 	}
 	
 	/**
@@ -235,6 +254,7 @@ public class Drivetrain extends Subsystem {
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Gyro Angle", getHeading());
+		//System.out.println("Gyro: " + getHeading());
     	SmartDashboard.putNumber("Optical Encoder Distance (IN)", getOpticalDistanceInches());
     	SmartDashboard.putNumber("Encoder Raw", encoder.getRaw());
     	SmartDashboard.putNumber("posPID.get()", posPID.get());

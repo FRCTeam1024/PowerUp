@@ -26,29 +26,47 @@ public class MiddleSwitchMiddleSwitch extends CommandGroup {
 
     public MiddleSwitchMiddleSwitch() {
     	addSequential(new AutoSwitchFront());
-    	addSequential(new ChangeTrimPID(Constants.TRIM_KP, Constants.TRIM_KI, Constants.TRIM_KD, 0.1));
-    	addSequential(new ChangeTurnSpeed(0.5));
-    	addSequential(new DriveAndMoveLift(-72.0, Level.INTAKE), 3);
+    	
     	if (Robot.fieldConfig.isSwitchRight()) {
-    		addSequential(new TurnLeft(65.0, 5.0), 2);
+    		addSequential(new TurnRight(45.0, 3.0), 5);
+    		addSequential(new DriveAndMoveLift(-72.0, Level.INTAKE),2);
+    		addSequential(new TurnLeft(45.0, 3.0), 5);
     		addSequential(new IntakeExtend());
-    		addSequential(new DriveAndIntake(48.0, 3.0));
+    		addSequential(new DriveAndIntake(36, 3.0), 2);
     		addSequential(new CloseClamp());
-    		addSequential(new DriveStraight(-48.0, 5.0));
-    		addSequential(new TurnRightAndLift(45.0, 5.0, Level.SWITCH), 3);
+    		addSequential(new DriveStraight(-36, 5.0), 2);
     		addSequential(new IntakeRetract());
-    		addSequential(new DriveStraight(48.0, 5.0));
+    		addSequential(new TurnRight(45.0, 3.0), 5);
+    		addSequential(new DriveAndMoveLift(72.0, Level.SWITCH), 2);
+    		addSequential(new TurnLeft(45.0, 3.0), 5);
     		addSequential(new OpenClamp());
+    		
+    		
+    		/*
+    		addSequential(new DriveAndMoveLift(-90.0, Level.INTAKE), 2);
+    		addSequential(new IntakeExtend());
+    		addSequential(new TurnLeft(40.0, 5.0), 1);
+    		addSequential(new IntakeExtend());
+    		addSequential(new DriveAndIntake(76.0, 3.0),2);
+    		addSequential(new CloseClamp());
+    		addSequential(new DriveAndIntake(-76.0, 3.0),2);
+    		addSequential(new TurnRightAndLift(40.0, 5.0, Level.SWITCH), 1);
+    		addSequential(new IntakeRetract());
+    		addSequential(new DriveStraight(68.0, 5.0), 1.5);
+    		addSequential(new OpenClamp());*/
     	} else {
-    		addSequential(new TurnRight(65.0, 5.0), 2);
+    		
+    		/*addSequential(new DriveAndMoveLift(-90.0, Level.INTAKE), 2);
     		addSequential(new IntakeExtend());
-    		addSequential(new DriveAndIntake(48.0, 5.0));
+    		addSequential(new TurnRight(60.0, 5.0), 1);
+    		addSequential(new IntakeExtend());
+    		addSequential(new DriveAndIntake(60.0, 3.0),2);
     		addSequential(new CloseClamp());
     		addSequential(new DriveStraight(-48.0, 5.0));
-    		addSequential(new TurnLeftAndLift(45.0, 5.0, Level.SWITCH), 3);
+    		addSequential(new TurnLeftAndLift(60.0, 5.0, Level.SWITCH), 1);
     		addSequential(new IntakeRetract());
     		addSequential(new DriveStraight(48.0, 5.0));
-    		addSequential(new OpenClamp());
+    		addSequential(new OpenClamp());*/
     	}
     }
 }

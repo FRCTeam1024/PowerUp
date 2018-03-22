@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
+import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
@@ -172,8 +173,9 @@ public class Robot extends TimedRobot {
 		*/
 		
 		// TODO when you want to try auto-chooser
-		m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
-		//m_autonomousCommand = new MoveLiftPID(Level.SCALE_NEUTRAL);
+		//m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
+		m_autonomousCommand = new TurnLeft(45.0, 3.0);
+		//m_autonomousCommand = new DriveAndShift(250, 1.0);
 		//m_autonomousCommand = new StJoeMatch53SpecialCondition();
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();

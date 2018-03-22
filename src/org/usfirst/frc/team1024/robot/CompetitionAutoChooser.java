@@ -26,6 +26,7 @@ public class CompetitionAutoChooser {
 	private SendableChooser<RobotPosition> robotPositionChooser = new SendableChooser<RobotPosition>();
 	private SendableChooser<AutoObjective> goal1Chooser = new SendableChooser<AutoObjective>();
 	private SendableChooser<AutoObjective> goal2Chooser = new SendableChooser<AutoObjective>();
+	private SendableChooser<String> specialConditions = new SendableChooser<String>();
 	
 	private RobotPosition robotPosition;
 	private AutoObjective goal1, goal2;
@@ -93,6 +94,9 @@ public class CompetitionAutoChooser {
 			
 			goal2Chooser = makeGoalChooser("Goal 2");
 			SmartDashboard.putData("Goal 2", goal2Chooser);
+			
+			specialConditions.addDefault("Run Normal Chooser", "Run Normal Chooser");
+			specialConditions.addObject("Do Switch if on robot's side, or do either scale", "Do Switch if on robot's side, or do either scale");
 		} catch (Exception e) {
 			System.out.println("error in initSmartDashboard");
 			e.printStackTrace();
@@ -164,7 +168,6 @@ public class CompetitionAutoChooser {
 			log("One or more of the input choosers was null");
 		}
 		System.out.println("FieldConfig : " + fieldConfig);
-		
 		Command chosenCommand = null;
 		
 		switch (robotPosition) {
