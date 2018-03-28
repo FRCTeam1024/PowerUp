@@ -18,7 +18,8 @@ public class IntakeWithJoystick extends Command {
     }
 
     protected void execute() {
-    	Robot.intake.intakeSpeed(Robot.oi.logi.getRawAxis(Constants.INTAKE_STICK_AXIS));
+    	Robot.intake.intakeSpeed((0.5) * Robot.oi.logi.getRawAxis(Constants.INTAKE_STICK_AXIS), 
+    									 Robot.oi.logi.getRawAxis(Constants.INTAKE_STICK_AXIS));
     }
 
     protected boolean isFinished() {

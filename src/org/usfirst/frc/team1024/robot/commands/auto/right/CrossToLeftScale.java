@@ -22,13 +22,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossToLeftScale extends CommandGroup {
 
     public CrossToLeftScale() {
-    	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3 + 12));
+    	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3 + 12 - 6));
     	addSequential(new TurnLeft(90, 1.0), 2);
-    	/*addSequential(new DriveAndShift(15.5 * 12 + 16)); 
+    	addSequential(new DriveAndShift(15.5 * 12 + 16 - 18 - 6 - 30 + 8), 5); 
     	// turn right to face scale
-    	addSequential(new TurnRightAndLift(70, 1.0, Level.SCALE_LOSS), 5);
+    	addSequential(new TurnRightAndLift(90.0, 1.0, Level.SCALE_LOSS), 5);
     	// drive forward to scale
-    	addSequential(new DriveStraight(33), 2);*/
-    	//addSequential(new OpenClamp());
+    	addSequential(new DriveStraight(33 + 12), 2);
+    	addSequential(new OpenClamp());
     }
 }

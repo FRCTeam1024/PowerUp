@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * Copied from latest DriveToRightScaleEnd, and then modified to work both sides
  * 
  * Delivers starting cube to scale, then goes and picks up cube at end of switch wall
- * THIS HAS NOT BEEN TESTED YET - remove this when it has
  */
 public class DeliverCubeToScale extends CommandGroup {
 

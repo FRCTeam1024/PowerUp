@@ -47,7 +47,7 @@ public class OI {
 	JoystickButton rightShiftLow      = new JoystickButton(rJoy, Constants.SHIFT_LOW_BUTTON);
 	JoystickButton closeClamp 		  = new JoystickButton(logi, Constants.LIFT_CLAMP_CLOSE_BUTTON);
 	JoystickButton openClamp          = new JoystickButton(logi, Constants.LIFT_CLAMP_OPEN_BUTTON);
-	JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
+	//JoystickButton intakeStartAcquire = new JoystickButton(logi, Constants.INTAKE_START_ACQUIRE);
 	JoystickButton switchHeight   	  = new JoystickButton(logi, Constants.REACH_SWITCH_HEIGHT);
 	JoystickButton zeroHeight         = new JoystickButton(logi, Constants.REACH_ZERO_HEIGHT);
 	JoystickButton portalHeight       = new JoystickButton(logi, Constants.REACH_PORTAL_HEIGHT);
@@ -63,7 +63,7 @@ public class OI {
 		rightShiftHigh.whenPressed(new ShiftLow());
 		closeClamp.whenPressed(new CloseClamp());
 		openClamp.whenPressed(new OpenClamp());
-		intakeStartAcquire.whileHeld(new IntakeCube());
+		//intakeStartAcquire.whileHeld(new IntakeCube());
 		portalHeight.whenPressed(new MoveLiftToLevel(Level.PORTAL));
 		switchHeight.whenPressed(new MoveLiftToLevel(Level.SWITCH));
 		switchHeight.whenPressed(new IntakeRetract());

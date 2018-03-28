@@ -172,12 +172,29 @@ public class Drivetrain extends Subsystem {
 		drive(-(netPower), netPower);
 	}
 	
-	public void pidTurnOneSideLeft() {
-		drive(-(turnPID.get()), 0.0);
+	public void pidTurnLeftOneSide(double oppositeSidePower) {
+		double minPowerToMove = 0.4; // just a guess
+		double netPower = turnPID.get();
+		if(netPower < minPowerToMove && netPower > 0.0) {
+			netPower = minPowerToMove;
+		} else if (netPower > -minPowerToMove && netPower < 0.0) {
+			netPower = -minPowerToMove;	
+		}
+		// drive(-(turnPID.get()), turnPID.get());
+		//drive(-(netPower), netPower);
+		drive(oppositeSidePower, netPower);
 	}
 	
-	public void pidTurnOneSideRight() {
-		drive(0.0, turnPID.get());
+	public void pidTurnRightOneSide(double oppositeSidePower) {
+		double minPowerToMove = 0.4; // just a guess
+		double netPower = turnPID.get();
+		if(netPower < minPowerToMove && netPower > 0.0) {
+			netPower = minPowerToMove;
+		} else if (netPower > -minPowerToMove && netPower < 0.0) {
+			netPower = -minPowerToMove;	
+		}
+		// drive(-(turnPID.get()), turnPID.get());
+		drive(-(netPower), oppositeSidePower);
 	}
 	
 	/**
