@@ -39,6 +39,7 @@ public class DeliverCubeToScale extends CommandGroup {
     	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - (Constants.ROBOT_LENGTH_IN / 2) - 8.0 - 12.0 - 12.0 + 12.0, 5.0));
 
     	addSequential(new ShiftLow());
+    	addSequential(new ChangeDriveSpeed(0.5));
     	// turn towards scale
     	if(Robot.fieldConfig.isScaleRight()) {
     		addSequential(new TurnLeft(90, 5.0),2);
@@ -51,7 +52,7 @@ public class DeliverCubeToScale extends CommandGroup {
     	}
     	addSequential(new DriveStraight(23.0 + 6.0));
     	// drop the cube on to the scale
-    	addSequential(new OpenClamp()); //THIS WILL BREAK THE INTAKE! Not sure anymore!
+    	addSequential(new OpenClamp()); 
     
     }
 }
