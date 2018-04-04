@@ -8,12 +8,8 @@ public class TurnLeft extends TurnRelative {
 		super(-1 * targetHeading);
 	}
 	
-	public TurnLeft(double targetHeading, double degreeTolerance) {
-		super(-1 * targetHeading, degreeTolerance);
-	}
-	
-	public TurnLeft(double targetHeading, double degreeTolerance, double speed) {
-		this(-1 * targetHeading, degreeTolerance);
+	public TurnLeft(double targetHeading, double speed) {
+		this(-1 * targetHeading);
 		Robot.drivetrain.turnPID.setOutputRange(-speed, speed);
 	}
 	

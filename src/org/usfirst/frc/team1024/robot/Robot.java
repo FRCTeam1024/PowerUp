@@ -35,6 +35,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
+import org.usfirst.frc.team1024.robot.commands.auto.right.DoubleScaleZane;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
@@ -103,7 +104,7 @@ public class Robot extends TimedRobot {
 		//Right scale
 		//Right switch (if on our side) or scale
 		//Right cross to left scale
-		autoChooser.addDefault("Cross", "CrossTest");
+		autoChooser.addDefault("Cross", "RightCrossLeft");
 		autoChooser.addObject("Middle Switch", "MiddleSwitch");
 		autoChooser.addObject("Right Scale", "RightScale");
 		autoChooser.addObject("Right Switch", "RightSwitch");
@@ -115,6 +116,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("L Scale First", "LScalePriority");
 		autoChooser.addObject("Test", "Test");
 		autoChooser.addObject("ScaleEither", "ScaleEither");
+		autoChooser.addObject("DoubleScaleZane", "DoubleScaleZane");
 		SmartDashboard.putData(autoChooser);
 		
 		// TODO un-comment when you want to test this
@@ -167,6 +169,12 @@ public class Robot extends TimedRobot {
 				break;
 			case "ScaleEither":
 				m_autonomousCommand = new ScaleEither();
+				break;
+			case "RightCrossLeft":
+				m_autonomousCommand = new CrossToLeftScale();
+				break;
+			case "DoubleScaleZane":
+				m_autonomousCommand = new DoubleScaleZane();
 				break;
 		}
 		

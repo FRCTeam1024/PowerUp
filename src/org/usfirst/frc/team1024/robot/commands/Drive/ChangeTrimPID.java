@@ -20,7 +20,7 @@ public class ChangeTrimPID extends Command {
     }
 
     protected void initialize() {
-    	Robot.drivetrain.trimPID.setPID(trimP, trimI, trimD);
+    	//Robot.drivetrain.trimPID.setPID(trimP, trimI, trimD);
     	Robot.drivetrain.trimPID.setOutputRange(-maxOutput, maxOutput);
     }
 

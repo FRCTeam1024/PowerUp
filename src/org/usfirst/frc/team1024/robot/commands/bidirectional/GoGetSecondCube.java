@@ -2,15 +2,18 @@ package org.usfirst.frc.team1024.robot.commands.bidirectional;
 
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.commands.Delay;
 import org.usfirst.frc.team1024.robot.commands.DriveAndLiftAndIntake;
 import org.usfirst.frc.team1024.robot.commands.DriveAndMoveLift;
 import org.usfirst.frc.team1024.robot.commands.PrintToConsole;
 import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
+import org.usfirst.frc.team1024.robot.commands.Drive.ChangeTrimPID;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
+import org.usfirst.frc.team1024.robot.commands.intake.IntakeNarrow;
 import org.usfirst.frc.team1024.robot.commands.lift.ChangeLiftSpeed;
 import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
 import org.usfirst.frc.team1024.robot.commands.lift.OpenClamp;
@@ -27,19 +30,25 @@ public class GoGetSecondCube extends CommandGroup {
     	// go get the nearest cube on the end of the switch wall
     	addSequential(new ChangeLiftSpeed(0.75));
     	addSequential(new ChangeDriveSpeed(0.5));
+    	addSequential(new ChangeTrimPID(0, 0, 0, 0.1));
     	addSequential(new ShiftLow());
     	addSequential(new DriveAndMoveLift(-18.0, Level.SWITCH), 2);
+    	
+    	// turn towards cube on switch wall
     	if(Robot.fieldConfig.isScaleRight()) {
-    		addSequential(new TurnLeft(68.0, 5.0), 2);
+    		addSequential(new TurnLeft(70.0, 5.0), 2);  // bryan changed from 68 for right and left
     	} else if(Robot.fieldConfig.isScaleLeft()) {
-    		addSequential(new TurnRight(68.0, 5.0), 2);
+    		addSequential(new TurnRight(70.0, 5.0), 2);
     	}
+    	
     	
     	addSequential(new OpenClamp()); 
     	addSequential(new IntakeExtend());
     	addSequential(new ChangeDriveSpeed(0.60));
     	// Need to slow down when acquiring cube
     	addSequential(new DriveAndLiftAndIntake(105.0, Level.INTAKE, 3.0), 3);
+    	addSequential(new IntakeNarrow());
+    	addSequential(new Delay(1));
     	addSequential(new CloseClamp());
     	addSequential(new PrintToConsole("Done @ " + DriverStation.getInstance().getMatchTime()));
     	

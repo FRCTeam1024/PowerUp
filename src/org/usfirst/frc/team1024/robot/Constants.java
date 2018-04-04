@@ -82,7 +82,8 @@ public class Constants {
 	public static final int LOGITECH_JOYSTICK_PORT = 2;
 	
 	public static final int LIFT_STICK_AXIS = 3;
-	public static final int INTAKE_STICK_AXIS = 1;
+	public static final int INTAKE_STICK_AXIS_Y = 1;
+	public static final int INTAKE_STICK_AXIS_X = 0;
 	public static final int SHIFT_HIGH_BUTTON = 7;
 	public static final int SHIFT_LOW_BUTTON = 10;
 	
