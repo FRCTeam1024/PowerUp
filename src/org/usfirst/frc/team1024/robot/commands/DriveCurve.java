@@ -9,54 +9,70 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveCurve extends Command {
-
-	private int targetHeading;
-	private double leftPower;
-	private double rightPower;
+	double targetDistance;
+	double tolerance = 5;
+	double trimAngle;
+	int onTargetCount = 0;
+	boolean hasShifted = false;
 	
-    public DriveCurve() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public DriveCurve(double targetDistance, double trimAngle) {
     	requires(Robot.drivetrain);
+    	this.targetDistance = targetDistance;
+    	this.trimAngle = trimAngle;
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.resetGyro();
-    	outputToSmartDashboard();
-    	this.targetHeading = (int) SmartDashboard.getNumber("Curve Target Angle", 90);
-    	this.leftPower = (double) SmartDashboard.getNumber("Curve left power", 0.9);
-    	this.rightPower = (double) SmartDashboard.getNumber("Curve right power", 0.1);
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	// it's inverted, for some reason?
-    	Robot.drivetrain.drive(-leftPower, -rightPower);
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	if(Math.abs(targetHeading - Robot.drivetrain.getHeading()) < 2)
-    		return true;
-    	else
-    		return false;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
+    	Robot.drivetrain.resetOpticalEncoder();
+    	Robot.drivetrain.resetMagneticEncoder();
+    	Robot.drivetrain.posPID.setSetpoint(targetDistance);
+    	Robot.drivetrain.trimPID.setSetpoint(trimAngle);
+    	Robot.drivetrain.posPID.enable();
+    	Robot.drivetrain.trimPID.enable();
     }
     
-    public void outputToSmartDashboard() {
-		SmartDashboard.putNumber("Curve Target Angle", 90);
-    	SmartDashboard.putNumber("Curve left power", 0.9);
-    	SmartDashboard.putNumber("Curve right power", 0.1);
+    protected void execute() {
+    	SmartDashboard.putNumber("targetDistance", targetDistance);
+    	// Robot.drivetrain.pidDriveForwardStraight();
+    	if (Robot.drivetrain.getOpticalDistanceInches() > 1.0 && !hasShifted) {
+    		Robot.drivetrain.shiftHigh();
+    		hasShifted = true;
+    		SmartDashboard.putNumber("Shifter", Robot.drivetrain.getShiftState() ? 0 : 1);
+    	}
+    	if(targetDistance < 0) {
+    		Robot.drivetrain.pidDriveBackwardStraight();
+    	} else {
+    		Robot.drivetrain.pidDriveForwardStraightBias(0.0);
+    	}
+    }
+
+    protected boolean isFinished() {
+    	if (Math.abs(Robot.drivetrain.getOpticalDistanceInches() - targetDistance) < tolerance) {
+    		onTargetCount++;
+    	} else {
+    		onTargetCount = 0;
+    	}
     	
-    	SmartDashboard.putData("Drive Curve", this);
-	}
+    	if(onTargetCount == 30) {
+    		System.out.println("Done at " + Robot.drivetrain.getOpticalDistanceInches() + " inches");
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    protected void end() {
+    	System.out.println("In end()");
+    	Robot.drivetrain.stop();
+    	Robot.drivetrain.resetOpticalEncoder();
+    	Robot.drivetrain.posPID.disable();
+    	Robot.drivetrain.trimPID.disable();
+    }
+    
+    protected void interrupted() {
+    	//System.out.print("In interrupted()");
+    	Robot.drivetrain.stop();
+    	Robot.drivetrain.resetOpticalEncoder();
+    	Robot.drivetrain.posPID.disable();
+    	Robot.drivetrain.trimPID.disable();
+    }
 }
