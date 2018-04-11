@@ -25,15 +25,15 @@ public class CrossToLeftScale extends CommandGroup {
 
     public CrossToLeftScale() {
     	addSequential(new ChangeDriveSpeed(1.0));
-    	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3));
-    	addSequential(new TurnLeft(90, 1.0), 2);
-    	addSequential(new ChangeDriveSpeed(0.6));
-    	addSequential(new DriveAndShift((15.5 * 12) + 9), 5); 
+    	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3.0));
+    	addSequential(new TurnLeft(90.0), 2);
+    	addSequential(new ChangeDriveSpeed(0.6)); //This could be faster probably
+    	addSequential(new DriveAndShift(195.0), 5); 
     	// turn right to face scale
-    	addSequential(new TurnRightAndLift(90.0, 1.0, Level.SCALE_LOSS), 5);
+    	addSequential(new TurnRightAndLift(90.0, Level.SCALE_LOSS), 5);
     	// drive forward to scale
-    	addSequential(new DriveStraight(45), 2);
-    	addSequential(new Delay(.5));
+    	addSequential(new DriveStraight(45.0), 2);
+    	addSequential(new Delay(0.5));
     	addSequential(new OpenClamp());
     }
 }

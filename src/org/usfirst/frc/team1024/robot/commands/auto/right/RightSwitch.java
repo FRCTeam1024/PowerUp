@@ -16,13 +16,5 @@ public class RightSwitch extends CommandGroup {
 
     public RightSwitch() {
     	addSequential(new DeliverFirstCubeToSwitch(POSITION.RIGHT));
-    	
-    	// TODO put cube on switch
-    	/* To scale:
-    	 * addSequential(new DriveStraight(-10));
-    	 * addSequential(new TurnRelative(90));
-    	 * addSequential(new DriveStraight(20));
-    	 * 
-    	 */
     }
 }

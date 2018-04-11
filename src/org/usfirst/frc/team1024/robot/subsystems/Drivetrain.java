@@ -173,7 +173,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void pidTurnLeftOneSide(double oppositeSidePower) {
-		double minPowerToMove = 0.4; // just a guess
+		double minPowerToMove = 0.5; // just a guess
 		double netPower = turnPID.get();
 		if(netPower < minPowerToMove && netPower > 0.0) {
 			netPower = minPowerToMove;
@@ -186,7 +186,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void pidTurnRightOneSide(double oppositeSidePower) {
-		double minPowerToMove = 0.4; // just a guess
+		double minPowerToMove = 0.5; // just a guess
 		double netPower = turnPID.get();
 		if(netPower < minPowerToMove && netPower > 0.0) {
 			netPower = minPowerToMove;

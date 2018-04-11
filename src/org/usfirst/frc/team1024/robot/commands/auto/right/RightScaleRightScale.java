@@ -14,7 +14,7 @@ public class RightScaleRightScale extends CommandGroup {
 
     public RightScaleRightScale() {
     	addSequential(new DeliverCubeToScale());
-    	addSequential(new GoGetSecondCube());
-        addSequential(new DeliverSecondCubeToScale());
+    	//addSequential(new GoGetSecondCube());
+        //addSequential(new DeliverSecondCubeToScale());
     }
 }

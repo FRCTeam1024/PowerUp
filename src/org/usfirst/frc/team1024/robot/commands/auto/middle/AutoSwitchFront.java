@@ -6,6 +6,7 @@ import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.DriveAndMoveLift;
+import org.usfirst.frc.team1024.robot.commands.DriveAndShiftAndLift;
 import org.usfirst.frc.team1024.robot.commands.TurnLeftAndLift;
 import org.usfirst.frc.team1024.robot.commands.TurnLeftOneSide;
 import org.usfirst.frc.team1024.robot.commands.TurnRightAndLift;
@@ -26,10 +27,17 @@ public class AutoSwitchFront extends CommandGroup {
 
 	public AutoSwitchFront() {
 		//This is for testing the turn at the beginning
-		addSequential(new TurnRightOneSide(30.0));
-		addSequential(new DriveAndMoveLift(103.0, Level.SWITCH), 2);
-		addSequential(new TurnLeftOneSide(30.0, 0.0));
-		addSequential(new OpenClamp());
+		if (Robot.fieldConfig.isSwitchRight()) {
+			addSequential(new TurnRightOneSide(29.0));
+			addSequential(new DriveAndMoveLift(113.0, Level.SWITCH), 2);
+			addSequential(new TurnLeftOneSide(30.0, 0.0), 1);
+			addSequential(new OpenClamp());
+		} else {
+			addSequential(new TurnLeftOneSide(30.0));
+			addSequential(new DriveAndMoveLift(111.0, Level.SWITCH), 2);
+			addSequential(new TurnRightOneSide(30.0, 0.0), 1);
+			addSequential(new OpenClamp());
+		}
 		
 		
 		/*
@@ -48,10 +56,6 @@ public class AutoSwitchFront extends CommandGroup {
 			addSequential(new DriveStraight(27), 1);
 		}
 		addSequential(new OpenClamp());
-
-		// this was for testing turn tuning, opening the clamp so we could see the turn
-		// was finished
-		// addSequential(new TurnRight(90, 1.0));
-		// addSequential(new OpenClamp());*/
+		*/
 	}
 }

@@ -43,7 +43,7 @@ public class IntakeWithJoystick extends Command {
 				rightMotorOutput = forwardSpeed - rotationSpeed;
 			}
 		}
-		Robot.intake.intakeSpeed((0.5) * leftMotorOutput, rightMotorOutput);
+		Robot.intake.intakeSpeed(leftMotorOutput, rightMotorOutput);
 
 	}
 

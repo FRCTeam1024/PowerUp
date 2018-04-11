@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team1024.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -18,9 +21,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1024.robot.commandgroups.DriveAndTurn;
 import org.usfirst.frc.team1024.robot.commands.CrossTest;
 import org.usfirst.frc.team1024.robot.commands.DoNothing;
+import org.usfirst.frc.team1024.robot.commands.DoubleScaleCurve;
+import org.usfirst.frc.team1024.robot.commands.DoubleSwitch;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
+import org.usfirst.frc.team1024.robot.commands.LeftScaleScale;
+import org.usfirst.frc.team1024.robot.commands.LeftScaleSwitch;
 import org.usfirst.frc.team1024.robot.commands.PlainfieldMatch51SpecialCondition;
+import org.usfirst.frc.team1024.robot.commands.RightScaleScale;
+import org.usfirst.frc.team1024.robot.commands.RightScaleSwitch;
+import org.usfirst.frc.team1024.robot.commands.RightSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.ScaleEither;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
@@ -51,62 +61,37 @@ public class Robot extends TimedRobot {
 	public static Intake intake = new Intake();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel();
 	public static OI oi;
-	public boolean isDone = false;
 	
 	Command m_autonomousCommand;
 	SendableChooser<String> autoChooser = new SendableChooser<String>();
+	public static SendableChooser<String> robotPosition = new SendableChooser<String>();
+	public static SendableChooser<String> opponentScale = new SendableChooser<String>();
+	public static SendableChooser<String> reliableMiddleSwitch = new SendableChooser<String>();
+	public static SendableChooser<String> dropCube = new SendableChooser<String>();
+	public static SendableChooser<String> stayOnOurSide = new SendableChooser<String>();
 	
 	@Override
 	public void robotInit() {
 		oi = new OI();
 		
+		try {
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+			camera.setResolution(160, 120);
+			camera.setExposureManual(50);
+			camera.setBrightness(50);
+			camera.setWhiteBalanceManual(255);
+			
+			camera.setFPS(30);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		drivetrain.resetOpticalEncoder();
 		lift.resetEncoder();
 		
-		
-		/*
-		autoChooser.addDefault("Default Do Nothing", "DoNothing");
-		//autoChooser.addObject("Drive And Turn", new DriveAndTurn());
-		autoChooser.addObject("Right Position Auto", "DriveToRightSwitch");
-		
-		autoChooser.addObject("Left Position Auto", "LeftPositionAuto");
-		autoChooser.addObject("Fast Cross To Left Scale", "FastCrossToScale");
-		autoChooser.addObject("DriveToRightScaleEnd", "DriveToRightScaleEnd");
-		//autoChooser.addObject("drive straight 20", new DriveStraight(100));
-		//autoChooser.addObject("drive backward 20", new DriveStraight(-100));
-		//autoChooser.addObject("Go To Level", new MoveLiftPID(Level.SWITCH));
-		//autoChooser.addObject("Turn 90", new TurnLeft(90));
-		autoChooser.addObject("Straight Forward Switch", "StraightForwardSwitch");
-		autoChooser.addObject("DriveStraight", "DriveStraight100");
-		//autoChooser.addObject("Go To Intake Level", new MoveLiftPID(Level.INTAKE));
-		//autoChooser.addObject("Go To Switch Level", new MoveLiftPID(Level.SWITCH));
-		//autoChooser.addObject("Go To Scale Ownership Level", new MoveLiftPID(Level.SCALE_OWNERSHIP));
-		//autoChooser.addObject("Go To Scale Neutral Level", new MoveLiftPID(Level.SCALE_NEUTRAL));
-		//autoChooser.addObject("Go To Scale Loss Level", new MoveLiftPID(Level.SCALE_LOSS));
-		autoChooser.addObject("AutoSwitchFront", "AutoSwitchFront");
-		autoChooser.addObject("Cross To Left Scale", "Cross To Left Scale");
-		autoChooser.addObject("Cross To Right Scale", "Cross To Right Scale");
-		autoChooser.addObject("Turn Left", "Turn Left");
-		autoChooser.addObject("Turn Right", "Turn Right");
-		autoChooser.addObject("STurn", "STurn");
-		autoChooser.addObject("right side right scale", "rightsiderightscaleScale");
-		autoChooser.addObject("left side left scale", "leftsideleftscaleScale");
-		SmartDashboard.putData("Auto mode", autoChooser);
-
-		autoChooser.addObject("DriveToRightSwitch", "DriveToRightSwitch");
-		autoChooser.addObject("DriveToLeftSwitch", "DriveToLeftSwitch");
-		SmartDashboard.putNumber("Pos P", Constants.POS_KP);
-		SmartDashboard.putNumber("Pos I", Constants.POS_KI);
-		SmartDashboard.putNumber("Pos D", Constants.POS_KD);
-		*/
-		//middle switch
-		//Right switch
-		//Right scale
-		//Right switch (if on our side) or scale
-		//Right cross to left scale
 		autoChooser.addDefault("Cross", "RightCrossLeft");
 		autoChooser.addObject("Middle Switch", "MiddleSwitch");
-		autoChooser.addObject("Right Scale", "RightScale");
+		autoChooser.addObject("Right Scale Side", "RightScaleSide");
 		autoChooser.addObject("Right Switch", "RightSwitch");
 		autoChooser.addObject("R Switch First", "RSwitchPriority");
 		autoChooser.addObject("R Scale First", "RScalePriority");
@@ -114,13 +99,44 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("Left Switch", "LeftSwitch");
 		autoChooser.addObject("L Switch First", "LSwitchPriority");
 		autoChooser.addObject("L Scale First", "LScalePriority");
-		autoChooser.addObject("Test", "Test");
 		autoChooser.addObject("ScaleEither", "ScaleEither");
-		autoChooser.addObject("DoubleScaleZane", "DoubleScaleZane");
-		SmartDashboard.putData(autoChooser);
+		autoChooser.addObject("DoubleScale", "DoubleScale");
+		autoChooser.addObject("Double Scale Curve", "DoubleScaleCurve");
+		autoChooser.addObject("DoubleSwitch", "DoubleSwitch");
+		autoChooser.addObject("New Chooser", "NewChooser");
+		autoChooser.addObject("Test", "Test");
+		autoChooser.addObject("RightScaleSwitch", "RightScaleSwitch");
+		autoChooser.addObject("RightScaleScale", "RightScaleScale");
+		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
+		autoChooser.addObject("LeftScaleSwitch", "LeftScaleSwitch");
+		SmartDashboard.putData("Auto Options", autoChooser);
 		
-		// TODO un-comment when you want to test this
-		//CompetitionAutoChooser.getInstance().initSmartDashboard();
+		robotPosition.addObject("Robot Position", "Right");
+		robotPosition.addDefault("Right", "Right");
+		robotPosition.addObject("Left", "Left");
+		robotPosition.addObject("Middle", "Middle");
+		SmartDashboard.putData("RobotPosition", robotPosition);
+
+		opponentScale.addDefault("Yes", "Yes");
+		opponentScale.addObject("Scale Robot?", "Yes");
+		opponentScale.addObject("No", "No");
+		SmartDashboard.putData("Opponent Scale?", opponentScale);
+		
+		reliableMiddleSwitch.addDefault("No", "No");
+		reliableMiddleSwitch.addObject("Switch Robot?", "No");
+		reliableMiddleSwitch.addObject("Yes", "Yes");
+		SmartDashboard.putData("Switch Robot?", reliableMiddleSwitch);
+		
+		dropCube.addObject("No", "No");
+		dropCube.addObject("Drop Cube?", "No");
+		dropCube.addDefault("Yes", "Yes");
+		SmartDashboard.putData("Drop Cube?", dropCube);
+		
+		stayOnOurSide.addDefault("No", "No");
+		stayOnOurSide.addObject("Our Side Only?", "No");
+		stayOnOurSide.addObject("Yes", "Yes");
+		SmartDashboard.putData("Our Side Only?", stayOnOurSide);
+		
 	}
 	
 	@Override
@@ -155,7 +171,7 @@ public class Robot extends TimedRobot {
 			case "MiddleSwitch":
 				m_autonomousCommand = new MiddleSwitchMiddleSwitch();
 				break;
-			case "RightScale":
+			case "RightScaleSide":
 				m_autonomousCommand = new RightScaleRightScale();
 				break;
 			case "RightSwitch":
@@ -170,26 +186,38 @@ public class Robot extends TimedRobot {
 			case "ScaleEither":
 				m_autonomousCommand = new ScaleEither();
 				break;
-			case "RightCrossLeft":
-				m_autonomousCommand = new CrossToLeftScale();
-				break;
-			case "DoubleScaleZane":
+			case "DoubleScale":
 				m_autonomousCommand = new DoubleScaleZane();
+				break;
+			case "DoubleScaleCurve":
+				m_autonomousCommand = new DoubleScaleCurve();
+				break;
+			case "DoubleSwitch":
+				m_autonomousCommand = new RightSwitchSwitch();
+				break;
+			case "RightScaleSwitch":
+				m_autonomousCommand = new RightScaleSwitch();
+				break;
+			case "NewChooser":
+				m_autonomousCommand = new BinaryChooser().chooseAuto();
+				break;
+			case "RightScaleScale":
+				m_autonomousCommand = new RightScaleScale();
+				break;
+			case "LeftScaleScale":
+				m_autonomousCommand = new LeftScaleScale();
+				break;
+			case "LeftScaleSwitch":
+				m_autonomousCommand = new LeftScaleSwitch();
+				break;
+			case "Test":
+				m_autonomousCommand = new CrossToLeftScale();
 				break;
 		}
 		
-		
-		// TODO when you want to try auto-chooser
-		//m_autonomousCommand = CompetitionAutoChooser.getInstance().chooseCommand();
-		//m_autonomousCommand = new DriveStraight(60.0, 5.0);
-		//m_autonomousCommand = new TurnLeft(45.0, 3.0);
-		//m_autonomousCommand = new DriveAndShift(250, 1.0);
-		//m_autonomousCommand = new StJoeMatch53SpecialCondition();
 		Robot.drivetrain.resetOpticalEncoder();
 		Robot.drivetrain.resetGyro();
-		System.out.println("before start command");
 		
-		// TODO re-enable autonomous; was disabled to test chooser but didn't want to run it
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
