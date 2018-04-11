@@ -8,16 +8,26 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeAcquire extends Command {
-
-    public IntakeAcquire() {
+	double leftPower;
+	double rightPower;
+	
+	public IntakeAcquire() {
     	requires(Robot.intake);
+    	this.leftPower = 0.5;
+    	this.rightPower = 1.0;
+	}
+	
+    public IntakeAcquire(double leftPower, double rightPower) {
+    	requires(Robot.intake);
+    	this.leftPower = leftPower;
+    	this.rightPower = rightPower;
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-    	Robot.intake.intakeSpeed(1.0);
+    	Robot.intake.intakeSpeed(leftPower, rightPower);
     }
 
     protected boolean isFinished() {

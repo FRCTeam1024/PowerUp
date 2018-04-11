@@ -29,30 +29,26 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * Copied from latest DriveToRightScaleEnd, and then modified to work both sides
  * 
  * Delivers starting cube to scale, then goes and picks up cube at end of switch wall
- * THIS HAS NOT BEEN TESTED YET - remove this when it has
  */
 public class DeliverCubeToScale extends CommandGroup {
 
     public DeliverCubeToScale() {
     	addSequential(new ChangeDriveSpeed(1.0));
     	addSequential(new ChangeLiftSpeed(1.0));
-    	//addSequential(new DriveAndShiftAndLift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - Constants.ROBOT_LENGTH_IN, 5.0, Level.SCALE_NEUTRAL));
-    	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - (Constants.ROBOT_LENGTH_IN / 2) - 8.0 - 12.0 - 12.0, 5.0));
-
-    	addSequential(new ShiftLow());
+    	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - (Constants.ROBOT_LENGTH_IN / 2) - 20.0));
+    	addSequential(new ChangeDriveSpeed(0.5));
     	// turn towards scale
     	if(Robot.fieldConfig.isScaleRight()) {
-    		addSequential(new TurnLeft(90, 5.0),2);
+    		addSequential(new TurnLeft(90),2);
     		addSequential(new DriveAndMoveLift(-12.0, Level.SCALE_LOSS), 2);
     		
     	} else if(Robot.fieldConfig.isScaleLeft()) {
-    		addSequential(new TurnRight(90, 5.0),2);
+    		addSequential(new TurnRight(90),2);
     		addSequential(new DriveAndMoveLift(-12.0, Level.SCALE_LOSS));
-    		
     	}
-    	addSequential(new DriveStraight(23.0));
+    	addSequential(new DriveStraight(29.0));
     	// drop the cube on to the scale
-    	addSequential(new OpenClamp()); //THIS WILL BREAK THE INTAKE! Not sure anymore!
+    	addSequential(new OpenClamp());
     
     }
 }

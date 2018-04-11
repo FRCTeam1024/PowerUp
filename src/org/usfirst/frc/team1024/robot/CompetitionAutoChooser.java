@@ -9,6 +9,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
+import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightSwitch;
@@ -25,6 +26,7 @@ public class CompetitionAutoChooser {
 	private SendableChooser<RobotPosition> robotPositionChooser = new SendableChooser<RobotPosition>();
 	private SendableChooser<AutoObjective> goal1Chooser = new SendableChooser<AutoObjective>();
 	private SendableChooser<AutoObjective> goal2Chooser = new SendableChooser<AutoObjective>();
+	private SendableChooser<String> specialConditions = new SendableChooser<String>();
 	
 	private RobotPosition robotPosition;
 	private AutoObjective goal1, goal2;
@@ -69,6 +71,7 @@ public class CompetitionAutoChooser {
 //		}
 	}
 	
+	
 	private void log(String msg) {
 		System.out.println(msg);
 	}
@@ -92,6 +95,9 @@ public class CompetitionAutoChooser {
 			
 			goal2Chooser = makeGoalChooser("Goal 2");
 			SmartDashboard.putData("Goal 2", goal2Chooser);
+			
+			specialConditions.addDefault("Run Normal Chooser", "Run Normal Chooser");
+			specialConditions.addObject("Do Switch if on robot's side, or do either scale", "Do Switch if on robot's side, or do either scale");
 		} catch (Exception e) {
 			System.out.println("error in initSmartDashboard");
 			e.printStackTrace();
@@ -163,33 +169,39 @@ public class CompetitionAutoChooser {
 			log("One or more of the input choosers was null");
 		}
 		System.out.println("FieldConfig : " + fieldConfig);
-		
 		Command chosenCommand = null;
 		
 		switch (robotPosition) {
 		case RIGHT:
 			System.out.println("Right Case Ran");
-
 			if (fieldConfig.isScaleRight()) {
 				// give it a default just in case
 				chosenCommand = new RightScaleRightScale();
 				if (fieldConfig.isSwitchRight()) {
 					if (AutoObjective.SCALE_MY_SIDE.equals(goal1) || AutoObjective.SCALE_EITHER.equals(goal1)) {
 						if (AutoObjective.SCALE_MY_SIDE.equals(goal2) || AutoObjective.SCALE_EITHER.equals(goal2)) {
+							//because the robot is on the right, the scale is on the right, and the switch does not matter,
+							//we want want the robot to do two cubes in the scale
 							chosenCommand = new RightScaleRightScale();
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
+							//because the robot is on the right, the scale is on the right, and the switch is on the right,
+							//we want the robot to do the right scale, then do the right switch
 							chosenCommand = new RightScaleRightSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+							//because the robot is on the right, the scale is on the right, and the switch doesn't matter,
+							//we want the robot to just do one cube in the scale
 							chosenCommand = new RightScale();
 						}
 					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						// default
 						chosenCommand = new RightSwitch();
 						if(AutoObjective.SCALE_MY_SIDE.equals(goal2)|| AutoObjective.SCALE_EITHER.equals(goal2)) {
-							// even though the switch is goal one, if we have both these goals, we have to
-							// do scale first, because it's easier to deliver 2nd cube to switch
+							//because the robot is on the right, the scale is on the right, and the switch in on the right,
+							//we want the robot to do the right scale, then do the right switch
 							chosenCommand = new RightScaleRightSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+							//because the robot is on the right, the scale is on the right, and the switch is on the right.
+							//we want the robot to do two cubes in scale
 							chosenCommand = new RightSwitch();
 						}
 					}
@@ -202,6 +214,10 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
 							chosenCommand = new RightScale();
 						}
+					} else if (AutoObjective.SCALE_EITHER.equals(goal2) || AutoObjective.SCALE_MY_SIDE.equals(goal2)) {
+						//because the robot is on the right, the scale is on the right, and the switch is on the left
+						//we want the robot do the right scale
+						chosenCommand = new RightScaleRightScale();
 					} else if (AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new LeftSwitchCrossLeftSwitch();
@@ -285,7 +301,13 @@ public class CompetitionAutoChooser {
 			break;
 		case MIDDLE:
 			System.out.println("Middle Case Ran");
-			chosenCommand = new AutoSwitchFront();
+			if (AutoObjective.SWITCH_EITHER.equals(goal1)) {
+				if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
+					chosenCommand = new MiddleSwitchMiddleSwitch();
+				} else if (AutoObjective.NO_GOAL.equals(goal2)) {
+					chosenCommand = new AutoSwitchFront();
+				}
+			}
 			break;
 		default:
 			break;

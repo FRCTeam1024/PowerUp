@@ -33,7 +33,7 @@ public class DriveToRightScaleEnd extends CommandGroup {
     	requires(Robot.drivetrain);
     	addSequential(new ChangeDriveSpeed(1.0));
     	addSequential(new ChangeLiftSpeed(0.25));
-    	addSequential(new DriveAndShiftAndLift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - Constants.ROBOT_LENGTH_IN, 5.0, Level.SCALE_NEUTRAL));
+    	addSequential(new DriveAndShiftAndLift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - Constants.ROBOT_LENGTH_IN, Level.SCALE_NEUTRAL));
 
     	addSequential(new ShiftLow());
     	// turn towards scale

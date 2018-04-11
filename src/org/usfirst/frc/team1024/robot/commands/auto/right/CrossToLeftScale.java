@@ -3,8 +3,10 @@ package org.usfirst.frc.team1024.robot.commands.auto.right;
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
 import org.usfirst.frc.team1024.robot.commands.AutoDriveConstants;
+import org.usfirst.frc.team1024.robot.commands.Delay;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.TurnRightAndLift;
+import org.usfirst.frc.team1024.robot.commands.Drive.ChangeDriveSpeed;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.ShiftLow;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
@@ -22,13 +24,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossToLeftScale extends CommandGroup {
 
     public CrossToLeftScale() {
-    	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3 + 12));
-    	addSequential(new TurnLeft(90, 1.0), 2);
-    	/*addSequential(new DriveAndShift(15.5 * 12 + 16)); 
+    	addSequential(new ChangeDriveSpeed(1.0));
+    	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3.0));
+    	addSequential(new TurnLeft(90.0), 2);
+    	addSequential(new ChangeDriveSpeed(0.6)); //This could be faster probably
+    	addSequential(new DriveAndShift(195.0), 5); 
     	// turn right to face scale
-    	addSequential(new TurnRightAndLift(70, 1.0, Level.SCALE_LOSS), 5);
+    	addSequential(new TurnRightAndLift(90.0, Level.SCALE_LOSS), 5);
     	// drive forward to scale
-    	addSequential(new DriveStraight(33), 2);*/
-    	//addSequential(new OpenClamp());
+    	addSequential(new DriveStraight(45.0), 2);
+    	addSequential(new Delay(0.5));
+    	addSequential(new OpenClamp());
     }
 }

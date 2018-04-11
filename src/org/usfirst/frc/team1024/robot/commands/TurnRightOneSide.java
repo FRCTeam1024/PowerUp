@@ -1,25 +1,27 @@
-
-package org.usfirst.frc.team1024.robot.commands.Drive;
+package org.usfirst.frc.team1024.robot.commands;
 
 import org.usfirst.frc.team1024.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class TurnRelative extends Command {
+/**
+ *
+ */
+public class TurnRightOneSide extends Command {
 	double targetAngle;
-	double degreeTolerance;
+	double oppositeSidePower;
 	int onTargetCount = 0;
-    public TurnRelative(double targetAngle) {
+    public TurnRightOneSide(double targetAngle) {
     	requires(Robot.drivetrain);
     	this.targetAngle = targetAngle;
-    	degreeTolerance = 3.0;
+    	oppositeSidePower = 0.1;
     }
     
-    public TurnRelative(double targetAngle, double degreeTolerance) {
+    public TurnRightOneSide(double targetAngle, double oppositeSidePower) {
     	requires(Robot.drivetrain);
     	this.targetAngle = targetAngle;
-    	this.degreeTolerance = degreeTolerance;
+    	this.oppositeSidePower = oppositeSidePower;
     }
 
     protected void initialize() {
@@ -32,7 +34,7 @@ public class TurnRelative extends Command {
     }
 
     protected void execute() {
-    	Robot.drivetrain.pidTurn();
+    	Robot.drivetrain.pidTurnRightOneSide(oppositeSidePower);
     	SmartDashboard.putNumber("onTargetCount", onTargetCount);
     }
     

@@ -47,7 +47,7 @@ public class DriveAndShift extends Command {
     	if(targetDistance < 0) {
     		Robot.drivetrain.pidDriveBackwardStraight();
     	} else {
-    		Robot.drivetrain.pidDriveForwardStraight();
+    		Robot.drivetrain.pidDriveForwardStraightBias(0.0);
     	}
     }
 
@@ -59,6 +59,7 @@ public class DriveAndShift extends Command {
     	}
     	
     	if(onTargetCount == 30) {
+    		System.out.println("Done at " + Robot.drivetrain.getOpticalDistanceInches() + " inches");
     		return true;
     	} else {
     		return false;

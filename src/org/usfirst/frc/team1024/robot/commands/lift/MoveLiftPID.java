@@ -50,7 +50,7 @@ public class MoveLiftPID extends Command {
     }
 
     protected boolean isFinished() {
-    	if (Robot.lift.getLiftEncoderValue() < level.getHeight() - 2000 || Robot.lift.getLiftEncoderValue() > level.getHeight() + 2000) {
+    	if (Robot.lift.getLiftEncoderValue() < level.getHeight() - 100 || Robot.lift.getLiftEncoderValue() > level.getHeight() + 100) {
     		return false;
     	} else {
     		log("FINISHING MOVE LIFT PID");

@@ -23,9 +23,9 @@ public class DeliverFirstCubeToSwitch extends CommandGroup {
     public DeliverFirstCubeToSwitch(FieldConfig.POSITION switchSide) {
     	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_END_OF_SWITCH_INCHES));
     	if(POSITION.LEFT.equals(switchSide)) {
-    		addSequential(new TurnRightAndLift(90, 5.0, Level.SWITCH));
+    		addSequential(new TurnRightAndLift(90.0, Level.SWITCH));
     	} else if(POSITION.RIGHT.equals(switchSide)) {
-    		addSequential(new TurnLeftAndLift(90, 5.0, Level.SWITCH));
+    		addSequential(new TurnLeftAndLift(90.0, Level.SWITCH));
     	}
     	addSequential(new DriveStraight(25.0));
     	addSequential(new OpenClamp());

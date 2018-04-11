@@ -14,4 +14,11 @@ public class DriveAndIntake extends CommandGroup {
     	addParallel(new IntakeAcquire(), intakeTimeOut);
     	addSequential(new DriveStraight(distance));
     }
+    
+    public DriveAndIntake(double distance, double intakeTimeOut, double leftPower, double rightPower) {
+    	addParallel(new IntakeAcquire(leftPower, rightPower), intakeTimeOut);
+    	addSequential(new DriveStraight(distance));
+    }
+    
+    
 }

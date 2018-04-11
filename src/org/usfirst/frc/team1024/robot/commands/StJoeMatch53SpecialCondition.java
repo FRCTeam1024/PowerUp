@@ -24,7 +24,7 @@ public class StJoeMatch53SpecialCondition extends CommandGroup {
         if (Robot.fieldConfig.isSwitchRight()) {
         	//Run right switch auto
         	addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_END_OF_SWITCH_INCHES), 5);
-        	addSequential(new TurnLeftAndLift(90, 5.0, Level.SWITCH), 2);
+        	addSequential(new TurnLeftAndLift(90, Level.SWITCH), 2);
         	addSequential(new DriveStraight(25.0), 2);
         	addSequential(new OpenClamp());
         } else {

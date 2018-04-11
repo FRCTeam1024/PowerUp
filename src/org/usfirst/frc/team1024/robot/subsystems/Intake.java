@@ -39,6 +39,11 @@ public class Intake extends Subsystem {
 		leftIntake.set(ControlMode.PercentOutput, -Power);
 		rightIntake.set(ControlMode.PercentOutput, Power);
 	}
+    
+    public void intakeSpeed(double leftPower, double rightPower) {
+    	leftIntake.set(ControlMode.PercentOutput, -leftPower);
+    	rightIntake.set(ControlMode.PercentOutput, rightPower);
+    }
 	
     public void intakeStop() {
     	leftIntake.set(ControlMode.PercentOutput, 0.0);
@@ -70,7 +75,7 @@ public class Intake extends Subsystem {
     }
 
 	public boolean cubeDetecterState() {
-		if (leftBumpDetector.get() != true && rightBumpDetector.get() != true) {
+		if (leftBumpDetector.get() == true && rightBumpDetector.get() == true) {
 			return true;
 		} else {
 			return false;
