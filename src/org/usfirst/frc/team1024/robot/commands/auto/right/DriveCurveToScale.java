@@ -23,6 +23,9 @@ public class DriveCurveToScale extends Command {
 	int currentLeg = 1;
 	long startTime;
 	double distanceToTurn = 189;
+	double targetAngle = -22;
+	double distanceToScale = 78;
+	boolean isFinished = false;
 
     public DriveCurveToScale() {
         // Use requires() here to declare subsystem dependencies
@@ -59,12 +62,41 @@ public class DriveCurveToScale extends Command {
     		Robot.drivetrain.drive(currentDrivePower, currentDrivePower);
     	} else if(currentLeg == 2) {
     		// powered turn left
+    		if(currentInnerTurnPower > targetInnerTurnPower) {
+    			// go from 0.9 down to 0.25
+    			currentInnerTurnPower -= 0.05;
+    		}
+    		if (Math.abs(Robot.drivetrain.getHeading() - targetAngle) < 1.0) {
+    			//reached target, start driving straight to scale
+    			currentLeg = 3;
+    			Robot.drivetrain.resetOpticalEncoder();
+    	    	Robot.drivetrain.resetMagneticEncoder();
+    	    	DeliverFirstCubeScaleCurve.ACTIVATE_LIFT = true;
+    		} else {
+    			Robot.drivetrain.drive(currentDrivePower, currentDrivePower);
+    		}
+    	} else if(currentLeg == 3) {
+    		if(currentInnerTurnPower < targetDrivePower) {
+    			currentInnerTurnPower += 0.05;
+    		}
+    		
+    		if(Math.abs(Robot.drivetrain.getOpticalDistanceInches() - distanceToScale) < 3) {
+    			// close enough, coast to stop
+    			currentInnerTurnPower = 0.0;
+    			currentDrivePower = 0.0;
+    			isFinished = true;
+    		} else if(Math.abs(Robot.drivetrain.getOpticalDistanceInches() - distanceToScale) < 12) {
+    			// try to decelerate
+    			currentInnerTurnPower -= 0.05;
+    			currentDrivePower -= 0.05;
+    		}
+    		Robot.drivetrain.drive(currentInnerTurnPower, currentDrivePower);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isFinished;
     }
 
     // Called once after isFinished returns true
