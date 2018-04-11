@@ -39,7 +39,7 @@ public class LeftScaleSwitch extends CommandGroup {
 			addSequential(new MoveLiftToLevel(Level.SWITCH));
 			addSequential(new Delay(0.5));
 			addSequential(new DriveStraight(24.0), 1.5);
-			if ("Yes".equals(Robot.dropCube.getSelected())) {
+			if (Robot.dropCube == true) {
 				addSequential(new OpenClamp());
 			}
 		} else {

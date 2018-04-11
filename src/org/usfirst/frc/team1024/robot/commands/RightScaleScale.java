@@ -41,7 +41,7 @@ public class RightScaleScale extends CommandGroup {
 			addSequential(new Delay(0.2));
 			addSequential(new TurnLeft(153));
 			addSequential(new DriveAndMoveLift(63, Level.SCALE_LOSS));
-			if (Robot.dropCube.getSelected().equals("Yes")) {
+			if (Robot.dropCube == true) {
 				addSequential(new OpenClamp());
 			}
 		} else {

@@ -32,7 +32,7 @@ public class RightSwitchSwitch extends CommandGroup {
 			addSequential(new IntakeRetract());
 			addSequential(new MoveLiftToLevel(Level.SWITCH));
 			addSequential(new DriveStraight(12.0));
-			if ("Yes".equals(Robot.dropCube.getSelected())) {
+			if (Robot.dropCube == true) {
 				addSequential(new OpenClamp());
 			}
 		} else {

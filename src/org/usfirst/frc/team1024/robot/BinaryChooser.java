@@ -29,11 +29,11 @@ public class BinaryChooser {
 	public int buildCode() {
 		int autoCode = 0;
 
-		if ("Right".equals(Robot.robotPosition.getSelected())) {
+		if (Robot.robotPosition == true) {
 			autoCode += 8;
 		}
 
-		if ("Yes".equals(Robot.opponentScale.getSelected())) {
+		if (Robot.opponentScale == true) {
 			autoCode += 4;
 		}
 
@@ -50,7 +50,7 @@ public class BinaryChooser {
 
 	public Command chooseAuto() {
 		Command chosenCommand = null;
-		if (Robot.robotPosition.getSelected().equals("Middle")) {
+		if (Robot.areWeInTheMiddle == true) {
 			chosenCommand = new MiddleSwitchMiddleSwitch(); //ready to test
 		} else {
 			switch (buildCode()) {
@@ -71,7 +71,7 @@ public class BinaryChooser {
 				// Left Zane Scale / Scale
 				break;
 			case 5:
-				if (Robot.reliableMiddleSwitch.getSelected().equals("Yes")) {
+				if (Robot.reliableMiddleSwitch == true) {
 					// Left Zane Scale / Switch
 					chosenCommand = new LeftScaleSwitch();
 				} else {
@@ -96,10 +96,12 @@ public class BinaryChooser {
 				chosenCommand = new RightScaleSwitch();
 				break;
 			case 14:
-				if (Robot.reliableMiddleSwitch.getSelected().equals("Yes")) {
+				if (Robot.reliableMiddleSwitch == true) {
 					// Right Zane Scale / Switch
+					//chosenCommand = new 
 				} else {
 					// Right Switch / Scale
+					//chosenCommand = new 
 				}
 				break;
 

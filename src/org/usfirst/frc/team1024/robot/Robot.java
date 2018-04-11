@@ -64,15 +64,27 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<String> autoChooser = new SendableChooser<String>();
-	public static SendableChooser<String> robotPosition = new SendableChooser<String>();
+	/*public static SendableChooser<String> robotPosition = new SendableChooser<String>();
 	public static SendableChooser<String> opponentScale = new SendableChooser<String>();
 	public static SendableChooser<String> reliableMiddleSwitch = new SendableChooser<String>();
 	public static SendableChooser<String> dropCube = new SendableChooser<String>();
 	public static SendableChooser<String> stayOnOurSide = new SendableChooser<String>();
-	
+	*/
+	public static boolean robotPosition;
+	public static boolean areWeInTheMiddle;
+	public static boolean opponentScale;
+	public static boolean reliableMiddleSwitch;
+	public static boolean dropCube;
+	public static boolean stayOnOurSide;
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		SmartDashboard.putBoolean("robotPosition (Right=true)", true); //Right
+		SmartDashboard.putBoolean("Are we in the middle? (Right=true)", false);
+		SmartDashboard.putBoolean("Opponent scale? (Yes=true)", true);
+		SmartDashboard.putBoolean("Reliable middle switch robot? (Yes=true)", false);
+		SmartDashboard.putBoolean("Drop second cube? (Yes=true)", false);
+		SmartDashboard.putBoolean("Stay on our side? (yes=true)", false);
 		
 		try {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -110,7 +122,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
 		autoChooser.addObject("LeftScaleSwitch", "LeftScaleSwitch");
 		SmartDashboard.putData("Auto Options", autoChooser);
-		
+		/*
 		robotPosition.addObject("Robot Position", "Right");
 		robotPosition.addDefault("Right", "Right");
 		robotPosition.addObject("Left", "Left");
@@ -136,6 +148,7 @@ public class Robot extends TimedRobot {
 		stayOnOurSide.addObject("Our Side Only?", "No");
 		stayOnOurSide.addObject("Yes", "Yes");
 		SmartDashboard.putData("Our Side Only?", stayOnOurSide);
+		*/
 		
 	}
 	
@@ -163,6 +176,14 @@ public class Robot extends TimedRobot {
 		drivetrain.setBrake();
 		lift.disengageAirBag();
 		
+		robotPosition = SmartDashboard.getBoolean("robotPosition (Right=true)", true); //Right
+		areWeInTheMiddle = SmartDashboard.getBoolean("Are we in the middle? (Right=true)", false);
+		opponentScale = SmartDashboard.getBoolean("Opponent scale? (Yes=true)", true);
+		reliableMiddleSwitch = SmartDashboard.getBoolean("Reliable middle switch robot? (Yes=true)", false);
+		dropCube = SmartDashboard.getBoolean("Drop second cube? (Yes=true)", false);
+		stayOnOurSide = SmartDashboard.getBoolean("Stay on our side? (yes=true)", false);
+		
+		
 		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
 			default:
@@ -177,16 +198,16 @@ public class Robot extends TimedRobot {
 			case "RightSwitch":
 				m_autonomousCommand = new RightSwitch();
 				break;
-			case "SwitchPriority":
+			case "RSwitchPriority": //Old Scale Method
 				m_autonomousCommand = new StJoeMatch53SpecialCondition();
 				break;
-			case "ScalePriority":
+			case "RScalePriority": //Old Scale Method
 				m_autonomousCommand = new PlainfieldMatch51SpecialCondition();
 				break;
-			case "ScaleEither":
+			case "ScaleEither": //Old Scale Method
 				m_autonomousCommand = new ScaleEither();
 				break;
-			case "DoubleScale":
+			case "DoubleScale": //New Scale Method
 				m_autonomousCommand = new DoubleScaleZane();
 				break;
 			case "DoubleScaleCurve":
