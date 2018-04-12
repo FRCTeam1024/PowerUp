@@ -27,14 +27,14 @@ public class RightSwitchSwitch extends CommandGroup {
 			addSequential(new IntakeExtend());
 			addSequential(new DriveAndMoveLift(96.0, Level.INTAKE), 2);
 			addSequential(new TurnLeftOneSide(130));
-			addSequential(new DriveAndIntake(36.0, 3.0));
+			/*addSequential(new DriveAndIntake(36.0, 3.0));
 			addSequential(new CloseClamp());
 			addSequential(new IntakeRetract());
 			addSequential(new MoveLiftToLevel(Level.SWITCH));
 			addSequential(new DriveStraight(12.0));
 			if (Robot.dropCube == true) {
 				addSequential(new OpenClamp());
-			}
+			}*/
 		} else {
 			addSequential(new CrossTest());
 		}

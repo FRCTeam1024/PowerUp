@@ -79,12 +79,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		SmartDashboard.putBoolean("robotPosition (Right=true)", true); //Right
-		SmartDashboard.putBoolean("Are we in the middle? (Right=true)", false);
-		SmartDashboard.putBoolean("Opponent scale? (Yes=true)", true);
-		SmartDashboard.putBoolean("Reliable middle switch robot? (Yes=true)", false);
-		SmartDashboard.putBoolean("Drop second cube? (Yes=true)", false);
-		SmartDashboard.putBoolean("Stay on our side? (yes=true)", false);
+		
+		SmartDashboard.putBoolean("Robot on Right (check box), on Left (no check)", true); //Right
+		SmartDashboard.putBoolean("1024 is Middle Robot (yes = check box)", false);
+		SmartDashboard.putBoolean("Does oppossing alliance scale in auto? (yes = check box)", true);
+		SmartDashboard.putBoolean("We have a reliable middle switch robot? (Yes = check box)", true);
+		SmartDashboard.putBoolean("Drop second cube? (Yes = check box)", false);
+		SmartDashboard.putBoolean("Stay on our side of field? (yes = check box)", false);
 		
 		try {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -101,7 +102,8 @@ public class Robot extends TimedRobot {
 		drivetrain.resetOpticalEncoder();
 		lift.resetEncoder();
 		
-		autoChooser.addDefault("Cross", "RightCrossLeft");
+		autoChooser.addDefault("Use Decision Matrix", "DecisionMatrix");
+		autoChooser.addObject("Cross", "RightCrossLeft");
 		autoChooser.addObject("Middle Switch", "MiddleSwitch");
 		autoChooser.addObject("Right Scale Side", "RightScaleSide");
 		autoChooser.addObject("Right Switch", "RightSwitch");
@@ -115,7 +117,6 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("DoubleScale", "DoubleScale");
 		autoChooser.addObject("Double Scale Curve", "DoubleScaleCurve");
 		autoChooser.addObject("DoubleSwitch", "DoubleSwitch");
-		autoChooser.addObject("New Chooser", "NewChooser");
 		autoChooser.addObject("Test", "Test");
 		autoChooser.addObject("RightScaleSwitch", "RightScaleSwitch");
 		autoChooser.addObject("RightScaleScale", "RightScaleScale");
@@ -176,12 +177,12 @@ public class Robot extends TimedRobot {
 		drivetrain.setBrake();
 		lift.disengageAirBag();
 		
-		robotPosition = SmartDashboard.getBoolean("robotPosition (Right=true)", true); //Right
-		areWeInTheMiddle = SmartDashboard.getBoolean("Are we in the middle? (Right=true)", false);
-		opponentScale = SmartDashboard.getBoolean("Opponent scale? (Yes=true)", true);
-		reliableMiddleSwitch = SmartDashboard.getBoolean("Reliable middle switch robot? (Yes=true)", false);
-		dropCube = SmartDashboard.getBoolean("Drop second cube? (Yes=true)", false);
-		stayOnOurSide = SmartDashboard.getBoolean("Stay on our side? (yes=true)", false);
+		robotPosition = SmartDashboard.getBoolean("Robot on Right (check box), on Left (no check)", true); //Right
+		areWeInTheMiddle = SmartDashboard.getBoolean("1024 is Middle Robot (yes = check box)", false);
+		opponentScale = SmartDashboard.getBoolean("Does oppossing alliance scale in auto? (yes = check box)", true);
+		reliableMiddleSwitch = SmartDashboard.getBoolean("We have a reliable middle switch robot? (Yes = check box)", false);
+		dropCube = SmartDashboard.getBoolean("Drop second cube? (Yes = check box)", false);
+		stayOnOurSide = SmartDashboard.getBoolean("Stay on our side of field? (yes = check box)", false);
 		
 		
 		System.out.println("before with selected " + autoSelected);
@@ -204,22 +205,13 @@ public class Robot extends TimedRobot {
 			case "RScalePriority": //Old Scale Method
 				m_autonomousCommand = new PlainfieldMatch51SpecialCondition();
 				break;
-			case "ScaleEither": //Old Scale Method
-				m_autonomousCommand = new ScaleEither();
-				break;
-			case "DoubleScale": //New Scale Method
-				m_autonomousCommand = new DoubleScaleZane();
-				break;
-			case "DoubleScaleCurve":
-				m_autonomousCommand = new DoubleScaleCurve();
-				break;
 			case "DoubleSwitch":
 				m_autonomousCommand = new RightSwitchSwitch();
 				break;
 			case "RightScaleSwitch":
 				m_autonomousCommand = new RightScaleSwitch();
 				break;
-			case "NewChooser":
+			case "DecisionMatrix":
 				m_autonomousCommand = new BinaryChooser().chooseAuto();
 				break;
 			case "RightScaleScale":

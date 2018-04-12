@@ -43,9 +43,6 @@ public class MiddleSwitchMiddleSwitch extends CommandGroup {
 			addSequential(new TurnRight(45.0), 5);
 			addSequential(new DriveAndMoveLift(84.0, Level.SWITCH), 2);
 			addSequential(new TurnLeftOneSide(45.0), 1);
-			//if ("Yes".equals(Robot.dropCube.getSelected())) {
-				addSequential(new OpenClamp());
-			//}
 		} else {
 			addSequential(new TurnLeft(45.0), 5);
 			addSequential(new IntakeExtend());
@@ -59,9 +56,9 @@ public class MiddleSwitchMiddleSwitch extends CommandGroup {
 			addSequential(new TurnLeft(45.0), 5);
 			addSequential(new DriveAndMoveLift(84.0, Level.SWITCH), 2);
 			addSequential(new TurnRightOneSide(45.0), 1);
-			if (Robot.dropCube == true) {
-				addSequential(new OpenClamp());
-			}
+		}
+		if (Robot.dropCube == true) {
+			addSequential(new OpenClamp());
 		}
 	}
 }

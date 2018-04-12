@@ -26,17 +26,12 @@ public class RightScaleSwitch extends CommandGroup {
 		if (Robot.fieldConfig.isScaleRight()) {
 			addSequential(new DeliverZaneFirstCubeToScale());
 			addSequential(new AcquireSecondCubeFromScale());
-			addSequential(new MoveLiftToLevel(Level.SWITCH));
-			addSequential(new Delay(0.5));
-			addSequential(new DriveStraight(24.0), 1.5);
-			if (Robot.dropCube == true) {
-				addSequential(new OpenClamp());
-			}
+			addSequential(new DeliverZaneSecondCubeToSwitch());
 		} else {
 			addSequential(new ChangeDriveSpeed(1.0));
 			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3.0));
 			addSequential(new TurnLeft(90.0), 2);
-			//if (Robot.stayOnOurSide.getSelected().equals("Yes")) {
+			if (Robot.stayOnOurSide == false) {
 				addSequential(new ChangeDriveSpeed(0.6)); // This could be faster probably
 				addSequential(new DriveAndShift(195.0), 5);
 				// turn right to face scale
@@ -44,7 +39,7 @@ public class RightScaleSwitch extends CommandGroup {
 				// drive forward to scale
 				addSequential(new DriveStraight(45.0), 2);
 				addSequential(new OpenClamp());
-			//}
+			}
 		}
 
 	}
