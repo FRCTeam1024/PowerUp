@@ -29,7 +29,7 @@ public class RightScaleSwitch extends CommandGroup {
 			addSequential(new DeliverZaneSecondCubeToSwitch());
 		} else {
 			addSequential(new ChangeDriveSpeed(1.0));
-			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3.0));
+			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 6.0));
 			addSequential(new TurnLeft(90.0), 2);
 			if (Robot.stayOnOurSide == false) {
 				addSequential(new ChangeDriveSpeed(0.6)); // This could be faster probably
@@ -41,6 +41,5 @@ public class RightScaleSwitch extends CommandGroup {
 				addSequential(new OpenClamp());
 			}
 		}
-
 	}
 }

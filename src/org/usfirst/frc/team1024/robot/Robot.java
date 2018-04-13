@@ -47,7 +47,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwi
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DoubleScaleZane;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
-import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
@@ -102,22 +102,22 @@ public class Robot extends TimedRobot {
 		drivetrain.resetOpticalEncoder();
 		lift.resetEncoder();
 		
-		autoChooser.addDefault("Use Decision Matrix", "DecisionMatrix");
+//		autoChooser.addDefault("Use Decision Matrix", "DecisionMatrix");
 		autoChooser.addObject("Cross", "RightCrossLeft");
-		autoChooser.addObject("Middle Switch", "MiddleSwitch");
+		autoChooser.addDefault("Middle Switch", "MiddleSwitch");
 		autoChooser.addObject("Right Scale Side", "RightScaleSide");
 		autoChooser.addObject("Right Switch", "RightSwitch");
 		autoChooser.addObject("R Switch First", "RSwitchPriority");
 		autoChooser.addObject("R Scale First", "RScalePriority");
-		autoChooser.addObject("Left Scale", "LeftScale");
-		autoChooser.addObject("Left Switch", "LeftSwitch");
-		autoChooser.addObject("L Switch First", "LSwitchPriority");
-		autoChooser.addObject("L Scale First", "LScalePriority");
+//		autoChooser.addObject("Left Scale", "LeftScale");
+//		autoChooser.addObject("Left Switch", "LeftSwitch");
+//		autoChooser.addObject("L Switch First", "LSwitchPriority");
+//		autoChooser.addObject("L Scale First", "LScalePriority");
 		autoChooser.addObject("ScaleEither", "ScaleEither");
 		autoChooser.addObject("DoubleScale", "DoubleScale");
-		autoChooser.addObject("Double Scale Curve", "DoubleScaleCurve");
+//		autoChooser.addObject("Double Scale Curve", "DoubleScaleCurve");
 		autoChooser.addObject("DoubleSwitch", "DoubleSwitch");
-		autoChooser.addObject("Test", "Test");
+		autoChooser.addObject("CrossToLeftScale", "CrossToLeftScale");
 		autoChooser.addObject("RightScaleSwitch", "RightScaleSwitch");
 		autoChooser.addObject("RightScaleScale", "RightScaleScale");
 		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
@@ -194,7 +194,7 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new MiddleSwitchMiddleSwitch();
 				break;
 			case "RightScaleSide":
-				m_autonomousCommand = new RightScaleRightScale();
+				m_autonomousCommand = new RightScaleEnd(); //doesn't look at field config, just does right scale 2 cube
 				break;
 			case "RightSwitch":
 				m_autonomousCommand = new RightSwitch();
@@ -215,7 +215,7 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new BinaryChooser().chooseAuto();
 				break;
 			case "RightScaleScale":
-				m_autonomousCommand = new RightScaleScale();
+				m_autonomousCommand = new RightScaleScale(); // takes scale side field config into choice
 				break;
 			case "LeftScaleScale":
 				m_autonomousCommand = new LeftScaleScale();
@@ -223,7 +223,7 @@ public class Robot extends TimedRobot {
 			case "LeftScaleSwitch":
 				m_autonomousCommand = new LeftScaleSwitch();
 				break;
-			case "Test":
+			case "CrossToLeftScale":
 				m_autonomousCommand = new CrossToLeftScale();
 				break;
 		}
