@@ -10,6 +10,7 @@ import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.auto.right.AcquireSecondCubeFromScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DeliverZaneFirstCubeToScale;
+import org.usfirst.frc.team1024.robot.commands.bidirectional.DeliverSecondCubeToScale;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeExtend;
 import org.usfirst.frc.team1024.robot.commands.intake.IntakeRetract;
 import org.usfirst.frc.team1024.robot.commands.lift.CloseClamp;
@@ -26,10 +27,16 @@ public class RightScaleSwitch extends CommandGroup {
 		if (Robot.fieldConfig.isScaleRight()) {
 			addSequential(new DeliverZaneFirstCubeToScale());
 			addSequential(new AcquireSecondCubeFromScale());
-			addSequential(new DeliverZaneSecondCubeToSwitch());
+			if (Robot.fieldConfig.isSwitchRight()) {
+				addSequential(new DeliverZaneSecondCubeToSwitch());
+			} else {
+				Robot.dropCube = false;
+				addSequential(new DeliverZaneSecondCubeToScale());
+			}
+			
 		} else {
 			addSequential(new ChangeDriveSpeed(1.0));
-			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 6.0));
+			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 9.0));
 			addSequential(new TurnLeft(90.0), 2);
 			if (Robot.stayOnOurSide == false) {
 				addSequential(new ChangeDriveSpeed(0.6)); // This could be faster probably

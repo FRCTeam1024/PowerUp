@@ -33,6 +33,7 @@ import org.usfirst.frc.team1024.robot.commands.RightScaleSwitch;
 import org.usfirst.frc.team1024.robot.commands.RightSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.ScaleEither;
+import org.usfirst.frc.team1024.robot.commands.SemiFinalsSpecial;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch53SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
@@ -122,6 +123,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("RightScaleScale", "RightScaleScale");
 		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
 		autoChooser.addObject("LeftScaleSwitch", "LeftScaleSwitch");
+		autoChooser.addObject("Special", "Special");
 		SmartDashboard.putData("Auto Options", autoChooser);
 		/*
 		robotPosition.addObject("Robot Position", "Right");
@@ -225,6 +227,9 @@ public class Robot extends TimedRobot {
 				break;
 			case "CrossToLeftScale":
 				m_autonomousCommand = new CrossToLeftScale();
+				break;
+			case "Speacial":
+				m_autonomousCommand = new SemiFinalsSpecial();
 				break;
 		}
 		

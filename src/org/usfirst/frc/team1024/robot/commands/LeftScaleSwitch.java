@@ -28,10 +28,14 @@ public class LeftScaleSwitch extends CommandGroup {
 		if (Robot.fieldConfig.isScaleLeft()) {
 			addSequential(new DeliverZaneFirstCubeToScale());
 			addSequential(new AcquireSecondCubeFromScale());
-			addSequential(new DeliverZaneSecondCubeToSwitch());
+			if (Robot.fieldConfig.isSwitchLeft()) {
+				addSequential(new DeliverZaneSecondCubeToSwitch());
+			} else {
+				addSequential(new DeliverZaneSecondCubeToScale());
+			}
 		} else {
 			addSequential(new ChangeDriveSpeed(1.0));
-			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 3.0));
+			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 9.0));
 			addSequential(new TurnRight(90.0), 2);
 			if (Robot.stayOnOurSide == false) {
 				addSequential(new ChangeDriveSpeed(0.6)); // This could be faster probably
