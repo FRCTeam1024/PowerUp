@@ -1,11 +1,13 @@
 package org.usfirst.frc.team1024.robot;
 
+import org.usfirst.frc.team1024.robot.commands.CrossTest;
 import org.usfirst.frc.team1024.robot.commands.LeftScaleScale;
 import org.usfirst.frc.team1024.robot.commands.LeftScaleSwitch;
 import org.usfirst.frc.team1024.robot.commands.LeftSwitchScale;
 import org.usfirst.frc.team1024.robot.commands.LeftSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.RightScaleScale;
 import org.usfirst.frc.team1024.robot.commands.RightScaleSwitch;
+import org.usfirst.frc.team1024.robot.commands.RightSwitchScale;
 import org.usfirst.frc.team1024.robot.commands.RightSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwitch;
 
@@ -29,11 +31,11 @@ public class BinaryChooser {
 	public int buildCode() {
 		int autoCode = 0;
 
-		if ("Right".equals(Robot.robotPosition.getSelected())) {
+		if (Robot.robotPosition == true) {
 			autoCode += 8;
 		}
 
-		if ("Yes".equals(Robot.opponentScale.getSelected())) {
+		if (Robot.opponentScale == true) {
 			autoCode += 4;
 		}
 
@@ -49,8 +51,8 @@ public class BinaryChooser {
 	}
 
 	public Command chooseAuto() {
-		Command chosenCommand = null;
-		if (Robot.robotPosition.getSelected().equals("Middle")) {
+		Command chosenCommand = new CrossTest();
+		if (Robot.areWeInTheMiddle == true) {
 			chosenCommand = new MiddleSwitchMiddleSwitch(); //ready to test
 		} else {
 			switch (buildCode()) {
@@ -71,11 +73,11 @@ public class BinaryChooser {
 				// Left Zane Scale / Scale
 				break;
 			case 5:
-				if (Robot.reliableMiddleSwitch.getSelected().equals("Yes")) {
+				if (Robot.reliableMiddleSwitch == true) {
 					// Left Zane Scale / Switch
 					chosenCommand = new LeftScaleSwitch();
 				} else {
-					chosenCommand = new LeftSwitchScale();
+					chosenCommand = new LeftSwitchScale(); //this should never actually get called
 					// Left Switch / Scale
 				}
 				break;
@@ -96,17 +98,17 @@ public class BinaryChooser {
 				chosenCommand = new RightScaleSwitch();
 				break;
 			case 14:
-				if (Robot.reliableMiddleSwitch.getSelected().equals("Yes")) {
+				if (Robot.reliableMiddleSwitch == true) {
 					// Right Zane Scale / Switch
+					chosenCommand = new RightScaleSwitch();
 				} else {
 					// Right Switch / Scale
+					chosenCommand = new RightSwitchScale(); //this should never actually get called
 				}
 				break;
-
 			}
 		}
 		SmartDashboard.putString("Auto: ", chosenCommand.getName());
 		return chosenCommand;
-
 	}
 }
