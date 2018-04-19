@@ -22,9 +22,9 @@ public class DriveCurveToScale extends Command {
 	double targetInnerTurnPower = 0.25;
 	int currentLeg = 1;
 	long startTime;
-	double distanceToTurn = 189;
+	double distanceToTurn = 159; // originally 189; reducing some because driving thru turn now
 	double targetAngle = -22;
-	double distanceToScale = 78;
+	double distanceToScale = 48; // was originally 78 but need to shorten it because it'll be driving forward on the turn
 	boolean isFinished = false;
 
     public DriveCurveToScale() {
@@ -40,6 +40,7 @@ public class DriveCurveToScale extends Command {
     	Robot.drivetrain.resetOpticalEncoder();
     	Robot.drivetrain.resetMagneticEncoder();
     	double currentAngle = Robot.drivetrain.getHeading();
+    	currentLeg = 1;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -59,7 +60,7 @@ public class DriveCurveToScale extends Command {
     			// so if this is called roughly every 20 ms, or 50x a sec, then split the acceleration over 25 calls
     			currentDrivePower += (0.9 / 25.0);
     		}
-    		Robot.drivetrain.drive(currentDrivePower, currentDrivePower);
+    		Robot.drivetrain.drive(-currentDrivePower, -currentDrivePower);
     	} else if(currentLeg == 2) {
     		// powered turn left
     		if(currentInnerTurnPower > targetInnerTurnPower) {
@@ -73,7 +74,7 @@ public class DriveCurveToScale extends Command {
     	    	Robot.drivetrain.resetMagneticEncoder();
     	    	DeliverFirstCubeScaleCurve.ACTIVATE_LIFT = true;
     		} else {
-    			Robot.drivetrain.drive(currentDrivePower, currentDrivePower);
+    			Robot.drivetrain.drive(-currentDrivePower, -currentDrivePower);
     		}
     	} else if(currentLeg == 3) {
     		if(currentInnerTurnPower < targetDrivePower) {
@@ -90,7 +91,7 @@ public class DriveCurveToScale extends Command {
     			currentInnerTurnPower -= 0.05;
     			currentDrivePower -= 0.05;
     		}
-    		Robot.drivetrain.drive(currentInnerTurnPower, currentDrivePower);
+    		Robot.drivetrain.drive(-currentInnerTurnPower, -currentDrivePower);
     	}
     }
 

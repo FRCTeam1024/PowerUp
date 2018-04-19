@@ -33,7 +33,7 @@ import org.usfirst.frc.team1024.robot.commands.RightScaleSwitch;
 import org.usfirst.frc.team1024.robot.commands.RightSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.ScaleEither;
-import org.usfirst.frc.team1024.robot.commands.SemiFinalsSpecial;
+//import org.usfirst.frc.team1024.robot.commands.SemiFinalsSpecial;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch53SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
@@ -46,6 +46,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
+import org.usfirst.frc.team1024.robot.commands.auto.right.DeliverFirstCubeScaleCurve;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DoubleScaleZane;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleEnd;
@@ -228,8 +229,9 @@ public class Robot extends TimedRobot {
 			case "CrossToLeftScale":
 				m_autonomousCommand = new CrossToLeftScale();
 				break;
-			case "Speacial":
-				m_autonomousCommand = new SemiFinalsSpecial();
+			case "Special":
+//				m_autonomousCommand = new SemiFinalsSpecial();
+				m_autonomousCommand = new DeliverFirstCubeScaleCurve();
 				break;
 		}
 		
