@@ -12,6 +12,7 @@ import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -41,6 +42,7 @@ import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
@@ -123,7 +125,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("RightScaleScale", "RightScaleScale");
 		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
 		autoChooser.addObject("LeftScaleSwitch", "LeftScaleSwitch");
-		autoChooser.addObject("Special", "Special");
+		autoChooser.addObject("Test", "Test");
 		SmartDashboard.putData("Auto Options", autoChooser);
 		/*
 		robotPosition.addObject("Robot Position", "Right");
@@ -152,12 +154,14 @@ public class Robot extends TimedRobot {
 		stayOnOurSide.addObject("Yes", "Yes");
 		SmartDashboard.putData("Our Side Only?", stayOnOurSide);
 		*/
+		intake.cubeLight.set(Relay.Value.kForward);
 		
 	}
 	
 	@Override
 	public void disabledInit() {
 		drivetrain.setCoast();
+		intake.setCubeLight();
 		intake.posIn();
 		intake.slideIn();
 		lift.clamp(false);
@@ -166,7 +170,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-
+		intake.setCubeLight();
 		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
@@ -175,6 +179,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
+		//fieldConfig = new FieldConfig("RRR");
 		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
 		lift.disengageAirBag();
@@ -228,8 +233,8 @@ public class Robot extends TimedRobot {
 			case "CrossToLeftScale":
 				m_autonomousCommand = new CrossToLeftScale();
 				break;
-			case "Speacial":
-				m_autonomousCommand = new SemiFinalsSpecial();
+			case "Test":
+				m_autonomousCommand = new LeftScaleEnd();
 				break;
 		}
 		
@@ -244,7 +249,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
+		intake.setCubeLight();
 		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
@@ -254,18 +259,22 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		drivetrain.setBrake();
 		lift.disengageAirBag();
+		intake.setCubeLight();
 		// This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to continue until interrupted by another command, remove this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		intake.cubeLight.set(Relay.Value.kForward);
 	}
 	
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		intake.setCubeLight();
 		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
+		intake.cubeLight.set(Relay.Value.kForward);
 	}
 	
 	@Override

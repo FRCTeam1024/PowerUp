@@ -29,24 +29,24 @@ public class AcquireSecondCubeFromScale extends CommandGroup {
 			addSequential(new ChangeTurnSpeed(1.0));
 			addSequential(new ChangeTrimPID(0, 0, 0, 0.1));
 			addSequential(new ChangeDriveSpeed(0.60));
-			addSequential(new DriveAndLiftAndIntake(60.0, Level.INTAKE, 2.0), 2.0);
-			addSequential(new IntakeFlat());
-			addSequential(new IntakeAcquire(), 0.5);
+			addSequential(new DriveAndLiftAndIntake(60.0, Level.INTAKE, 3.0), 3.0);
+			//addSequential(new IntakeFlat());
+			//addSequential(new IntakeAcquire(), 0.5);
 			addSequential(new CloseClamp());
 			addSequential(new IntakeRetract());
-			addSequential(new Delay(0.2));
+			addSequential(new Delay(0.5));
 		} else {
 			addSequential(new ChangeTurnSpeed(0.6));
 			addSequential(new TurnRight(145.0));
 			addSequential(new ChangeTurnSpeed(1.0));
 			addSequential(new ChangeTrimPID(0, 0, 0, 0.1));
 			addSequential(new ChangeDriveSpeed(0.60));
-			addSequential(new DriveAndLiftAndIntake(60.0, Level.INTAKE, 2.0), 2.0);
-			addSequential(new IntakeFlat());
-			addSequential(new IntakeAcquire(), 0.5);
+			addSequential(new DriveAndLiftAndIntake(60.0, Level.INTAKE, 3.0), 3.0);
+			//addSequential(new IntakeFlat());
+			//addSequential(new IntakeAcquire(), 0.5);
 			addSequential(new CloseClamp());
 			addSequential(new IntakeRetract());
-			addSequential(new Delay(0.2));
+			addSequential(new Delay(0.5));
 		}
 	}
 }

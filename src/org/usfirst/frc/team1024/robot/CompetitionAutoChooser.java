@@ -4,7 +4,7 @@ import org.usfirst.frc.team1024.robot.commands.RightScale;
 import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.CrossToRightScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
-import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
@@ -269,7 +269,7 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal2) || AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							chosenCommand = new LeftScaleLeftSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							chosenCommand = new LeftScale();
+							chosenCommand = new LeftScaleEnd();
 						}
 					} else if (AutoObjective.SWITCH_MY_SIDE.equals(goal1) || AutoObjective.SWITCH_EITHER.equals(goal1)) {
 						//Add more options here later
@@ -282,7 +282,7 @@ public class CompetitionAutoChooser {
 						} else if (AutoObjective.SWITCH_EITHER.equals(goal2)) {
 							//chosenCommand = new LeftScaleRightSwitch();
 						} else if (AutoObjective.NO_GOAL.equals(goal2)) {
-							chosenCommand = new LeftScale();
+							chosenCommand = new LeftScaleEnd();
 						}
 					}
 				}

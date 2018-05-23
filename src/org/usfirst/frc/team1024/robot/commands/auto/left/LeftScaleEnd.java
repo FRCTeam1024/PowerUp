@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LeftScale extends CommandGroup {
+public class LeftScaleEnd extends CommandGroup {
 
-    public LeftScale() {
+    public LeftScaleEnd() {
         addSequential(new DeliverCubeToScale());
     }
 }

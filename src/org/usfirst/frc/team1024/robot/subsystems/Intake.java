@@ -8,6 +8,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,21 +20,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Intake extends Subsystem {
-    private TalonSRX leftIntake = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR_PORT);
-    private TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
+    public TalonSRX leftIntake = new TalonSRX(RobotMap.LEFT_INTAKE_MOTOR_PORT);
+    public TalonSRX rightIntake = new TalonSRX(RobotMap.RIGHT_INTAKE_MOTOR_PORT);
     
     private Solenoid leftIntakeSlide = new Solenoid(RobotMap.INTAKE_SLIDE_PORT);
     private Solenoid leftIntakePos = new Solenoid(RobotMap.INTAKE_POS_PORT);
     
-    private DigitalInput leftBumpDetector = new DigitalInput(RobotMap.LEFT_BUMP_CUBE_DETECTOR_PORT);
-    private DigitalInput rightBumpDetector = new DigitalInput(RobotMap.RIGHT_BUMP_CUBE_DETECTOR_PORT);
+    private DigitalInput cubeDetector = new DigitalInput(RobotMap.LEFT_BUMP_CUBE_DETECTOR_PORT);
+    //private DigitalInput rightBumpDetector = new DigitalInput(RobotMap.RIGHT_BUMP_CUBE_DETECTOR_PORT);
     
+    public Relay cubeLight = new Relay(0);
+    public DigitalOutput cube2 = new DigitalOutput(4);
     private boolean intakeInState = true;
     private boolean intakeWideState = true;
     
     public Intake () {
     }
     
+    public void setCubeLight() {
+    	if (cubeDetecterState() != true) {
+    		cube2.set(true);
+    	} else {
+    		cube2.set(false);
+    	}
+    }
     public void initDefaultCommand() {
     	setDefaultCommand(new IntakeWithJoystick());
     }
@@ -75,7 +88,7 @@ public class Intake extends Subsystem {
     }
 
 	public boolean cubeDetecterState() {
-		if (leftBumpDetector.get() == true && rightBumpDetector.get() == true) {
+		if (cubeDetector.get()) {
 			return true;
 		} else {
 			return false;
@@ -84,6 +97,8 @@ public class Intake extends Subsystem {
 	
 	public void outputToSmartDashboard() {
 		SmartDashboard.putBoolean("BreakBeam", cubeDetecterState());
+		SmartDashboard.putNumber("LeftIntake Current: ", leftIntake.getOutputCurrent());
+		SmartDashboard.putNumber("RightIntake Current: ", rightIntake.getOutputCurrent());
 	}
 	
 	public boolean intakeWideState() {

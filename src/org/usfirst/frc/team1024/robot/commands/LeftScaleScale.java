@@ -29,16 +29,21 @@ public class LeftScaleScale extends CommandGroup {
 			addSequential(new DeliverZaneSecondCubeToScale());
 		} else {
 			addSequential(new ChangeDriveSpeed(1.0));
-			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 6.0));
+			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 9.0));
 			addSequential(new TurnRight(90.0), 2);
 			if (Robot.stayOnOurSide == false) {
-				addSequential(new ChangeDriveSpeed(0.6)); // This could be faster probably
-				addSequential(new DriveAndShift(192.0), 5);
+				addSequential(new ChangeDriveSpeed(1.0)); // This could be faster probably
+				addSequential(new DriveAndShift(192.0 - 14.0), 5);
 				// turn right to face scale
 				addSequential(new TurnLeftAndLift(90.0, Level.SCALE_LOSS), 5);
 				// drive forward to scale
 				addSequential(new DriveStraight(47.0), 2);
 				addSequential(new OpenClamp());
+				addSequential(new ChangeTurnSpeed(0.6));
+				addSequential(new Delay(0.5));
+				addSequential(new DriveStraight(-24.0));
+				addSequential(new TurnRightAndLift(180.0, Level.INTAKE), 3);
+				addSequential(new DriveAndIntake(66.0, 3.0), 3);
 			}
 		}
 	}

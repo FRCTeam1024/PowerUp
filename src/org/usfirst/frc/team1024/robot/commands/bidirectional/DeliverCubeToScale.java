@@ -40,8 +40,8 @@ public class DeliverCubeToScale extends CommandGroup {
     	addSequential(new ChangeDriveSpeed(0.5));
     	// turn towards scale
     	if(Robot.fieldConfig.isScaleRight()) {
-    		addSequential(new TurnLeft(90),2);
-    		addSequential(new DriveAndMoveLift(-12.0, Level.SCALE_LOSS), 2);
+    		addSequential(new TurnLeft(90.0),2);
+    		addSequential(new DriveAndMoveLift(-17.0, Level.SCALE_LOSS), 2);
         	addSequential(new DriveStraight(29.0));
         	// drop the cube on to the scale
         	addSequential(new OpenClamp());

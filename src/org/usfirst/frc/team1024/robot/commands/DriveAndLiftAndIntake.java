@@ -12,6 +12,6 @@ public class DriveAndLiftAndIntake extends CommandGroup {
 
     public DriveAndLiftAndIntake(double distance, Level level, double intakeTimeOut) {
     	addParallel(new DriveAndMoveLift(distance, level));
-    	addSequential(new IntakeAcquireBurst(), intakeTimeOut);
+    	addSequential(new IntakeAcquire(), intakeTimeOut);
     }
 }
