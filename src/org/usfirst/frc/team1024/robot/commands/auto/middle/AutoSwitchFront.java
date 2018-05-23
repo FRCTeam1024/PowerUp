@@ -29,13 +29,13 @@ public class AutoSwitchFront extends CommandGroup {
 		//This is for testing the turn at the beginning
 		if (Robot.fieldConfig.isSwitchRight()) {
 			addSequential(new TurnRightOneSide(29.0));
-			addSequential(new DriveAndMoveLift(113.0, Level.SWITCH), 2);
-			addSequential(new TurnLeftOneSide(30.0, 0.0), 1);
+			addSequential(new DriveAndMoveLift(115.0, Level.SWITCH), 2.5);
+			addSequential(new TurnLeftOneSide(35.0, 0.0), 2);
 			addSequential(new OpenClamp());
 		} else {
 			addSequential(new TurnLeftOneSide(30.0));
-			addSequential(new DriveAndMoveLift(111.0, Level.SWITCH), 2);
-			addSequential(new TurnRightOneSide(30.0, 0.0), 1);
+			addSequential(new DriveAndMoveLift(113.0, Level.SWITCH), 2.5);
+			addSequential(new TurnRightOneSide(35.0, 0.0), 2);
 			addSequential(new OpenClamp());
 		}
 		

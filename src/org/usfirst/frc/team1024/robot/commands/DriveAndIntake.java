@@ -11,8 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveAndIntake extends CommandGroup {
 
     public DriveAndIntake(double distance, double intakeTimeOut) {
-    	addParallel(new IntakeAcquire(), intakeTimeOut);
-    	addSequential(new DriveStraight(distance));
+    	addParallel(new DriveStraight(distance));
+    	addSequential(new IntakeAcquire(), intakeTimeOut);
+    	
     }
     
     public DriveAndIntake(double distance, double intakeTimeOut, double leftPower, double rightPower) {

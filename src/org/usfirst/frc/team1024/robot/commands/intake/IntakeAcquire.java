@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IntakeAcquire extends Command {
 	double leftPower;
 	double rightPower;
+	int currentSpikeCount = 0;
+	int stoppedCount = 0;
 	
 	public IntakeAcquire() {
     	requires(Robot.intake);
-    	this.leftPower = 0.5;
+    	this.leftPower = 1.0;
     	this.rightPower = 1.0;
 	}
 	
@@ -27,7 +29,19 @@ public class IntakeAcquire extends Command {
     }
 
     protected void execute() {
-    	Robot.intake.intakeSpeed(leftPower, rightPower);
+    	if (Robot.intake.leftIntake.getOutputCurrent() > 7.0 || Robot.intake.rightIntake.getOutputCurrent() > 7.0) {
+			currentSpikeCount++;
+		} else {
+			currentSpikeCount = 0;
+		}
+		if (currentSpikeCount > 5 && stoppedCount < 10) {
+			Robot.intake.intakeSpeed(0.0, rightPower);
+			stoppedCount++;
+		} else {
+			Robot.intake.intakeSpeed(leftPower, rightPower);
+			stoppedCount = 0;
+		}
+    	
     }
 
     protected boolean isFinished() {

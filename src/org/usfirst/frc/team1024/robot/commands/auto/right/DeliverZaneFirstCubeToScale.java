@@ -24,7 +24,7 @@ public class DeliverZaneFirstCubeToScale extends CommandGroup {
     		addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES - 21.0));
     		addSequential(new TurnLeftAndLift(22.0, Level.SWITCH));
     		addSequential(new IntakeExtend());
-    		addSequential(new ChangeDriveSpeed(0.9));
+    		addSequential(new ChangeDriveSpeed(1.0));
     		addSequential(new DriveAndMoveLift(78.0, Level.SCALE_LOSS));
    			addSequential(new OpenClamp());
     	} else {
@@ -32,7 +32,7 @@ public class DeliverZaneFirstCubeToScale extends CommandGroup {
     		addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES - 21.0));
     		addSequential(new TurnRightAndLift(22.0, Level.SWITCH));
     		addSequential(new IntakeExtend());
-    		addSequential(new ChangeDriveSpeed(0.9));
+    		addSequential(new ChangeDriveSpeed(1.0));
     		addSequential(new DriveAndMoveLift(78.0, Level.SCALE_LOSS));
    			addSequential(new OpenClamp());
     	}

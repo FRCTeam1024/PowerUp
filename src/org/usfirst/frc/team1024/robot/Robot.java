@@ -12,6 +12,7 @@ import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -33,6 +34,7 @@ import org.usfirst.frc.team1024.robot.commands.RightScaleSwitch;
 import org.usfirst.frc.team1024.robot.commands.RightSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.STurn;
 import org.usfirst.frc.team1024.robot.commands.ScaleEither;
+import org.usfirst.frc.team1024.robot.commands.SemiFinalsSpecial;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch3SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StJoeMatch53SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.StraightForwardSwitch;
@@ -40,6 +42,7 @@ import org.usfirst.frc.team1024.robot.commands.Drive.DriveStraight;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnLeft;
 import org.usfirst.frc.team1024.robot.commands.Drive.TurnRight;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftCrossToRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftScaleLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.left.LeftSwitch;
 import org.usfirst.frc.team1024.robot.commands.auto.middle.AutoSwitchFront;
@@ -47,7 +50,7 @@ import org.usfirst.frc.team1024.robot.commands.auto.middle.MiddleSwitchMiddleSwi
 import org.usfirst.frc.team1024.robot.commands.auto.right.CrossToLeftScale;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DoubleScaleZane;
 import org.usfirst.frc.team1024.robot.commands.auto.right.DriveToRightScaleEnd;
-import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleRightScale;
+import org.usfirst.frc.team1024.robot.commands.auto.right.RightScaleEnd;
 import org.usfirst.frc.team1024.robot.commands.auto.right.RightSwitch;
 import org.usfirst.frc.team1024.robot.commands.lift.MoveLiftPID;
 import org.usfirst.frc.team1024.robot.subsystems.Drivetrain;
@@ -64,15 +67,28 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<String> autoChooser = new SendableChooser<String>();
-	public static SendableChooser<String> robotPosition = new SendableChooser<String>();
+	/*public static SendableChooser<String> robotPosition = new SendableChooser<String>();
 	public static SendableChooser<String> opponentScale = new SendableChooser<String>();
 	public static SendableChooser<String> reliableMiddleSwitch = new SendableChooser<String>();
 	public static SendableChooser<String> dropCube = new SendableChooser<String>();
 	public static SendableChooser<String> stayOnOurSide = new SendableChooser<String>();
-	
+	*/
+	public static boolean robotPosition;
+	public static boolean areWeInTheMiddle;
+	public static boolean opponentScale;
+	public static boolean reliableMiddleSwitch;
+	public static boolean dropCube;
+	public static boolean stayOnOurSide;
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		
+		SmartDashboard.putBoolean("Robot on Right (check box), on Left (no check)", true); //Right
+		SmartDashboard.putBoolean("1024 is Middle Robot (yes = check box)", false);
+		SmartDashboard.putBoolean("Does oppossing alliance scale in auto? (yes = check box)", true);
+		SmartDashboard.putBoolean("We have a reliable middle switch robot? (Yes = check box)", true);
+		SmartDashboard.putBoolean("Drop second cube? (Yes = check box)", false);
+		SmartDashboard.putBoolean("Stay on our side of field? (yes = check box)", false);
 		
 		try {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
@@ -89,28 +105,29 @@ public class Robot extends TimedRobot {
 		drivetrain.resetOpticalEncoder();
 		lift.resetEncoder();
 		
-		autoChooser.addDefault("Cross", "RightCrossLeft");
-		autoChooser.addObject("Middle Switch", "MiddleSwitch");
+//		autoChooser.addDefault("Use Decision Matrix", "DecisionMatrix");
+		autoChooser.addObject("Cross", "RightCrossLeft");
+		autoChooser.addDefault("Middle Switch", "MiddleSwitch");
 		autoChooser.addObject("Right Scale Side", "RightScaleSide");
 		autoChooser.addObject("Right Switch", "RightSwitch");
 		autoChooser.addObject("R Switch First", "RSwitchPriority");
 		autoChooser.addObject("R Scale First", "RScalePriority");
-		autoChooser.addObject("Left Scale", "LeftScale");
-		autoChooser.addObject("Left Switch", "LeftSwitch");
-		autoChooser.addObject("L Switch First", "LSwitchPriority");
-		autoChooser.addObject("L Scale First", "LScalePriority");
+//		autoChooser.addObject("Left Scale", "LeftScale");
+//		autoChooser.addObject("Left Switch", "LeftSwitch");
+//		autoChooser.addObject("L Switch First", "LSwitchPriority");
+//		autoChooser.addObject("L Scale First", "LScalePriority");
 		autoChooser.addObject("ScaleEither", "ScaleEither");
 		autoChooser.addObject("DoubleScale", "DoubleScale");
-		autoChooser.addObject("Double Scale Curve", "DoubleScaleCurve");
+//		autoChooser.addObject("Double Scale Curve", "DoubleScaleCurve");
 		autoChooser.addObject("DoubleSwitch", "DoubleSwitch");
-		autoChooser.addObject("New Chooser", "NewChooser");
-		autoChooser.addObject("Test", "Test");
+		autoChooser.addObject("CrossToLeftScale", "CrossToLeftScale");
 		autoChooser.addObject("RightScaleSwitch", "RightScaleSwitch");
 		autoChooser.addObject("RightScaleScale", "RightScaleScale");
 		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
 		autoChooser.addObject("LeftScaleSwitch", "LeftScaleSwitch");
+		autoChooser.addObject("Test", "Test");
 		SmartDashboard.putData("Auto Options", autoChooser);
-		
+		/*
 		robotPosition.addObject("Robot Position", "Right");
 		robotPosition.addDefault("Right", "Right");
 		robotPosition.addObject("Left", "Left");
@@ -136,12 +153,15 @@ public class Robot extends TimedRobot {
 		stayOnOurSide.addObject("Our Side Only?", "No");
 		stayOnOurSide.addObject("Yes", "Yes");
 		SmartDashboard.putData("Our Side Only?", stayOnOurSide);
+		*/
+		intake.cubeLight.set(Relay.Value.kForward);
 		
 	}
 	
 	@Override
 	public void disabledInit() {
 		drivetrain.setCoast();
+		intake.setCubeLight();
 		intake.posIn();
 		intake.slideIn();
 		lift.clamp(false);
@@ -150,7 +170,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-
+		intake.setCubeLight();
 		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
@@ -159,9 +179,18 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		fieldConfig = new FieldConfig(DriverStation.getInstance().getGameSpecificMessage());
+		//fieldConfig = new FieldConfig("RRR");
 		String autoSelected = (String) autoChooser.getSelected();
 		drivetrain.setBrake();
 		lift.disengageAirBag();
+		
+		robotPosition = SmartDashboard.getBoolean("Robot on Right (check box), on Left (no check)", true); //Right
+		areWeInTheMiddle = SmartDashboard.getBoolean("1024 is Middle Robot (yes = check box)", false);
+		opponentScale = SmartDashboard.getBoolean("Does oppossing alliance scale in auto? (yes = check box)", true);
+		reliableMiddleSwitch = SmartDashboard.getBoolean("We have a reliable middle switch robot? (Yes = check box)", false);
+		dropCube = SmartDashboard.getBoolean("Drop second cube? (Yes = check box)", false);
+		stayOnOurSide = SmartDashboard.getBoolean("Stay on our side of field? (yes = check box)", false);
+		
 		
 		System.out.println("before with selected " + autoSelected);
 		switch (autoSelected) {
@@ -172,25 +201,16 @@ public class Robot extends TimedRobot {
 				m_autonomousCommand = new MiddleSwitchMiddleSwitch();
 				break;
 			case "RightScaleSide":
-				m_autonomousCommand = new RightScaleRightScale();
+				m_autonomousCommand = new RightScaleEnd(); //doesn't look at field config, just does right scale 2 cube
 				break;
 			case "RightSwitch":
 				m_autonomousCommand = new RightSwitch();
 				break;
-			case "SwitchPriority":
+			case "RSwitchPriority": //Old Scale Method
 				m_autonomousCommand = new StJoeMatch53SpecialCondition();
 				break;
-			case "ScalePriority":
+			case "RScalePriority": //Old Scale Method
 				m_autonomousCommand = new PlainfieldMatch51SpecialCondition();
-				break;
-			case "ScaleEither":
-				m_autonomousCommand = new ScaleEither();
-				break;
-			case "DoubleScale":
-				m_autonomousCommand = new DoubleScaleZane();
-				break;
-			case "DoubleScaleCurve":
-				m_autonomousCommand = new DoubleScaleCurve();
 				break;
 			case "DoubleSwitch":
 				m_autonomousCommand = new RightSwitchSwitch();
@@ -198,11 +218,11 @@ public class Robot extends TimedRobot {
 			case "RightScaleSwitch":
 				m_autonomousCommand = new RightScaleSwitch();
 				break;
-			case "NewChooser":
+			case "DecisionMatrix":
 				m_autonomousCommand = new BinaryChooser().chooseAuto();
 				break;
 			case "RightScaleScale":
-				m_autonomousCommand = new RightScaleScale();
+				m_autonomousCommand = new RightScaleScale(); // takes scale side field config into choice
 				break;
 			case "LeftScaleScale":
 				m_autonomousCommand = new LeftScaleScale();
@@ -210,8 +230,11 @@ public class Robot extends TimedRobot {
 			case "LeftScaleSwitch":
 				m_autonomousCommand = new LeftScaleSwitch();
 				break;
-			case "Test":
+			case "CrossToLeftScale":
 				m_autonomousCommand = new CrossToLeftScale();
+				break;
+			case "Test":
+				m_autonomousCommand = new LeftScaleEnd();
 				break;
 		}
 		
@@ -226,7 +249,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
+		intake.setCubeLight();
 		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
@@ -236,18 +259,22 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		drivetrain.setBrake();
 		lift.disengageAirBag();
+		intake.setCubeLight();
 		// This makes sure that the autonomous stops running when teleop starts running. If you want the autonomous to continue until interrupted by another command, remove this line or comment it out.
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		intake.cubeLight.set(Relay.Value.kForward);
 	}
 	
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		intake.setCubeLight();
 		drivetrain.outputToSmartDashboard();
 		lift.outputToSmartDashboard();
 		intake.outputToSmartDashboard();
+		intake.cubeLight.set(Relay.Value.kForward);
 	}
 	
 	@Override

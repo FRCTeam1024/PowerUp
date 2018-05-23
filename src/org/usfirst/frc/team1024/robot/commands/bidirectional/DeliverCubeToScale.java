@@ -4,6 +4,7 @@ import org.usfirst.frc.team1024.robot.Constants;
 import org.usfirst.frc.team1024.robot.FieldConfig;
 import org.usfirst.frc.team1024.robot.Level;
 import org.usfirst.frc.team1024.robot.Robot;
+import org.usfirst.frc.team1024.robot.commands.CrossTest;
 import org.usfirst.frc.team1024.robot.commands.DriveAndLiftAndIntake;
 import org.usfirst.frc.team1024.robot.commands.DriveAndMoveLift;
 import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
@@ -39,16 +40,15 @@ public class DeliverCubeToScale extends CommandGroup {
     	addSequential(new ChangeDriveSpeed(0.5));
     	// turn towards scale
     	if(Robot.fieldConfig.isScaleRight()) {
-    		addSequential(new TurnLeft(90),2);
-    		addSequential(new DriveAndMoveLift(-12.0, Level.SCALE_LOSS), 2);
-    		
-    	} else if(Robot.fieldConfig.isScaleLeft()) {
-    		addSequential(new TurnRight(90),2);
-    		addSequential(new DriveAndMoveLift(-12.0, Level.SCALE_LOSS));
+    		addSequential(new TurnLeft(90.0),2);
+    		addSequential(new DriveAndMoveLift(-17.0, Level.SCALE_LOSS), 2);
+        	addSequential(new DriveStraight(29.0));
+        	// drop the cube on to the scale
+        	addSequential(new OpenClamp());
+
+    	} else {
+    		addSequential(new CrossTest());
     	}
-    	addSequential(new DriveStraight(29.0));
-    	// drop the cube on to the scale
-    	addSequential(new OpenClamp());
     
     }
 }
