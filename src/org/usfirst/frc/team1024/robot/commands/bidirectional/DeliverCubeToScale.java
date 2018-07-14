@@ -34,12 +34,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DeliverCubeToScale extends CommandGroup {
 
     public DeliverCubeToScale() {
-    	addSequential(new ChangeDriveSpeed(1.0));
-    	addSequential(new ChangeLiftSpeed(1.0));
-    	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - (Constants.ROBOT_LENGTH_IN / 2) - 20.0));
-    	addSequential(new ChangeDriveSpeed(0.5));
+    	
     	// turn towards scale
     	if(Robot.fieldConfig.isScaleRight()) {
+    		addSequential(new ChangeDriveSpeed(1.0));
+        	addSequential(new ChangeLiftSpeed(1.0));
+        	addSequential(new DriveAndShift(Constants.BACKWALL_TO_MIDDLE_SCALE_DISTANCE - (Constants.ROBOT_LENGTH_IN / 2) - 20.0));
+        	addSequential(new ChangeDriveSpeed(0.5));
     		addSequential(new TurnLeft(90.0),2);
     		addSequential(new DriveAndMoveLift(-17.0, Level.SCALE_LOSS), 2);
         	addSequential(new DriveStraight(29.0));

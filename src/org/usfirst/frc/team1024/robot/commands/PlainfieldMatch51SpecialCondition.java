@@ -16,10 +16,10 @@ public class PlainfieldMatch51SpecialCondition extends CommandGroup {
 
     public PlainfieldMatch51SpecialCondition() {
         if (Robot.fieldConfig.isScaleRight()) {
-        	//addSequential(new DeliverCubeToScale());
-        	addSequential(new DeliverZaneFirstCubeToScale());
+        	addSequential(new DeliverCubeToScale());
+        	/*addSequential(new DeliverZaneFirstCubeToScale());
 			addSequential(new AcquireSecondCubeFromScale());
-			addSequential(new DeliverZaneSecondCubeToScale());
+			addSequential(new DeliverZaneSecondCubeToScale());*/
         } else {
         	if (Robot.fieldConfig.isSwitchRight()) {
         		addSequential(new DeliverFirstCubeToSwitch(POSITION.RIGHT));

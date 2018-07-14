@@ -29,7 +29,7 @@ public class RightScaleScale extends CommandGroup {
 			addSequential(new DeliverZaneSecondCubeToScale());
 		} else {
 			addSequential(new ChangeDriveSpeed(1.0));
-			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 9.0));
+			addSequential(new DriveAndShift(AutoDriveConstants.BACK_WALL_TO_CROSSING_PATH_INCHES + 12.0));
 			addSequential(new TurnLeft(90.0), 2);
 			if (Robot.stayOnOurSide == false) {
 				addSequential(new ChangeDriveSpeed(1.0)); // This could be faster probably

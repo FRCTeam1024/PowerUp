@@ -24,9 +24,9 @@ public class LeftSwitchSwitch extends CommandGroup {
 			addSequential(new OpenClamp());
 			addSequential(new TurnRightOneSide(90.0));
 			addSequential(new CloseClamp());
-			addSequential(new IntakeExtend());
-			addSequential(new DriveAndMoveLift(96.0, Level.INTAKE), 2);
-			addSequential(new TurnRightOneSide(130));
+//			addSequential(new IntakeExtend());
+//			addSequential(new DriveAndMoveLift(96.0, Level.INTAKE), 2);
+//			addSequential(new TurnRightOneSide(130));
 			/*addSequential(new DriveAndIntake(36.0, 3.0));
 			addSequential(new CloseClamp());
 			addSequential(new IntakeRetract());

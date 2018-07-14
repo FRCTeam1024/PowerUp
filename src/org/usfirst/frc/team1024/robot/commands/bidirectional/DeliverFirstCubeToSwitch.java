@@ -30,4 +30,5 @@ public class DeliverFirstCubeToSwitch extends CommandGroup {
     	addSequential(new DriveStraight(25.0));
     	addSequential(new OpenClamp());
     }
+
 }

@@ -28,6 +28,7 @@ import org.usfirst.frc.team1024.robot.commands.DriveAndShift;
 import org.usfirst.frc.team1024.robot.commands.FastCrossToScale;
 import org.usfirst.frc.team1024.robot.commands.LeftScaleScale;
 import org.usfirst.frc.team1024.robot.commands.LeftScaleSwitch;
+import org.usfirst.frc.team1024.robot.commands.LeftSwitchSwitch;
 import org.usfirst.frc.team1024.robot.commands.PlainfieldMatch51SpecialCondition;
 import org.usfirst.frc.team1024.robot.commands.RightScaleScale;
 import org.usfirst.frc.team1024.robot.commands.RightScaleSwitch;
@@ -125,6 +126,7 @@ public class Robot extends TimedRobot {
 		autoChooser.addObject("RightScaleScale", "RightScaleScale");
 		autoChooser.addObject("LeftScaleScale", "LeftScaleScale");
 		autoChooser.addObject("LeftScaleSwitch", "LeftScaleSwitch");
+		autoChooser.addObject("LeftSwitch", "LeftSwitchSwitch");
 		autoChooser.addObject("Test", "Test");
 		SmartDashboard.putData("Auto Options", autoChooser);
 		/*
@@ -209,7 +211,7 @@ public class Robot extends TimedRobot {
 			case "RSwitchPriority": //Old Scale Method
 				m_autonomousCommand = new StJoeMatch53SpecialCondition();
 				break;
-			case "RScalePriority": //Old Scale Method
+			case "RScalePriority": 
 				m_autonomousCommand = new PlainfieldMatch51SpecialCondition();
 				break;
 			case "DoubleSwitch":
@@ -232,6 +234,9 @@ public class Robot extends TimedRobot {
 				break;
 			case "CrossToLeftScale":
 				m_autonomousCommand = new CrossToLeftScale();
+				break;
+			case "LeftSwitchSwitch":
+				m_autonomousCommand = new LeftSwitchSwitch();
 				break;
 			case "Test":
 				m_autonomousCommand = new LeftScaleEnd();
